@@ -58,7 +58,7 @@ Paths:
   - ls <value> = list items in target directory
   - cd <value> = change directory
   - cd .. = go back a directory
-  
+      .. means parent directory
   File commands:
   - cat <file> = concatenate bytes to view files in terminal
   - head -# (# defaults to 10)= print first # of lines of a file
@@ -68,6 +68,22 @@ Paths:
       - less -N: enumerates lines spacebar scrolls to next page, b goes back
   - touch: updates the access and modification timestamps of a file
            if a file does not exist one will be created, can make multiple at once
-  - 
+  - mkdir <value>: make directory
+  - mv <old value> <new value>: move file or directory to new location: rename                                     file or folder
+  - rm <value>: delete file or folder
+  - rm -r <value>: deletes a directory and all of its contents using recursion
+  - cp <value> <location>: copy file or directory
+  - cp -R <value> <location>: copy a directory and all contents using recursion
+  - ~ home directory alias cd ~ takes you to /users/name
+  - grep: search for something in a file, similar to ctrl+f
+        grep "hello" words.txt
+      Can grep multiple files
+        grep "hello" hello.txt hello2.txt
+  - grep -r "hello" <location>: search entire directory including all subs and                                     files in directory.
+  - Use grep -r "value" . for current directory. "." means current directory
+  - find <directory> -name <value>: search a directory for a file name
+    - can search by pattern: find <directory> -name "*.txt" * is wildcard
+    - find <directory> -name "*chad*" would look for all filenames containing chad
 
+Permissions:
   
