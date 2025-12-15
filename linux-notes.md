@@ -1,4 +1,3 @@
-
 Bash and ZSH are shells. Also powerful programming languages.
 Shells are primarily for running other programs and small scripts.
 
@@ -17,7 +16,7 @@ Functions:
     history + # = returns # history of commands input
   clear = Clears terminal text
 
-Variable creation:
+Local Variable creation:
   variable=<value> (no spaces)
 
 Syntax:
@@ -56,6 +55,8 @@ Paths:
   - pwd = print current working directory
   - ls = list items in current directory
   - ls <value> = list items in target directory
+  - ls -l = shows permissions
+  - ls -a = show hidden files
   - cd <value> = change directory
   - cd .. = go back a directory
       .. means parent directory
@@ -72,6 +73,7 @@ Paths:
   - mv <old value> <new value>: move file or directory to new location: rename                                     file or folder
   - rm <value>: delete file or folder
   - rm -r <value>: deletes a directory and all of its contents using recursion
+  - rm -rf <value>: f stands for force. If ran with sudo can do serious damage
   - cp <value> <location>: copy file or directory
   - cp -R <value> <location>: copy a directory and all contents using recursion
   - ~ home directory alias cd ~ takes you to /users/name
@@ -86,4 +88,71 @@ Paths:
     - find <directory> -name "*chad*" would look for all filenames containing chad
 
 Permissions:
-  
+Represented as a ten-character string:
+  drwxrwxrwx
+  Break down: 
+    First character is always a "d" or "-". 
+      "d" = directory, "-" = file
+    Next three characters are Owner permissions 
+       r = read 
+       w = write 
+       x = execute
+       - = none
+      rwx = read, write and execute
+      r-x = read, execute
+      r-- = read only
+  Second set of three characters are Group permissions
+  Third set is everyone else
+
+  Commands:
+    - chmod: change mode (permissions) of a file or directory
+        chmod -R: recursively change all files in directory
+        chmod -R u=rwx: change owner permissions to rwx
+        chmod -R u=rwx,g=: change group permissions to none
+        chmod -R u=rwx,g=,o=: change others permissions to none
+        chmod -R u-rwx,g=,o= DIRECTORY: what directory to change permissions of
+    - chmod -x <file>: removes executable flag for owner
+    - chmod u+x <file>: adds executable flag for owner
+    - chown: change owner requires root
+    
+.sh file extension calls shell scripts. These are text files that contain shell commands. To call them use:
+  mydir/program.sh
+  If calling in current directory use:
+  ./program.sh
+Prefix folders are required so the shell knows we are trying to run a program, not an embedded command
+
+Programs:
+  Commands:
+  - which <value>: tells you location of an installed command line program
+  - #!: shebang. Used at the top of a script to tell your shell what program to use to execute the file.
+    #!/usr/bin/python3
+
+Programs are just sets of instructions that a computer can execute. An executable is just a file that contains a program.
+Two types of programs:
+  Compiled programs (Go, C, Rust): Program converted from human-readable code into machine code. To run a compiled program you would simply ./texteditor
+  Interpreted Programs (Python, Ruby, Javascript): A program executed by another program that interprets the   human readable code at runtime to machine code for JIT execution. To run an interperted program you need to call which interpreter to use. So you would python texteditor.py
+
+Shells:
+  - sh: Bourne shell. Original Unix shell. Very basic, missing QoL features
+  - bash: Bourne Again shell. Most popular on Linux, builds off sh, QoL features
+  - zsh: Z shell. Most popular on macOS. Builds off sh. QoL features
+
+All variations can run .sh scripts
+
+Bash and Zsh have config files that run every time you start a new shell session. Located in home directory and hidden by default
+
+Environmental Variables:
+  Available to all programs ran in the shell
+  - env: view environmental variables currently set
+  - export NAME="value": sets a variable in the shell
+    Once an environmetal variable is set, other scripts can access and use it
+
+PATH:
+  A variable containing the list of directories that the shell will look into when running a command.
+  Without this variable we would have to directly tell the shell where we want to look, from the intial home directory, every time. i.e. use /bin/ls instead of just ls
+
+When installing a new program via CLI a message will printed with the install path for the program you installed. PAY ATTENTION TO THIS. If you try to run a program and it doesn't run, it's location may not be set within PATH. This line will tell us where it's located so we can find the damn thing.
+To add locations to path use the following:
+export PATH="$PATH:/<value>/<value>/<etc.>" this will append the directory to your PATH. Note: $PATH calls whatever is already in the PATH variable. Then we append our new directory to the variable by using the :/<value>/<etc>
+Make sure to use pwd to get the whole path of the directory, then use that to add to PATH. This will only change your PATH for the current shell session.
+To make this permanent, add the export command to your shell config file. .bashrc / .zshrc
