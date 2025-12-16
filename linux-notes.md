@@ -86,7 +86,9 @@ Paths:
   - find <directory> -name <value>: search a directory for a file name
     - can search by pattern: find <directory> -name "*.txt" * is wildcard
     - find <directory> -name "*chad*" would look for all filenames containing chad
-
+  - grep -r "value" <location> --exclude-dir="value"
+      Sets the exclude-dir flag to the value and ignores that directory
+    
 Permissions:
 Represented as a ten-character string:
   drwxrwxrwx
@@ -156,3 +158,47 @@ To add locations to path use the following:
 export PATH="$PATH:/<value>/<value>/<etc.>" this will append the directory to your PATH. Note: $PATH calls whatever is already in the PATH variable. Then we append our new directory to the variable by using the :/<value>/<etc>
 Make sure to use pwd to get the whole path of the directory, then use that to add to PATH. This will only change your PATH for the current shell session.
 To make this permanent, add the export command to your shell config file. .bashrc / .zshrc
+
+I/O:
+Commands:
+  - man: displays manual for programs with them
+      man ls
+
+Flags:
+  - the arguements passed to a command using -
+      ls -l
+  - can be combined with multiple flags
+      ls -al
+  - single character flags are typically one -
+  - multi character flags are typically two --
+
+  curl: CLI tool that lets you make network requests from CLI
+  $?: returns exit code of last program ran
+    ls ~
+    echo $?
+    # 0
+
+Standard Output (stdout):
+  Stream of data that prints to your terminal
+  i.e. print() in python, echo "" for sh
+
+Standard Error (stderr):
+  Datastream like standard output, but intended to be used for error messages.      Can be redirected.
+
+Redirecting Streams:
+  >: redirects stdout
+    echo "Hello world" > hello.txt
+  2>: redirects stderr
+    cat doesnotexist.txt 2> error.txt
+
+Standard Input (stdin):
+  Default place where programs read their input. Simply a stream of data that programs can read from as they run.
+    i.e. input() in python, read VARIABLE (must be in caps) in sh
+
+/tmp:
+  Directory that exists by default on Unix-like systems in root directory. Files here are deleted by the system routinely. Great to store temp files.
+
+Piping:
+  Act of taking output from one program as input for another program. This allows for powerful automation.
+  Use | to pipe. Following example takes stdout from one program and pipes it to the stdin for another
+    echo "Have you heard the tragedy of Darth Plagueis the Wise?" | wc -w
