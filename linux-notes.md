@@ -202,3 +202,28 @@ Piping:
   Act of taking output from one program as input for another program. This allows for powerful automation.
   Use | to pipe. Following example takes stdout from one program and pipes it to the stdin for another
     echo "Have you heard the tragedy of Darth Plagueis the Wise?" | wc -w
+
+Interrupt:
+  If programs freeze or take too long to execute, use ctrl + c to send a 'SIGINT' signal to the program and tells it to stop
+
+Kill:
+  If a program doesn't respond to SIGINT open another shell session and use kill.
+  - kill <pid>: pid stands for process id
+  - ps aux: shows all processes running including their process ids
+      process id will be the first number
+    ashkyw 2389  0.0  0.0   6936  3308 pts/1    S+   20:02   0:00 bash private/       bin/malicious.sh force
+
+Unix Philosophy:
+  1. Write programs that do one thing and do it well
+  2. Write programs to work together
+  3. Write programs to handle text streams because that is a universal interface
+
+  1. ls, grep, less exist because they do one thing and do it well. No fluff.
+  2. Since specialized programs exist, it's easy to write programs that work together. grep can search for text in a file then pipe it into less to display the results
+    - grep "hello" some_file.txt | less
+  3. Programs work together easily when they all use the same interface: text streams. 
+
+Top:
+  Allows you to see which programs are using the most resources on a computer.
+  top: displays resource management
+  
