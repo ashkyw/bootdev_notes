@@ -227,3 +227,6 @@ Top:
   Allows you to see which programs are using the most resources on a computer.
   top: displays resource management
   
+Package Managers:
+  Software tool designed to help install other software. Their primary functions include downloading software from official sources, installing, updating, remove software, and managing relevant dependencies.
+  
