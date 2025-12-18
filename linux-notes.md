@@ -229,4 +229,10 @@ Top:
   
 Package Managers:
   Software tool designed to help install other software. Their primary functions include downloading software from official sources, installing, updating, remove software, and managing relevant dependencies.
-  
+  Commands:
+    - which: returns file path for program
+
+  Webi:
+    Lets you install command line tools directly from the web without the need for apt. Removes the need for sudo.
+    https://webinstall.dev/
+    - Always install lsd
