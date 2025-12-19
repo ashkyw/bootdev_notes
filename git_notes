@@ -1,1 +1,3 @@
-
+Bootdev CLI:
+  - bootdev run <id>: runs the commands and shows results. Used for debugging.
+  - bootdev run <id> -s: runs the commands, gives pass/fail feedback, marks lesson complete
