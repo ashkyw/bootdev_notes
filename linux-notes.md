@@ -76,7 +76,7 @@ Paths:
   - rm -rf <value>: f stands for force. If ran with sudo can do serious damage
   - cp <value> <location>: copy file or directory
   - cp -R <value> <location>: copy a directory and all contents using recursion
-  - ~ home directory alias cd ~ takes you to /users/name
+  - ~ (~/) home directory alias cd ~ takes you to /users/name
   - grep: search for something in a file, similar to ctrl+f
         grep "hello" words.txt
       Can grep multiple files
