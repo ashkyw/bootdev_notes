@@ -8,4 +8,4 @@ def get_players_to_message(lobbies, selected_lobbies, muted_players):
     players_to_message = players_to_message.difference(muted_players)
     return players_to_message
 
-(W3)[https://www.w3schools.com/python/python_ref_set.asp]
+[W3](https://www.w3schools.com/python/python_ref_set.asp)
