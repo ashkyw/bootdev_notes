@@ -1,0 +1,17 @@
+class Order:
+    next_id = 1
+    tax_percent = 10
+
+    def __init__(self, customer_name, subtotal):
+        self.id = Order.next_id
+        Order.next_id += 1
+        self.customer_name = customer_name
+        self.subtotal = subtotal
+
+    def apply_discount(self, percent):
+        discounted_price = self.subtotal * percent // 100
+        self.subtotal = self.subtotal - discounted_price
+
+    def final_total(self):
+        tax_amount = self.subtotal * Order.tax_percent // 100
+        return self.subtotal + tax_amount
