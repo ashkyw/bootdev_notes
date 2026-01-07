@@ -128,3 +128,29 @@ MAX_HP = 100
 CRIT_MULTIPLIER = 1.5
 DEFAULT_ARROW_COUNT = 10
 
+Use a constant (e.g. MAX_HP = 100) when a value is:
+
+    Magic-looking
+        If a number/string appears and isn’t self-explanatory (3, 0.07, "us-east-1"), consider a named constant.
+        Example: TAX_RATE = 0.07 is clearer than price * 0.07.
+
+    Used in multiple places
+        If the same value appears in more than one spot, make it a constant so you can update it in one place and avoid inconsistencies.
+
+    Represents a domain concept
+        If the value has meaning in your game/app (like MAX_INVENTORY_SIZE, TRIPLE_SHOT_COST, STARTING_GOLD), it deserves a name.
+
+    Intended to be configuration, not logic
+        Values that might change between environments or game balance tweaks should be constants: API URLs, default timeouts, difficulty tuning numbers.
+
+    Should never change at runtime
+        If the value is fixed for the whole run of the program, a constant signals “do not mutate this.”
+
+    Needed across multiple modules
+        Shared, stable values (like DEFAULT_PORT, SECONDS_PER_MINUTE) are good constant candidates.
+
+On the flip side, avoid constants when:
+
+    The value is truly one-off and obvious (range(3) in a tiny local loop, etc.).
+    The value is derived from other values and better expressed as an expression than a stored constant.
+    The value is meant to change frequently at runtime (that’s state, not a constant).
