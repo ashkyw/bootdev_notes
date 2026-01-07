@@ -154,3 +154,47 @@ On the flip side, avoid constants when:
     The value is truly one-off and obvious (range(3) in a tiny local loop, etc.).
     The value is derived from other values and better expressed as an expression than a stored constant.
     The value is meant to change frequently at runtime (that’s state, not a constant).
+
+Inheritance in tree form. Archer and Wizard inherited from Hero:
+
+class Hero:
+    def __init__(self, name, health):
+        self.__name = name
+        self.__health = health
+
+    def get_name(self):
+        return self.__name
+
+    def get_health(self):
+        return self.__health
+
+    def take_damage(self, damage):
+        self.__health -= damage
+
+class Archer(Hero):
+    ARROW_DAMAGE = 10
+
+    def __init__(self, name, health, num_arrows):
+        super().__init__(name, health)
+        self.__num_arrows = num_arrows
+
+    def shoot(self, target):
+        if self.__num_arrows <= 0:
+            raise Exception("not enough arrows")
+        self.__num_arrows -= 1
+        target.take_damage(self.ARROW_DAMAGE)
+        
+class Wizard(Hero):
+    WIZARD_SPELL_DAMAGE = 25
+    
+    def __init__(self, name, health, mana):
+        super().__init__(name, health)
+        self.__mana = mana
+
+    def cast(self, target):
+        if self.__mana < 25:
+            raise Exception("not enough mana")
+
+        self.__mana -= 25
+        target.take_damage(self.WIZARD_SPELL_DAMAGE)
+
