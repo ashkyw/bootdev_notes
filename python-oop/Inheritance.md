@@ -198,3 +198,33 @@ class Wizard(Hero):
         self.__mana -= 25
         target.take_damage(self.WIZARD_SPELL_DAMAGE)
 
+Another example, with cartesian grid maff!:
+
+class Unit:
+    def __init__(self, name, pos_x, pos_y):
+        self.name = name
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+
+    def in_area(self, x_1, y_1, x_2, y_2):        
+        if x_1 <= self.pos_x <= x_2 and y_1 <= self.pos_y <= y_2:
+            return True
+        
+        return False
+
+class Dragon(Unit):
+    def __init__(self, name, pos_x, pos_y, fire_range):
+        super().__init__(name, pos_x, pos_y)
+        self.__fire_range = fire_range
+
+    def breathe_fire(self, x, y, units):
+        units_hit = []
+        x_1 = x - self.__fire_range
+        y_1 = y - self.__fire_range
+        x_2 = x + self.__fire_range
+        y_2 = y + self.__fire_range
+        for unit_name in units:
+            if unit_name.in_area(x_1, y_1, x_2, y_2):
+                units_hit.append(unit_name)
+
+        return units_hit
