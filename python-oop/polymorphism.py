@@ -169,3 +169,44 @@ class Rectangle:
             return self.__y1
         return self.__y2
 
+Explanation of how to utilize classes in bigger projects with multiple files:
+
+In real projects, it’s very common to:
+
+    Put related classes/functions into their own module files.
+    Then import them into the files that use them.
+
+For example, you might have:
+
+# rectangle.py
+class Rectangle:
+    def __init__(self, x1, y1, x2, y2):
+        ...
+    def overlaps(self, rect):
+        ...
+
+# units.py
+from rectangle import Rectangle
+
+class Unit:
+    ...
+class Dragon(Unit):
+    ...
+
+# main.py
+from units import Dragon
+
+def main():
+    d = Dragon("Smaug", 0, 0, 10, 10, 5)
+    ...
+
+Same import mechanics as with functions—modules are just files, and you import names (classes, functions, variables) from them.
+
+Typical guidelines:
+
+    One module per “concept” or tight group of concepts.
+        e.g. geometry.py for Rectangle, Circle, etc.
+        units.py for Unit, Dragon, Archer, etc.
+    Keep your main.py fairly small—often just wiring things together, parsing args, running the game/app.
+
+As your projects grow past “single small script”, splitting code into modules like this is the normal next step.
