@@ -210,3 +210,129 @@ Typical guidelines:
     Keep your main.py fairly small—often just wiring things together, parsing args, running the game/app.
 
 As your projects grow past “single small script”, splitting code into modules like this is the normal next step.
+
+<hit_by_fire example>
+
+class Human:
+    def hit_by_fire(self):
+        self.health -= 5
+        return self.health
+
+class Archer:
+    def hit_by_fire(self):
+        self.health -= 10
+        return self.health
+
+What Is a Function Signature?
+
+A function signature (or method signature) includes the name, inputs, and outputs of a function or method. For example, hit_by_fire in the Human and Archer classes have identical signatures.
+
+class Human:
+    def hit_by_fire(self):
+        self.health -= 5
+        return self.health
+
+class Archer:
+    def hit_by_fire(self):
+        self.health -= 10
+        return self.health
+
+Both methods have the same name, take no additional inputs, and return integers. If any of those things were different, they would have different function signatures. Here are methods with different signatures:
+
+class Human:
+    def hit_by_fire(self):
+        self.health -= 5
+        return self.health
+
+class Archer:
+    def hit_by_fire(self, dmg):
+        self.health -= dmg
+        return self.health
+
+<class point default>
+
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+p1 = Point(4, 5)
+p2 = Point(2, 3)
+p3 = p1 + p2
+# TypeError: unsupported operand type(s) for +: 'Point' and 'Point'
+
+<class point with __add__>
+
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other):
+        x = self.x + point.x
+        y = self.y + point.y
+        return Point(x, y)
+
+p1 = Point(4, 5)
+p2 = Point(2, 3)
+p3 = p1 + p2
+# p3 is (6, 8)
+
+<CH:6 - 9 Solution>
+
+class Sword:
+    def __init__(self, sword_type):
+        self.sword_type = sword_type
+
+    def __add__(self, other):
+        if self.sword_type == "bronze" and other.sword_type == "bronze":
+            return Sword("iron")
+        if self.sword_type == "iron" and other.sword_type == "iron":
+            return Sword("steel")
+        raise Exception("cannot craft")
+
+Dunder methods to overload other operators
+
+Operation 	        Operator 	Method
+Addition     	        + 	    __add__
+Subtraction 	        - 	    __sub__
+Multiplication 	        * 	    __mul__
+Power 	                ** 	    __pow__
+Division 	            / 	    __truediv__
+Floor Division 	        // 	    __floordiv__
+Remainder (modulo) 	    % 	    __mod__
+Bitwise Left Shift 	    << 	    __lshift__
+Bitwise Right Shift     >> 	    __rshift__
+Bitwise AND 	        & 	    __and__
+Bitwise OR         	    | 	    __or__
+Bitwise XOR 	        ^ 	    __xor__
+Bitwise NOT 	        ~ 	    __invert__
+
+<print example>
+
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+p1 = Point(4, 5)
+print(p1)
+# prints "<Point object at 0xa0acf8>"
+
+That's not super useful! We probably want to see the fields!
+
+Let's teach our Point class to print itself. The __str__ method (short for "string") lets us do just that. It takes no inputs but returns a string that will be printed to the console when someone passes an instance of the class to Python's print() function.
+
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return f"({self.x},{self.y})"
+
+p1 = Point(4, 5)
+print(p1)
+# prints "(4,5)"
+
+The __repr__ method works similarly: the difference is that it's intended for use in debugging by developers, rather than in printing strings to end users.
