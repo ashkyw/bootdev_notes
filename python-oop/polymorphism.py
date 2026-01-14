@@ -336,3 +336,35 @@ print(p1)
 # prints "(4,5)"
 
 The __repr__ method works similarly: the difference is that it's intended for use in debugging by developers, rather than in printing strings to end users.
+
+<Overloading multiple cards operators>
+
+SUITS = ["Clubs", "Diamonds", "Hearts", "Spades"]
+
+RANKS = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
+
+
+class Card:
+    def __init__(self, rank, suit):
+        self.rank = rank
+        self.suit = suit
+        self.rank_index = RANKS.index(rank)
+        self.suit_index = SUITS.index(suit)
+
+    def __eq__(self, other):
+        return (
+            other.rank_index == self.rank_index and other.suit_index == self.suit_index
+        )
+
+    def __lt__(self, other):
+        if self.rank_index == other.rank_index:
+            return self.suit_index < other.suit_index
+        return self.rank_index < other.rank_index
+
+    def __gt__(self, other):
+        if self.rank_index == other.rank_index:
+            return self.suit_index > other.suit_index
+        return self.rank_index > other.rank_index
+
+    def __str__(self):
+        return f"{self.rank} of {self.suit}"
