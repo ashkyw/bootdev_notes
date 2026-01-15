@@ -1,0 +1,8 @@
+Since each .py file is a module we can easily group related functions, variables, and classes together in a module.
+Then we can import using:
+  
+  from module_name import my_function
+  import module_name #for full import
+
+Games often have a lot of magic numbers to represent various attributes: speed, item costs, attack damage
+We'll use a dedicated module to store those constants.
