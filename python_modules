@@ -6,3 +6,11 @@ Then we can import using:
 
 Games often have a lot of magic numbers to represent various attributes: speed, item costs, attack damage
 We'll use a dedicated module to store those constants.
+
+The Greek letter delta (Δ) is often used to represent a change in a value in mathematics. 
+In game development, we use "delta time" to represent the amount of time that has passed since the last frame was drawn. 
+This value is useful to decouple the game's speed from the speed it's being drawn to the screen.The Greek letter delta (Δ) is often used to represent a change 
+in a value in mathematics. 
+
+In game development, we use "delta time" to represent the amount of time that has passed since the last frame was drawn. 
+This value is useful to decouple the game's speed from the speed it's being drawn to the screen.
