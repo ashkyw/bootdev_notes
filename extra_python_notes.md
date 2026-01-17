@@ -20,3 +20,90 @@ The Group class is a container that holds and manages multiple game objects. We 
 You can think of them as a sort of Venn diagram. An object can be in multiple groups at the same time!
 
 [Boot.dev lesson with groups image](https://www.boot.dev/lessons/6a09887c-ad3f-4fb3-8726-c7bd9fa4161c)
+
+
+Examples of Using Groups
+
+Create a new empty group called my_group:
+
+my_group = pygame.sprite.Group()
+
+Add all future instances of a Player class to two different groups (group_a and group_b):
+
+# Player is the name of the class, not an instance of it
+# This must be done before any Player objects are created
+Player.containers = (group_a, group_b)
+
+You can iterate over objects in a group just like any other collection in Python:
+
+for thing in group:
+    thing.do_something(some_value)
+
+You may also call the .update() method for every member of a group by calling it on the group itself:
+
+group.update(dt)
+
+Examples of Using Groups
+
+Create a new empty group called my_group:
+
+my_group = pygame.sprite.Group()
+
+Add all future instances of a Player class to two different groups (group_a and group_b):
+
+# Player is the name of the class, not an instance of it
+# This must be done before any Player objects are created
+Player.containers = (group_a, group_b)
+
+You can iterate over objects in a group just like any other collection in Python:
+
+for thing in group:
+    thing.do_something(some_value)
+
+You may also call the .update() method for every member of a group by calling it on the group itself:
+
+group.update(dt)
+
+Examples of Using Groups
+
+Create a new empty group called my_group:
+
+my_group = pygame.sprite.Group()
+
+Add all future instances of a Player class to two different groups (group_a and group_b):
+
+# Player is the name of the class, not an instance of it
+# This must be done before any Player objects are created
+Player.containers = (group_a, group_b)
+
+You can iterate over objects in a group just like any other collection in Python:
+
+for thing in group:
+    thing.do_something(some_value)
+
+You may also call the .update() method for every member of a group by calling it on the group itself:
+
+group.update(dt)
+
+Examples of Using Groups
+
+Create a new empty group called my_group:
+
+my_group = pygame.sprite.Group()
+
+Add all future instances of a Player class to two different groups (group_a and group_b):
+
+# Player is the name of the class, not an instance of it
+# This must be done before any Player objects are created
+Player.containers = (group_a, group_b)
+
+You can iterate over objects in a group just like any other collection in Python:
+
+for thing in group:
+    thing.do_something(some_value)
+
+You may also call the .update() method for every member of a group by calling it on the group itself:
+
+group.update(dt)
+
+
