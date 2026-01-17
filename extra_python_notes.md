@@ -14,3 +14,9 @@ in a value in mathematics.
 
 In game development, we use "delta time" to represent the amount of time that has passed since the last frame was drawn. 
 This value is useful to decouple the game's speed from the speed it's being drawn to the screen.
+
+The Group class is a container that holds and manages multiple game objects. We can organize our objects into various groups to track them more easily.
+
+You can think of them as a sort of Venn diagram. An object can be in multiple groups at the same time!
+
+(Boot.dev lesson with groups image)[https://www.boot.dev/lessons/6a09887c-ad3f-4fb3-8726-c7bd9fa4161c]
