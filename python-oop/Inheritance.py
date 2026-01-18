@@ -331,3 +331,44 @@ class Catapult(Siege):
     def get_cargo_volume(self):
         return self.cargo_volume
 
+
+notes on inheritance from Asteroids creation:
+
+
+
+class Asteroid(CircleShape):
+    def __init__(self, x, y, radius):
+        super().__init__(x, y, radius)
+
+So Asteroid.__init__ doesn’t set self.x/self.y directly; it delegates that job to CircleShape.__init__.
+
+Think of it like this:
+
+    CircleShape.__init__(self, x, y, radius) probably does something like:
+
+    self.position = pygame.Vector2(x, y)
+    self.radius = radius
+    self.velocity = pygame.Vector2()
+
+    When you call super().__init__(x, y, radius) inside Asteroid.__init__, Python runs CircleShape.__init__ with self being the Asteroid instance.
+
+So:
+
+    super().__init__(...) runs the parent’s constructor.
+    That parent constructor sets attributes on the same self (the asteroid object).
+    After that, your asteroid object has all those attributes: self.position, self.radius, self.velocity, etc.
+    Because the attributes live on self, you just use self.position, self.radius in your methods. You do not need super().position or super().radius.
+
+Key idea:
+
+    super() is for calling parent methods (like __init__), not for reading parent attributes.
+    Once the parent method has run, all attributes it created are just normal attributes on self.
+
+So to your wording:
+
+    because it has been built with the CircleShape class initially, I can simply use self.x, self.y and self.radius without redefining it?
+
+Almost. More accurately:
+
+    Because CircleShape.__init__ ran (via super().__init__), whatever attributes it assigned to self are now available directly as self.something in Asteroid.
+    If CircleShape used self.position instead of self.x/self.y, then you should use self.position, not self.x/self.y.
