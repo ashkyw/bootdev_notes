@@ -21,6 +21,8 @@ The Group class is a container that holds and manages multiple game objects. We 
 
 You can think of them as a sort of Venn diagram. An object can be in multiple groups at the same time!
 
+![Alt text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/groups.png)
+
 [Boot.dev lesson with groups image](https://www.boot.dev/lessons/6a09887c-ad3f-4fb3-8726-c7bd9fa4161c)
 
 
