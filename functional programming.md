@@ -57,3 +57,13 @@ master.geometry("200x100") # set the window size
 button = Button(master, text="Submit", fg="red").pack() # create a button
 master.mainloop() # start the event loop
 ```
+Sigma example
+
+```math
+avg = Σx/N
+```
+
+1. Σ is just the Greek letter Sigma, and it represents "the sum of a collection".
+2. x is the collection of numbers we're averaging.
+3. N is the number of elements in the collection.
+4. avg is equal to the sum of all the numbers in collection "x" divided by the number of elements in collection "x".
