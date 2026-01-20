@@ -253,3 +253,10 @@ msg = (
     else ("Access limited" if user.is_authenticated else "Access denied")
 )
 ```
+
+Another example of ternary:
+
+```py
+def choose_parser(file_extension):
+    return "markdown" if file_extension.lower() in ("markdown", "md") else "plaintext"
+```
