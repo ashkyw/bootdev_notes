@@ -84,3 +84,12 @@ However, with functional programming, we would write code that's a bit more decl
 def get_average(nums):
     return sum(nums) / len(nums)
 ```
+
+Example of good, one line functional programming:
+
+```py
+def get_median_font_size(font_sizes):
+    if len(font_sizes) == 0:
+        return None
+    return sorted(font_sizes)[(len(font_sizes) - 1) // 2]
+```
