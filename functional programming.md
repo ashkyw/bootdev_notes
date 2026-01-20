@@ -123,7 +123,7 @@ Functional programming and object-oriented programming are styles for writing co
 
 You'll encounter developers who love functional programming and others who love object-oriented programming. However, contrary to popular opinion, FP and OOP are not always at odds with one another. They aren't opposites. Of the four pillars of OOP, inheritance is the only one that doesn't fit with functional programming.
 
-!Alt Text
+![Alt Text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/FP%20OOP%20Ven.png)
 
 Inheritance isn't seen in functional code due to the mutable classes that come along with it. Encapsulation, polymorphism and abstraction are still used all the time in functional programming.
 
