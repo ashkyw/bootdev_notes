@@ -61,8 +61,8 @@ Sigma example
 
 ```math
 avg = Σx/N
-```
 
+```
 
 1. Σ is just the Greek letter Sigma, and it represents "the sum of a collection".
 2. x is the collection of numbers we're averaging.
