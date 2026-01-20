@@ -95,7 +95,7 @@ def get_median_font_size(font_sizes):
     return sorted(font_sizes)[(len(font_sizes) - 1) // 2]
 ```
 
-Debugging Functional Programming:
+# Debugging Functional Programming:
 
 It's nearly impossible, even for tenured senior developers, to write perfect code the first time. That's why debugging is such an important skill. Sometimes you have these "elegant" one-liners that are tricky to debug:
 
@@ -128,3 +128,83 @@ You'll encounter developers who love functional programming and others who love 
 Inheritance isn't seen in functional code due to the mutable classes that come along with it. Encapsulation, polymorphism and abstraction are still used all the time in functional programming.
 
 When working in a language that supports ideas from both FP and OOP (like Python, JavaScript, or Go) the best developers are the ones who can use the best ideas from both paradigms effectively and appropriately.
+
+# Statements vs. Expressions
+
+Studying functional programming is really about returning to the most basic aspects of programming and looking at them in a new way. Statements and expressions are a great example of that.
+
+# Statements
+
+"Statements" are actions to be carried out. For example:
+
+    "Set n to 7"
+    "Define a function named greet"
+    "If x > 10, print a greeting to Alice"
+
+In Python, such statements look like this:
+```py
+n = 7  # Variable assignment statement
+
+def greet(name):  # Function definition statement
+    return f"Hello, {name}!"
+
+if x > 10:  # `if` statement
+    print(greet("Alice"))
+
+for i in range(n):  # `for` loop statement
+    print(i)
+```
+Every complete instruction is a statement.
+
+# Expressions
+
+Expressions are a subset of statements that produce values. Evaluating an expression results in a value that can be used in whatever way is needed. It can be assigned to a variable, returned from a function, etc.
+
+```py
+result = 2 + 2  # Arithmetic expression
+length = len("hello")  # Function call expression
+total_cost = len(items) * cost  # Multiple expressions combined into one
+```
+
+One thing that may surprise you is that, in most languages (including Python), every function call is an expression. When you call a function, it returns a value – whether or not you realize it or do anything with that value. Even if a Python function doesn't have a `return` statement, it still implicitly returns `None`. You can test this by assigning a `print` call to a variable:
+
+```py
+x = print("hello")  # hello
+print(x)            # None
+```
+
+Sure enough: `print` – the first function that we all learn – technically returns a value.
+Expressions Over Statements
+
+Because expressions always produce values, they're reusable and declarative. You can compose expressions and nest them within each other – but you can't always do that with other kinds of statements. Functional programming encourages the use of expressions over statements where possible, because expressions tend to minimize side effects, and make the code easier to reason about. For example, a function that returns a sum is an expression:
+
+```py
+total = sum([1, 2, 3, 4])
+```
+
+We can get the same result with a loop, but that involves a series of statements:
+
+```py
+total = 0
+for n in [1, 2, 3, 4]:
+    total += n
+```
+
+Again, it's simple to combine expressions:
+
+```py
+print(sum([1, 2, 3, 4]) * 2)  # 20
+```
+
+But we can't really do the same thing with our series of statements:
+
+```py
+# This doesn't work!
+print((
+total = 0
+for n in [1, 2, 3, 4]:
+    total += n
+) * 4)
+```
+
+Expressions tend to be concise and logically pure. Some languages that are designed for functional programming, such as Haskell, actually treat everything as an expression. In these languages, even control flow constructs like if and case are expressions that return values.
