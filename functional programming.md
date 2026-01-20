@@ -67,3 +67,20 @@ avg = Σx/N
 2. x is the collection of numbers we're averaging.
 3. N is the number of elements in the collection.
 4. avg is equal to the sum of all the numbers in collection "x" divided by the number of elements in collection "x".
+
+So, the equation really just says that avg is the average of all the numbers in collection "x". This math equation is a declarative way of writing "calculate the average of a list of numbers". Here's some imperative Python code that does the same thing:
+
+```py
+def get_average(nums):
+    total = 0
+    for num in nums:
+        total += num
+    return total / len(nums)
+```
+
+However, with functional programming, we would write code that's a bit more declarative:
+
+```py
+def get_average(nums):
+    return sum(nums) / len(nums)
+```
