@@ -208,3 +208,48 @@ for n in [1, 2, 3, 4]:
 ```
 
 Expressions tend to be concise and logically pure. Some languages that are designed for functional programming, such as Haskell, actually treat everything as an expression. In these languages, even control flow constructs like if and case are expressions that return values.
+
+# Ternary Expressions
+
+[Ternaries](https://book.pythontips.com/en/latest/ternary_operators.html) are a great way to reduce a series of statements, like an `if/else` block, to a single expression.
+
+When you first learning how to use conditional logic in Python, it typically looks like this:
+
+```py
+result = 0
+if number % 2 == 0:
+    result = number / 2
+else:
+    result = (number * 3) + 1
+```
+
+This sets `result` to a dummy value `0` (`None` would also work), then overwrites it with its "real" value based on the condition.
+
+A ternary lets us do all that in one expression:
+
+```py
+result = number / 2 if number % 2 == 0 else (number * 3) + 1
+```
+
+Note that we also avoided mutating the `result` variable. Ternary expressions are good for maintaining immutability.
+
+The syntax for a ternary in Python is:
+```py
+value_a if condition else value_b
+```
+This qualifies as an expression because it's a single statement that evaluates to a value – one of two values, depending on the condition.
+
+# When to Use Ternaries
+
+Ternary expressions are cool, but don't overdo it. If you're dealing with complex conditional logic, it's often easier to work with full `if/else` blocks than to try to nest ternaries inside each other.
+
+```py
+msg = (
+    "Access granted"
+    if (
+        user.is_authenticated
+        and (user.role == "admin" or (user.role == "editor" and not user.suspended))
+    )
+    else ("Access limited" if user.is_authenticated else "Access denied")
+)
+```
