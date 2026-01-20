@@ -93,3 +93,27 @@ def get_median_font_size(font_sizes):
         return None
     return sorted(font_sizes)[(len(font_sizes) - 1) // 2]
 ```
+
+Debugging Functional Programming:
+
+It's nearly impossible, even for tenured senior developers, to write perfect code the first time. That's why debugging is such an important skill. Sometimes you have these "elegant" one-liners that are tricky to debug:
+
+```py
+def get_player_position(position, velocity, friction, gravity):
+    return calc_gravity(calc_friction(calc_move(position, velocity), friction), gravity)
+```
+
+If the output of get_player_position is incorrect, it's hard to know what's going on. So we need to break it up! Then you can inspect the moved, slowed, and final variables more easily:
+
+```py
+def get_player_position(position, velocity, friction, gravity):
+    moved = calc_move(position, velocity)
+    slowed = calc_friction(moved, friction)
+    final = calc_gravity(slowed, gravity)
+    print("Given:")
+    print(f"position: {position}, velocity: {velocity}, friction: {friction}, gravity: {gravity}")
+    print("Results:")
+    print(f"moved: {moved}, slowed: {slowed}, final: {final}")
+    return final
+```
+Once you've run it, found the issue, solved it, then you can remove print statements.
