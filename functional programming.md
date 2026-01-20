@@ -15,7 +15,7 @@ Example of functional code:
 return clean_windows(add_gas(create_car()))
 ```
 
-Tuples are immuatble. Example of creating a new tuple and adding that to existing tuple:
+Tuples are immutable. Example of creating a new tuple and adding that to existing tuple:
 
 ```py
 ages = (16, 21, 30)
