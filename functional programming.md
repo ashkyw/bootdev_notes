@@ -61,10 +61,10 @@ avg = Σx/N
 
 ```
 
-1. Σ is just the Greek letter Sigma, and it represents "the sum of a collection".
-2. x is the collection of numbers we're averaging.
-3. N is the number of elements in the collection.
-4. avg is equal to the sum of all the numbers in collection "x" divided by the number of elements in collection "x".
+1. `Σ` is just the Greek letter Sigma, and it represents "the sum of a collection".
+2. `x` is the collection of numbers we're averaging.
+3. `N` is the number of elements in the collection.
+4. `avg` is equal to the sum of all the numbers in collection "x" divided by the number of elements in collection "x".
 
 So, the equation really just says that avg is the average of all the numbers in collection "x". This math equation is a declarative way of writing "calculate the average of a list of numbers". Here's some imperative Python code that does the same thing:
 
