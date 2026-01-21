@@ -3,9 +3,7 @@ Example of imperative code:
 ```py
 car = create_car()
 car.add_gas(10)
-car.clean_windows()button {
-  color: red;
-}
+car.clean_windows()
 ```
 
 Example of functional code:
