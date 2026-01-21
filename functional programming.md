@@ -356,3 +356,39 @@ squares = my_map(square, [1, 2, 3, 4, 5])
 print(squares)
 # [1, 4, 9, 16, 25]
 ```
+
+# Map
+
+"Map", "filter", and "reduce" are three commonly used [higher-order functions](https://en.wikipedia.org/wiki/Higher-order_function) in functional programming.
+
+In Python, the built-in [map](https://docs.python.org/3/library/functions.html#map) function takes a function and an [iterable](https://docs.python.org/3/glossary.html#term-iterable) (in this case a list) as inputs. It returns an iterator that applies the function to every item, yielding the results.
+
+[!Alt text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/map.png)
+
+With map, we can operate on lists without using loops and nasty stateful variables. For example, given this code:
+```py
+def square(x):
+    return x * x
+
+nums = [1, 2, 3, 4, 5]
+squared_nums = []
+for num in nums:
+    num_squared = square(num)
+    squared_nums.append(num_squared)
+
+print(squared_nums)
+# [1, 4, 9, 16, 25]
+```
+We could use map instead, like this:
+```py
+def square(x):
+    return x * x
+
+nums = [1, 2, 3, 4, 5]
+squared_nums = map(square, nums)
+
+print(list(squared_nums))
+# [1, 4, 9, 16, 25]
+```
+
+`map()` returns a "map object", so the `[list()` type constructor](https://docs.python.org/3/library/stdtypes.html#list) is needed to convert it back into a standard list.
