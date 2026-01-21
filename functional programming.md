@@ -390,5 +390,5 @@ squared_nums = map(square, nums)
 print(list(squared_nums))
 # [1, 4, 9, 16, 25]
 ```
-
-`map()` returns a "map object", so the `[list()` type constructor](https://docs.python.org/3/library/stdtypes.html#list) is needed to convert it back into a standard list.
+> [!Note]
+> `map()` returns a "map object", so the [`list()` type constructor](https://docs.python.org/3/library/stdtypes.html#list) is needed to convert it back into a standard list.
