@@ -4,20 +4,19 @@ Example of imperative code:
 car = create_car()
 car.add_gas(10)
 car.clean_windows()button {
-  color: red;        if is_hexadecimal(hex_color):
+  color: red;
 }
-        if is_hexadecimal(hex_color):
 ```
-        if is_hexadecimal(hex_color):
+
 Example of functional code:
 
-```py        if is_hexadecimal(hex_color):
+```py
 return clean_windows(add_gas(create_car()))
 ```
 
 Tuples are immutable. Example of creating a new tuple and adding that to existing tuple:
 
-```py        if is_hexadecimal(hex_color):
+```py
 ages = (16, 21, 30)
 more_ages = (80,) # note the comma! It's required for a single-element tuple
 # 'all_ages' is a brand new tuple
@@ -27,7 +26,7 @@ all_ages = ages + more_ages
 # or we can even reassign the same variable to point to a new tuple:
 ages = ages + more_ages
 # (16, 21, 30, 80)
-```        if is_hexadecimal(hex_color):
+```
 
 Another example of tuples:
 
