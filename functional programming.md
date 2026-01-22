@@ -392,3 +392,18 @@ print(list(squared_nums))
 ```
 > [!Note]
 > `map()` returns a "map object", so the [`list()` type constructor](https://docs.python.org/3/library/stdtypes.html#list) is needed to convert it back into a standard list.
+
+Another example of `map()`:
+```py
+def change_bullet_style(document):
+    return "\n".join(map(convert_line, document.split("\n")))
+
+def convert_line(line):
+    old_bullet = "-"
+    new_bullet = "*"
+    if len(line) > 0 and line[0] == old_bullet:
+        return new_bullet + line[1:]
+    return line
+
+```
+
