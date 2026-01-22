@@ -422,3 +422,10 @@ evens = list(filter(is_even, numbers))
 print(evens)
 # [2, 4, 6]
 ```
+Example of overly complex, shitty one-liners in Python:
+```py
+def remove_invalid_lines(document):
+    return "\n".join(
+        filter(lambda line: not line.startswith("-"), document.split("\n"))
+    )
+```
