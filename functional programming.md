@@ -413,16 +413,8 @@ The built-in [filter](https://docs.python.org/3/library/functions.html#filter) f
 
 In Python:
 ```py
-def is_even(x):In Python:
 
 def is_even(x):
-    return x % 2 == 0
-
-numbers = [1, 2, 3, 4, 5, 6]
-evens = list(filter(is_even, numbers))
-print(evens)
-# [2, 4, 6]
-
     return x % 2 == 0
 
 numbers = [1, 2, 3, 4, 5, 6]
