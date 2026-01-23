@@ -363,7 +363,7 @@ print(squares)
 
 In Python, the built-in [map](https://docs.python.org/3/library/functions.html#map) function takes a function and an [iterable](https://docs.python.org/3/glossary.html#term-iterable) (in this case a list) as inputs. It returns an iterator that applies the function to every item, yielding the results.
 
-[!Alt text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/map.png)
+![Alt text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/map.png)
 
 With map, we can operate on lists without using loops and nasty stateful variables. For example, given this code:
 ```py
