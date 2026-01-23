@@ -523,10 +523,20 @@ def restore_documents(originals, backups):
 
 # Pure Functions
 
-If you take nothing else away from this course, <em>please</em> take this: Pure functions <strong>are fantastic.</strong> They have two properties:
+If you take nothing else away from this course, <em>please</em> take this: [Pure functions](https://en.wikipedia.org/wiki/Pure_function) <strong>are fantastic.</strong> They have two properties:
 
 * They always return the same value given the same arguments.
 * Running them causes no side effects
+
+Pure functions have a lot of benefits. Whenever possible, good developers try to use pure functions instead of impure functions. Remember, pure functions:
+
+* Return the same result if given the same arguments. They are [deterministic](https://en.wikipedia.org/wiki/Deterministic_system).
+* Do not change the external state of the program. For example, they do not change any variables outside of their scope.
+* Do not perform any [I/O operations](https://en.wikipedia.org/wiki/Input/output) (like reading from disk, accessing the internet, or writing to the console).
+
+These properties result in pure functions being easier to test, debug, and think about.
+
+Refer to the following examples and answer the questions.
 
 In short: <strong>pure functions don't do anything with anything that exists outside of their scope.</strong>
 
