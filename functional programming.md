@@ -525,7 +525,7 @@ def restore_documents(originals, backups):
 
 If you take nothing else away from this course, please take this: Pure functions are fantastic. They have two properties:
 
-    They always return the same value given the same arguments.
-    Running them causes no side effects
+* They always return the same value given the same arguments.
+* Running them causes no side effects
 
 In short: <strong>pure functions don't do anything with anything that exists outside of their scope.</strong>
