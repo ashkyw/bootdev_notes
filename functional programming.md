@@ -37,7 +37,7 @@ def add_prefix(document, documents):
 
 ```
 
-The goal of functional programming is to move close and close to a declarative style. 
+The goal of functional programming is to move closer and closer to a declarative style. 
 In CSS they simply declare a button is red:
 
 ```css
