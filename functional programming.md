@@ -134,9 +134,9 @@ Studying functional programming is really about returning to the most basic aspe
 
 "Statements" are actions to be carried out. For example:
 
-    "Set n to 7"
-    "Define a function named greet"
-    "If x > 10, print a greeting to Alice"
+* "Set n to 7"
+* "Define a function named greet"
+* "If x > 10, print a greeting to Alice"
 
 In Python, such statements look like this:
 ```py
@@ -325,8 +325,8 @@ def file_type_getter(file_extension_tuples):
 
 A programming language "supports first-class functions" when functions are treated like any other variable. That means functions can be passed as arguments to other functions, can be returned by other functions, and can be assigned to variables.
 
-    First-class function: A function that is treated like any other value
-    Higher-order function: A function that accepts another function as an argument or returns a function
+* First-class function: A function that is treated like any other value
+* Higher-order function: A function that accepts another function as an argument or returns a function
 
 Python supports first-class and higher-order functions.
 
