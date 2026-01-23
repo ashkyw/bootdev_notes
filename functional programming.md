@@ -509,3 +509,14 @@ c = list(zip(a, b))
 print(c)
 # [(1, 4), (2, 5), (3, 6)]
 ```
+One more one-liner example of functional programming combining a lot of things:
+
+```py
+def restore_documents(originals, backups):
+    return set(
+        filter(
+            lambda doc: not doc.isdigit(),
+            map(lambda doc: doc.upper(), originals + backups),
+        )
+    )
+```
