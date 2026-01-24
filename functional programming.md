@@ -660,3 +660,63 @@ One of the biggest differences between good and great developers is how often th
 
 There's nothing worse than trying to debug a program where the order of function calls needs to be juuuuust right because they all read and modify the same global variable.
 
+# Input and Output
+
+![Alt text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/Cartoon.png)The term "i/o" stands for input/output. In the context of writing programs, i/o refers to anything in our code that interacts with the "outside world". "Outside world" just means anything that's not stored in our application's memory (like variables).
+
+# Examples of I/O
+
+* Reading from or writing to a file on the hard drive
+* Accessing the internet
+* Reading from or writing to a database
+* Even simply printing to the console is considered i/o!
+
+All i/o is a form of "side effect".
+
+# Should I I/O?
+
+A program that doesn't do <em>any</em> i/o is pretty useless. What's the point of computing something if you can't see the results?
+
+![Alt text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/spongebob.png)
+
+In functional programming, i/o is viewed as <em>dirty</em> but <em>necessary</em>. We know we can't <em>eliminate</em> i/o from our code, so we just <em>contain</em> it as much as possible. There should be a clear place in your project that does nasty i/o stuff, and the rest of your code can be pure.
+
+For example, a Python program might:
+
+1. Read a file from the hard drive as the program starts
+2. Run a bunch of pure functions to analyze the data
+3. Write the results of the analysis to a file on the hard drive at the end
+
+![Alt text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/functional_i-o_tree.png)
+
+# No-Op
+
+A [no-op](https://en.wikipedia.org/wiki/NOP_(code)) is an operation that does... nothing.
+
+If a function doesn't return anything, it's probably impure. If it doesn't return anything, the only reason for it to exist is to perform a side effect.
+
+# Example No-Op
+
+This function performs a useless computation because it doesn't return anything or perform a side effect. It's a no-op.
+```py
+def square(x):
+    x * x
+```
+# Example Side Effect
+
+This function performs a side effect. It changes the value of the y variable that is outside of its scope. It's impure.
+```py
+y = 5
+def add_to_y(x):
+    global y
+    y += x
+
+add_to_y(3)
+# y = 8
+```
+[!Note]
+> The `global` keyword just tells Python to allow modification of the outer-scoped `y` variable.
+
+# print()
+
+Even the `print` function (technically) has an impure side effect! It doesn't return anything, but it does print text to the console, which is a form of I/O.
