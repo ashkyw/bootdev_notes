@@ -523,7 +523,7 @@ def restore_documents(originals, backups):
 
 # Pure Functions
 
-If you take nothing else away from this course, <em>please</em> take this: [Pure functions](https://en.wikipedia.org/wiki/Pure_function) <strong>are fantastic.</strong> They have two properties:
+If you take nothing else away from this course, *please* take this: [Pure functions](https://en.wikipedia.org/wiki/Pure_function) **are fantastic.** They have two properties:
 
 * They always return the same value given the same arguments.
 * Running them causes no side effects
@@ -538,7 +538,7 @@ These properties result in pure functions being easier to test, debug, and think
 
 Refer to the following examples and answer the questions.
 
-In short: <strong>pure functions don't do anything with anything that exists outside of their scope.</strong>
+In short: **pure functions don't do anything with anything that exists outside of their scope.**
 
 # Example of a Pure Function
 ```py
@@ -588,18 +588,18 @@ def convert_file_format(filename, target_format):
 
 When you pass a value into a function as an argument, one of two things can happen:
 
-* It's passed by <strong>reference</strong>: The function has access to the original value and can change it.
-* It's passed by <strong>value</strong>: The function only has access to a copy. Changes to the copy within the function don't affect the original.
+* It's passed by **reference**: The function has access to the original value and can change it.
+* It's passed by **value**: The function only has access to a copy. Changes to the copy within the function don't affect the original.
 
-<em>There is a bit more nuance, but this explanation mostly works.</em>
+*There is a bit more nuance, but this explanation mostly works.*
 
-These types are passed by <strong>reference</strong>:
+These types are passed by **reference**:
 
 * Lists
 * Dictionaries
 * Sets
 
-These types are passed by <strong>value</strong>:
+These types are passed by **value**:
 
 * Integers
 * Floats
@@ -638,7 +638,7 @@ attempt_to_modify(outer_num)
 
 Because certain types in Python are passed by reference, we can mutate values that we didn't intend to. This is a form of function impurity.
 
-Remember, a pure function should have <em>no side effects.</em> It shouldn't modify anything outside of its scope, <em>including its inputs.</em> It should return new copies of inputs instead of changing them.
+Remember, a pure function should have *no side effects.* It shouldn't modify anything outside of its scope, *including its inputs.* It should return new copies of inputs instead of changing them.
 
 # Pure Function
 ```py
@@ -675,11 +675,11 @@ All i/o is a form of "side effect".
 
 # Should I I/O?
 
-A program that doesn't do <em>any</em> i/o is pretty useless. What's the point of computing something if you can't see the results?
+A program that doesn't do *any* i/o is pretty useless. What's the point of computing something if you can't see the results?
 
 ![Alt text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/spongebob.png)
 
-In functional programming, i/o is viewed as <em>dirty</em> but <em>necessary</em>. We know we can't <em>eliminate</em> i/o from our code, so we just <em>contain</em> it as much as possible. There should be a clear place in your project that does nasty i/o stuff, and the rest of your code can be pure.
+In functional programming, i/o is viewed as *dirty* but *necessary*. We know we can't *eliminate* i/o from our code, so we just *contain* it as much as possible. There should be a clear place in your project that does nasty i/o stuff, and the rest of your code can be pure.
 
 For example, a Python program might:
 
@@ -720,3 +720,34 @@ add_to_y(3)
 # print()
 
 Even the `print` function (technically) has an impure side effect! It doesn't return anything, but it does print text to the console, which is a form of I/O.
+
+# Memoization
+
+At its core, [memoization](https://en.wikipedia.org/wiki/Memoization) is just [caching](https://en.wikipedia.org/wiki/Cache_(computing)) (storing a copy of) the result of a computation so that we don't have to compute it again in the future.
+
+For example, take this simple function:
+```py
+def add(x, y):
+    return x + y
+```
+A call to `add(5, 7)` will *always* evaluate to `12`. So, if you think about it, once we know that `add(5, 7)` can be replaced with `12`, we can just store the value `12` somewhere in memory so that we don't have to do the addition operation again in the future. Then, if we need to `add(5, 7)` again, we can just look up the value `12` instead of doing a (potentially expensive) CPU operation.
+
+The slower and more complex the function, the more memoization can help speed things up.
+
+> [!Note]
+> It's pronounced "memOization", not "memORization". This confused me for quite a while in college, I thought my professor just didn't speak goodly...
+
+# Referential Transparency
+
+Pure functions are always [referentially transparent](https://www.baeldung.com/cs/referential-transparency#referential-transparency).
+
+"Referential transparency" is a fancy way of saying that a function call can be replaced by its would-be return value because it's the same every time. *Referentially transparent functions can be safely memoized.* For example `add(2, 3)` can be smartly replaced by the value `5`.
+
+The great thing about pure functions is that they can always be safely memoized. Impure functions can't be because they might do something in addition to returning a static value, or they might return different values given the same arguments.
+
+# Should I Always Memoize?
+
+No! Memoization is a *tradeoff* between memory and speed. If your function is fast to execute, it's probably not worth memoizing, because the amount of RAM (memory) your program will need to store the results will go way up.
+
+It's also a bunch of extra code to write, so you should only do it if you have a good reason to.
+
