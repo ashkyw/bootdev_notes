@@ -714,7 +714,7 @@ def add_to_y(x):
 add_to_y(3)
 # y = 8
 ```
-> [!]
+> [!Note]
 > The `global` keyword just tells Python to allow modification of the outer-scoped `y` variable.
 
 # print()
