@@ -1,5 +1,5 @@
 Basic example of using polymorphism to check if boxes are overlapping based on cartesian coords.
-
+```py
 class Rectangle:
     def overlaps(self, rect):
         if (
@@ -39,10 +39,11 @@ class Rectangle:
 
     def __repr__(self):
         return f"Rectangle({self.__x1}, {self.__y1}, {self.__x2}, {self.__y2})"
-
-Explanation of Class code execution order:
+```
+Explanation of `class` code execution order:
 
 There are two levels of “order” to think about:
+
 1. Module level (top to bottom)
 
 Python does run the file itself top to bottom:
@@ -52,43 +53,44 @@ Python does run the file itself top to bottom:
     Then it defines Rectangle
     Then any code that runs at the bottom (like tests)
 
-But “define a class” means: Python reads the whole class Rectangle: block, executes its body to build the class object, and only then binds the name Rectangle to that finished class.
+But “define a `class`” means: Python reads the whole `class` Rectangle: block, executes its body to build the `class` object, and only then binds the name Rectangle to that finished `class`.
 
-Inside that class body, order still matters, but in a different way.
-2. Inside the class body
+Inside that `class` body, order still matters, but in a different way.
+
+2. Inside the `class` body
 
 When Python sees:
-
+```py
 class Rectangle:
     def overlaps(self, rect):
         ...
     def __init__(self, x1, y1, x2, y2):
         ...
-
+```
 it:
 
     Executes the body top to bottom.
-    Each def just creates a function object and assigns it as an attribute on the class being built.
+    Each `def` just creates a function object and assigns it as an attribute on the `class` being built.
 
-So after the class statement is done, you end up with a Rectangle that has both:
+So after the `class` statement is done, you end up with a Rectangle that has both:
 
-    a Rectangle.overlaps method
-    a Rectangle.__init__ method
+    a `Rectangle.overlaps` method
+    a `Rectangle.__init__` method
 
 The order of those two defs doesn’t matter for calling them later. When you write:
-
+```py
 r = Rectangle(1, 2, 3, 4)
+```
+Python looks up `Rectangle.__init__` on the finished `class`; it doesn’t care that overlaps was listed first.
 
-Python looks up Rectangle.__init__ on the finished class; it doesn’t care that overlaps was listed first.
-
-The only time order inside the class would really matter is if you tried to do something like:
-
+The only time order inside the `class` would really matter is if you tried to do something like:
+```py
 class Rectangle:
     print(__init__)  # This would fail if __init__ isn't defined yet
     def __init__(...):
         ...
-
-But normal methods calling each other or being called from outside are fine, regardless of their order in the class.
+```
+But normal methods calling each other or being called from outside are fine, regardless of their order in the `class`.
 How this ties back to your concern
 
     When you write self.__hit_box = Rectangle(...) in Dragon.__init__, that happens only when a Dragon object is created at runtime, not when Python is first reading the file.
@@ -100,7 +102,7 @@ So:
     But within class Rectangle, the order of def __init__ vs def overlaps doesn’t affect your ability to call them later. They both exist on the class once the class statement finishes.
 
 Example of polymorphism with double inheritance:
-
+```py
 class Unit:
     def __init__(self, name, pos_x, pos_y):
         self.name = name
@@ -168,7 +170,7 @@ class Rectangle:
         if self.__y1 < self.__y2:
             return self.__y1
         return self.__y2
-
+```
 Explanation of how to utilize classes in bigger projects with multiple files:
 
 In real projects, it’s very common to:
@@ -177,7 +179,7 @@ In real projects, it’s very common to:
     Then import them into the files that use them.
 
 For example, you might have:
-
+```py
 # rectangle.py
 class Rectangle:
     def __init__(self, x1, y1, x2, y2):
@@ -199,8 +201,8 @@ from units import Dragon
 def main():
     d = Dragon("Smaug", 0, 0, 10, 10, 5)
     ...
-
-Same import mechanics as with functions—modules are just files, and you import names (classes, functions, variables) from them.
+```
+Same import mechanics as with functions—modules are just files, and you import names (`classes`, `functions`, `variables`) from them.
 
 Typical guidelines:
 
@@ -211,8 +213,8 @@ Typical guidelines:
 
 As your projects grow past “single small script”, splitting code into modules like this is the normal next step.
 
-<hit_by_fire example>
-
+hit_by_fire example
+```py
 class Human:
     def hit_by_fire(self):
         self.health -= 5
@@ -223,10 +225,12 @@ class Archer:
         self.health -= 10
         return self.health
 
+```
 What Is a Function Signature?
 
 A function signature (or method signature) includes the name, inputs, and outputs of a function or method. For example, hit_by_fire in the Human and Archer classes have identical signatures.
 
+```py
 class Human:
     def hit_by_fire(self):
         self.health -= 5
@@ -236,9 +240,9 @@ class Archer:
     def hit_by_fire(self):
         self.health -= 10
         return self.health
-
+```
 Both methods have the same name, take no additional inputs, and return integers. If any of those things were different, they would have different function signatures. Here are methods with different signatures:
-
+```py
 class Human:
     def hit_by_fire(self):
         self.health -= 5
@@ -260,9 +264,9 @@ p1 = Point(4, 5)
 p2 = Point(2, 3)
 p3 = p1 + p2
 # TypeError: unsupported operand type(s) for +: 'Point' and 'Point'
-
-<class point with __add__>
-
+```
+class point with __add__
+```py
 class Point:
     def __init__(self, x, y):
         self.x = x
@@ -277,9 +281,9 @@ p1 = Point(4, 5)
 p2 = Point(2, 3)
 p3 = p1 + p2
 # p3 is (6, 8)
-
-<CH:6 - 9 Solution>
-
+```
+CH:6 - 9 Solution
+```py
 class Sword:
     def __init__(self, sword_type):
         self.sword_type = sword_type
@@ -290,9 +294,9 @@ class Sword:
         if self.sword_type == "iron" and other.sword_type == "iron":
             return Sword("steel")
         raise Exception("cannot craft")
-
+```
 Dunder methods to overload other operators
-
+```py
 Operation 	        Operator 	Method
 Addition     	        + 	    __add__
 Subtraction 	        - 	    __sub__
@@ -307,9 +311,9 @@ Bitwise AND 	        & 	    __and__
 Bitwise OR         	    | 	    __or__
 Bitwise XOR 	        ^ 	    __xor__
 Bitwise NOT 	        ~ 	    __invert__
-
-<print example>
-
+```
+# print example
+```py
 class Point:
     def __init__(self, x, y):
         self.x = x
@@ -318,11 +322,11 @@ class Point:
 p1 = Point(4, 5)
 print(p1)
 # prints "<Point object at 0xa0acf8>"
-
+```
 That's not super useful! We probably want to see the fields!
 
-Let's teach our Point class to print itself. The __str__ method (short for "string") lets us do just that. It takes no inputs but returns a string that will be printed to the console when someone passes an instance of the class to Python's print() function.
-
+Let's teach our Point class to print itself. The `__str__` method (short for "string") lets us do just that. It takes no inputs but returns a string that will be printed to the console when someone passes an instance of the class to Python's print() function.
+```py
 class Point:
     def __init__(self, x, y):
         self.x = x
@@ -371,9 +375,10 @@ class Card:
 
 SUITS = ["Clubs", "Diamonds", "Hearts", "Spades"]
 RANKS = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
-
-<extended overloading with other classes inheritance>
-
+```
+extended overloading with other classes inheritance
+    
+```py
 class Card:
     def __init__(self, rank, suit):
         self.rank = rank
@@ -428,4 +433,4 @@ class LowCardRound(Round):
             return 1
         if self.card1 > self.card2:
             return 2
-
+```
