@@ -53,7 +53,7 @@ Python does run the file itself top to bottom:
     Then it defines Rectangle
     Then any code that runs at the bottom (like tests)
 
-But “define a `class`” means: Python reads the whole `class` Rectangle: block, executes its body to build the `class` object, and only then binds the name Rectangle to that finished `class`.
+But “define a `class`” means: Python reads the whole `class Rectangle`: block, executes its body to build the `class` object, and only then binds the name Rectangle to that finished `class`.
 
 Inside that `class` body, order still matters, but in a different way.
 
