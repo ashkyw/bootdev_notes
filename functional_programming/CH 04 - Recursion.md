@@ -8,7 +8,7 @@ is notoriously hard to understand. Ultimately, it's just a function that calls i
 ```py
 def countdown(n):
   print(n)
-  countdown(N-1)
+  countdown(n-1)
 ```
 
 Would `print` `n` then calls itself and `print`s `n`-1
