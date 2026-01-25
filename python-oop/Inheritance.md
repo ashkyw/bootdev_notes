@@ -113,7 +113,8 @@ TRIPLE_SHOT_COST = 3 as a constant – best style if you want to practice good h
 
 So in this case:
 
-> [!Note] “Triple shot always uses 3 arrows” → conceptually stable.
+> [!Note]
+> “Triple shot always uses 3 arrows” → conceptually stable.
 > It belongs to the idea of a Crossbowman’s ability, not to each specific instance’s state.
 
 That makes a class-level constant a great fit:
@@ -133,33 +134,36 @@ DEFAULT_ARROW_COUNT = 10
 ```
 Use a constant (e.g. MAX_HP = 100) when a value is:
 
+> [!Note]
 > Magic-looking
 > If a number/string appears and isn’t self-explanatory (3, 0.07, "us-east-1"), consider a named constant.
-> Example: TAX_RATE = 0.07 is clearer than price * 0.07.
+> Example:
+```py
+    TAX_RATE = 0.07 is clearer than price * 0.07.
+```
+* Used in multiple places:
+  If the same value appears in more than one spot, make it a constant so you can update it in one place and avoid inconsistencies.
 
-    Used in multiple places
-        If the same value appears in more than one spot, make it a constant so you can update it in one place and avoid inconsistencies.
+* Represents a domain concept
+  If the value has meaning in your game/app (like `MAX_INVENTORY_SIZE`, `TRIPLE_SHOT_COST`, `STARTING_GOLD`), it deserves a name.
 
-    Represents a domain concept
-        If the value has meaning in your game/app (like MAX_INVENTORY_SIZE, TRIPLE_SHOT_COST, STARTING_GOLD), it deserves a name.
+* Intended to be configuration, not logic
+  Values that might change between environments or game balance tweaks should be constants: API URLs, default timeouts, difficulty tuning numbers.
 
-    Intended to be configuration, not logic
-        Values that might change between environments or game balance tweaks should be constants: API URLs, default timeouts, difficulty tuning numbers.
+* Should never change at runtime
+  If the value is fixed for the whole run of the program, a constant signals “do not mutate this.”
 
-    Should never change at runtime
-        If the value is fixed for the whole run of the program, a constant signals “do not mutate this.”
-
-    Needed across multiple modules
-        Shared, stable values (like DEFAULT_PORT, SECONDS_PER_MINUTE) are good constant candidates.
+* Needed across multiple modules
+  Shared, stable values (like `DEFAULT_PORT`, `SECONDS_PER_MINUTE`) are good constant candidates.
 
 On the flip side, avoid constants when:
 
-    The value is truly one-off and obvious (range(3) in a tiny local loop, etc.).
-    The value is derived from other values and better expressed as an expression than a stored constant.
-    The value is meant to change frequently at runtime (that’s state, not a constant).
+* The value is truly one-off and obvious (range(3) in a tiny local loop, etc.).
+* The value is derived from other values and better expressed as an expression than a stored constant.
+* The value is meant to change frequently at runtime (that’s state, not a constant).
 
 Inheritance in tree form. Archer and Wizard inherited from Hero:
-
+```py
 class Hero:
     def __init__(self, name, health):
         self.__name = name
@@ -200,9 +204,9 @@ class Wizard(Hero):
 
         self.__mana -= 25
         target.take_damage(self.WIZARD_SPELL_DAMAGE)
-
+```
 Another example, with cartesian grid maff!:
-
+```py
 class Unit:
     def __init__(self, name, pos_x, pos_y):
         self.name = name
@@ -231,9 +235,9 @@ class Dragon(Unit):
                 units_hit.append(unit_name)
 
         return units_hit
-
+```
 Dragon fight! With list modification and efficent method:
-
+```py
 def main():
     dragons = [
         Dragon("Green Dragon", 0, 0, 1),
@@ -291,9 +295,9 @@ class Dragon(Unit):
 
 
 main()
-
+```
 More OOP with double inheritance and setting super to a variable:
-
+```py
 class Siege:
     def __init__(self, max_speed, efficiency):
         self.max_speed = max_speed
@@ -304,7 +308,6 @@ class Siege:
 
     def get_cargo_volume(self):
         pass
-
 
 class BatteringRam(Siege):
     def __init__(
@@ -325,7 +328,6 @@ class BatteringRam(Siege):
     def get_cargo_volume(self):
         return self.bed_area * 2.0
 
-
 class Catapult(Siege):
     def __init__(self, max_speed, efficiency, cargo_volume):
         super().__init__(max_speed, efficiency)
@@ -333,45 +335,44 @@ class Catapult(Siege):
 
     def get_cargo_volume(self):
         return self.cargo_volume
-
-
+```
 notes on inheritance from Asteroids creation:
 
-
-
+```py
 class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
-
-So Asteroid.__init__ doesn’t set self.x/self.y directly; it delegates that job to CircleShape.__init__.
+```
+So `Asteroid.__init__` doesn’t set `self.x`/`self.y` directly; it delegates that job to `CircleShape.__init__`.
 
 Think of it like this:
+```py
 
-    CircleShape.__init__(self, x, y, radius) probably does something like:
+CircleShape.__init__(self, x, y, radius) probably does something like:
+self.position = pygame.Vector2(x, y)
+self.radius = radius
+self.velocity = pygame.Vector2()
+```
 
-    self.position = pygame.Vector2(x, y)
-    self.radius = radius
-    self.velocity = pygame.Vector2()
-
-    When you call super().__init__(x, y, radius) inside Asteroid.__init__, Python runs CircleShape.__init__ with self being the Asteroid instance.
+When you call `super().__init__(x, y, radius)` inside `Asteroid.__init__`, Python runs `CircleShape.__init__` with `self` being the Asteroid instance.
 
 So:
 
-    super().__init__(...) runs the parent’s constructor.
-    That parent constructor sets attributes on the same self (the asteroid object).
-    After that, your asteroid object has all those attributes: self.position, self.radius, self.velocity, etc.
-    Because the attributes live on self, you just use self.position, self.radius in your methods. You do not need super().position or super().radius.
+`super().__init__(...)` runs the parent’s constructor.
+That parent constructor sets attributes on the same `self` (the asteroid object).
+After that, your asteroid object has all those attributes: `self.position`, `self.radius`, `self.velocity`, etc.
+Because the attributes live on `self`, you just use `self.position`, `self.radius` in your methods. You do not need `super().position` or `super().radius`.
 
 Key idea:
 
-    super() is for calling parent methods (like __init__), not for reading parent attributes.
-    Once the parent method has run, all attributes it created are just normal attributes on self.
+`super()` is for calling parent methods (like `__init__`), not for reading parent attributes.
+Once the parent method has run, all attributes it created are just normal attributes on self.
 
 So to your wording:
 
-    because it has been built with the CircleShape class initially, I can simply use self.x, self.y and self.radius without redefining it?
+because it has been built with the CircleShape class initially, I can simply use self.x, self.y and self.radius without redefining it?
 
 Almost. More accurately:
 
-    Because CircleShape.__init__ ran (via super().__init__), whatever attributes it assigned to self are now available directly as self.something in Asteroid.
-    If CircleShape used self.position instead of self.x/self.y, then you should use self.position, not self.x/self.y.
+Because `CircleShape.__init__` ran (via `super().__init__`), whatever attributes it assigned to `self` are now available directly as `self.something` in Asteroid.
+If `CircleShape` used `self.position` instead of `self.x`/`self.y`, then you should use `self.position`, not `self.x`/`self.y`.
