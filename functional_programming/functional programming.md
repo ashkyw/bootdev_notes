@@ -1,16 +1,26 @@
-Example of imperative code:
+# Functional Programming:
 
+Functional Programming is a Style or Paradigm where we compse functions instead of mutating state (updating the values of variables)
+Functional programming is about declaring **what** you want to happen, rather than *how* you want it to happen.
+
+Functional example:
+```py
+return clean_windows(add_gas(create_car()))
+```
+
+Imperative programming (or procedural) declares both the **what** and the *how*.
+
+Imperative Example:
 ```py
 car = create_car()
 car.add_gas(10)
 car.clean_windows()
 ```
+In functional programming we never change the value of the `car` variable, we just compose functions that return new values with the `clean_windows` function returning the final result.
 
-Example of functional code:
+# Immutability
 
-```py
-return clean_windows(add_gas(create_car()))
-```
+Functional programming strives to make our data immutable. Immutable data is easier to think about & work with. When several functions have access to the same variable & you're debugging a problem with a mutable variable you have to consider the possibilty that *any* functions that touched it could have changed the value. Where when something is immutable you know it hasn't been changed after it's creation. This makes code much easier to maintain and debug.
 
 Tuples are immutable. Example of creating a new tuple and adding that to existing tuple:
 
@@ -36,6 +46,7 @@ def add_prefix(document, documents):
     return documents
 
 ```
+# Declarative Styling
 
 The goal of functional programming is to move closer and closer to a declarative style. 
 In CSS they simply declare a button is red:
@@ -45,6 +56,8 @@ button {
   color: red;
 }
 ```
+# Imperative Styling
+
 But in python in order to do the same we would need to do a few more steps in order to achieve the same thing:
 
 ```py
@@ -54,11 +67,13 @@ master.geometry("200x100") # set the window size
 button = Button(master, text="Submit", fg="red").pack() # create a button
 master.mainloop() # start the event loop
 ```
-Sigma example
+
+# Da Maff
+
+Functional programming is popular among people with a strong math background since equations are declarative, **not** procedural.
 
 ```math
 avg = Σx/N
-
 ```
 
 1. `Σ` is just the Greek letter Sigma, and it represents "the sum of a collection".
@@ -92,6 +107,22 @@ def get_median_font_size(font_sizes):
     return sorted(font_sizes)[(len(font_sizes) - 1) // 2]
 ```
 
+# Classes vs. Functions
+
+Functions are *not* inferior to `classes`, they are just different.
+
+# When to use classes or functions
+
+Good rule of thumb:
+
+    If you're unsure, default to functions. Classes are good when something will be long lived,       stateful, & would be easier to model with shared behavior & data structure via inheritance.       Often these are the case with video games, simulations & GUIs.
+
+Key differences:
+
+    **Classes** encourage you to think about the world as a hierarchical collection of `objects`.     `Objects` bundle behavior, data, & state together in a way that draws boundaries between          instances of things, like Chess pieces on a board.
+
+    **Functions** encourage you to think about the world as a series of data transformations.         They take data as input & return a transformed output.
+
 # Debugging Functional Programming:
 
 It's nearly impossible, even for tenured senior developers, to write perfect code the first time. That's why debugging is such an important skill. Sometimes you have these "elegant" one-liners that are tricky to debug:
@@ -101,7 +132,7 @@ def get_player_position(position, velocity, friction, gravity):
     return calc_gravity(calc_friction(calc_move(position, velocity), friction), gravity)
 ```
 
-If the output of get_player_position is incorrect, it's hard to know what's going on. So we need to break it up! Then you can inspect the moved, slowed, and final variables more easily:
+If the output of `get_player_position` is incorrect, it's hard to know what's going on. So we need to break it up! Then you can inspect the moved, slowed, and final variables more easily:
 
 ```py
 def get_player_position(position, velocity, friction, gravity):
