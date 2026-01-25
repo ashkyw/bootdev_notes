@@ -1,4 +1,4 @@
-# Inheritance - https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming]
+# [Inheritance](https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming)
 
 first code snippets Example of what code would look like without inheritance, we write the same code twice:
 ```py
