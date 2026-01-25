@@ -1,7 +1,7 @@
-Inheritance - https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming]
+# Inheritance - https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming]
 
 first code snippets Example of what code would look like without inheritance, we write the same code twice:
-
+```py
 class Aircraft:
     def __init__(self, height, speed):
         self.height = height
@@ -21,9 +21,9 @@ class Helicopter:
 
     def rotate(self):
         self.direction += 90
-
+```
 second code snippet example of what code looks like with inheritance, we take the aircraft class and pass it into the helicopter class, then act upon itself.
-
+```py
 class Helicopter(Aircraft):
     def __init__(self, height, speed):
         super().__init__(height, speed)
@@ -31,9 +31,9 @@ class Helicopter(Aircraft):
 
     def rotate(self):
         self.direction += 90
-
+```
 Another example of inheritance:
-
+```py
 class Human:
     def __init__(self, name):
         self.__name = name
@@ -48,8 +48,9 @@ class Archer(Human):
         
     def get_num_arrows(self):
         return self.__num_arrows
+```
 Another example:
-
+```py
 class Human:
     def __init__(self, name):
         self.__name = name
@@ -78,61 +79,62 @@ class Crossbowman(Archer):
         use_arrows = 3
         self.use_arrows(use_arrows)
         return f"{target.get_name()} was shot by 3 crossbow bolts
-
+```
 Explanation on constants and good hygiene:
 
 Where magic numbers really matter is when:
 
-    The same number is used in multiple places, or
-    The meaning isn’t obvious from context.
+* The same number is used in multiple places, or
+* The meaning isn’t obvious from context.
 
 A more “hygienic” version, if you want to be disciplined, would be a named constant at class level:
-
+```py
 class Crossbowman(Archer):
     TRIPLE_SHOT_COST = 3
 
     def triple_shot(self, target):
         self.use_arrows(self.TRIPLE_SHOT_COST)
         return f"{target.get_name()} was shot by 3 crossbow bolts"
-
+```
 Now the “3-ness” has a clear name and is easy to change.
 
 So:
+```py
+self.use_arrows(3) – acceptable and simple here.
+use_arrows = 3 local variable – meh, not harmful, but not adding much clarity.
+TRIPLE_SHOT_COST = 3 as a constant – best style if you want to practice good habits.
+```
 
-    self.use_arrows(3) – acceptable and simple here.
-    use_arrows = 3 local variable – meh, not harmful, but not adding much clarity.
-    TRIPLE_SHOT_COST = 3 as a constant – best style if you want to practice good habits.
-Use a constant when:
-
-    The value has a meaningful concept (not just “3” but “cost of a triple shot”).
-    You don’t expect it to vary per object, only per class/module.
-    It might be used in multiple places, or you want to avoid hunting down the number later.
+> [!Note] Use a constant when:
+> The value has a meaningful concept (not just “3” but “cost of a triple shot”).
+> You don’t expect it to vary per object, only per class/module.
+> It might be used in multiple places, or you want to avoid hunting down the number later.
 
 So in this case:
 
-    “Triple shot always uses 3 arrows” → conceptually stable.
-    It belongs to the idea of a Crossbowman’s ability, not to each specific instance’s state.
+> [!Note] “Triple shot always uses 3 arrows” → conceptually stable.
+> It belongs to the idea of a Crossbowman’s ability, not to each specific instance’s state.
 
 That makes a class-level constant a great fit:
-
+```py
 class Crossbowman(Archer):
     TRIPLE_SHOT_COST = 3  # constant
 
     def triple_shot(self, target):
         self.use_arrows(self.TRIPLE_SHOT_COST)
         return f"{target.get_name()} was shot by 3 crossbow bolts"
-
+```
 In larger programs you’ll see similar patterns:
-
+```py
 MAX_HP = 100
 CRIT_MULTIPLIER = 1.5
 DEFAULT_ARROW_COUNT = 10
-
+```
 Use a constant (e.g. MAX_HP = 100) when a value is:
 
-    Magic-looking
-        If a number/string appears and isn’t self-explanatory (3, 0.07, "us-east-1"), consider a named constant.
-        Example: TAX_RATE = 0.07 is clearer than price * 0.07.
+> Magic-looking
+> If a number/string appears and isn’t self-explanatory (3, 0.07, "us-east-1"), consider a named constant.
+> Example: TAX_RATE = 0.07 is clearer than price * 0.07.
 
     Used in multiple places
         If the same value appears in more than one spot, make it a constant so you can update it in one place and avoid inconsistencies.
