@@ -1,4 +1,4 @@
-# [Inheritance](https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming)
+# [Inheritance](https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming))
 
 first code snippets Example of what code would look like without inheritance, we write the same code twice:
 ```py
@@ -105,7 +105,8 @@ use_arrows = 3 local variable – meh, not harmful, but not adding much clarity.
 TRIPLE_SHOT_COST = 3 as a constant – best style if you want to practice good habits.
 ```
 
-> [!Note] Use a constant when:
+> [!Note]
+> Use a constant when:
 > The value has a meaningful concept (not just “3” but “cost of a triple shot”).
 > You don’t expect it to vary per object, only per class/module.
 > It might be used in multiple places, or you want to avoid hunting down the number later.
