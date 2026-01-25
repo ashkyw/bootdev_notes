@@ -115,13 +115,13 @@ Functions are *not* inferior to `classes`, they are just different.
 
 Good rule of thumb:
 
-    If you're unsure, default to functions. Classes are good when something will be long lived,       stateful, & would be easier to model with shared behavior & data structure via inheritance.       Often these are the case with video games, simulations & GUIs.
+> If you're unsure, default to functions. Classes are good when something will be long lived,     > stateful, & would be easier to model with shared behavior & data structure via inheritance.     > Often these are the case with video games, simulations & GUIs.
 
 Key differences:
 
-    **Classes** encourage you to think about the world as a hierarchical collection of `objects`.     `Objects` bundle behavior, data, & state together in a way that draws boundaries between          instances of things, like Chess pieces on a board.
+> **Classes** encourage you to think about the world as a hierarchical collection of `objects`.   > `Objects` bundle behavior, data, & state together in a way that draws boundaries between        > instances of things, like Chess pieces on a board.
 
-    **Functions** encourage you to think about the world as a series of data transformations.         They take data as input & return a transformed output.
+> **Functions** encourage you to think about the world as a series of data transformations.       > They take data as input & return a transformed output.
 
 # Debugging Functional Programming:
 
