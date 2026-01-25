@@ -63,4 +63,4 @@ So what happens when we get to the "end"? `sum_nums(nums[1:])` is called, but `n
 if len(nums) == 0:
     return 0
 ```
-The "base case" of a recursive function is the part of the function that does not call itself.
+The "base case" of a recursive function is the part of the function that does *not* call itself.
