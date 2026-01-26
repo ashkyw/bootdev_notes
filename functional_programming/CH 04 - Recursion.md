@@ -124,3 +124,18 @@ Key mental model:
 So the mental recipe:
 * “If input is tiny (empty list, empty string, no nodes…) → here is the final answer for that: base case.”
 * “Otherwise → assume the smaller version is already solved, then add my one piece.”
+
+# Recursion Review
+
+Recursion is so *dang useful* with tree-like structures because we don't always know how deep they're nested. Stop and think about how you would write nested loops to traverse a tree of arbitrary depth... it's not easy, is it?
+
+```py
+for item in tree:
+    for nested_item in item:
+        for nested_nested_item in nested_item:
+            for nested_nested_nested_item in nested_nested_item:
+                # ... WHEN DOES IT END???
+```
+I most often use recursion on tree-like problems (file systems, nested dictionaries, etc). If I'm just iterating over a one-dimensional list then a loop (*gasp...*) is typically simpler, even if it's not as "pure" in the academic sense.
+
+*Remember: The rules of functional programming are just philosophies to help you write better code, but it's not always the right tool for the job.* The same goes for any programming paradigm.
