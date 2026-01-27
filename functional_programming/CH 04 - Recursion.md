@@ -144,17 +144,17 @@ I most often use recursion on tree-like problems (file systems, nested dictionar
 # Debugging Recursion Tip:
 
 When you debug recursive stuff a couple of safe habits:
+
+* Always ask: “What does this function return at every level?”
+* Temporarily log both the argument and the return value, e.g.:
+
 ```py
-    Always ask: “What does this function return at every level?”
-
-    Temporarily log both the argument and the return value, e.g.:
-
     print("ENTER", parent_directory, current_filepath)
     ...
     print("EXIT", directory_list)
 ```
 
-### FUCK Recursion:
+# FUCK Recursion:
 
 ```py
 def list_files(parent_directory, current_filepath=""):
