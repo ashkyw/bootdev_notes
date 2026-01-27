@@ -154,7 +154,7 @@ When you debug recursive stuff a couple of safe habits:
     print("EXIT", directory_list)
 ```
 
-### **FUCK** Recursion:
+### FUCK Recursion:
 
 ```py
 def list_files(parent_directory, current_filepath=""):
