@@ -156,7 +156,7 @@ When you debug recursive stuff a couple of safe habits:
 
 ### **FUCK** Recursion:
 
-'''py
+```py
 def list_files(parent_directory, current_filepath=""):
     directory_list = []
 
@@ -168,66 +168,68 @@ def list_files(parent_directory, current_filepath=""):
             directory_list.extend(list_files(parent_directory[key], new_path))
             
     return directory_list
-'''
+```
 
 Further explanation on how the above works.
 
-1. “Why do I not need a base case? Won’t this run forever?”
+**1. “Why do I not need a base case? Won’t this run forever?”**
 
-You do have a base case; it’s just not written as a separate if at the top.
+You do have a base case; it’s just not written as a separate `if` at the top.
 
 Your base case is this branch:
-
+```py
 if parent_directory[key] is None:
     directory_list.append(new_path)
+```
+When `parent_directory[key]` is `None`, that means: “this key is a file, not a directory.”
 
-When parent_directory[key] is None, that means: “this key is a file, not a directory.”
-
-    In that case you do not recurse.
-    You just add the file path and move on to the next key in the for loop.
-    Eventually the loop ends, and the function hits return directory_list.
+* In that case you *do not recurse*.
+* You just add the file path and move on to the next key in the `for` loop.
+* Eventually the loop ends, and the function hits `return directory_list`.
 
 So the recursion only happens in this branch:
-
+```py
 else:
     directory_list.extend(list_files(parent_directory[key], new_path))
+```
+And that branch only runs when `parent_directory[key]` is a **dictionary**, i.e., a real subdirectory. Since your input structure eventually bottoms out in `None` values (files), you keep descending until you reach a file, hit the `if`, and *don’t* recurse. That’s your stopping condition.
 
-And that branch only runs when parent_directory[key] is a dictionary, i.e., a real subdirectory. Since your input structure eventually bottoms out in None values (files), you keep descending until you reach a file, hit the if, and don’t recurse. That’s your stopping condition.
+In tree-recursion, the base case is often “when this node has no children” or “when this value is not a container,” which is exactly your `None` check.
 
-In tree-recursion, the base case is often “when this node has no children” or “when this value is not a container,” which is exactly your None check.
-2. “How can I create the empty list and it not constantly make a new list every call?”
+**2. “How can I create the empty list and it not constantly make a new list every call?”**
 
 You do make a new list on every call:
-
+```py
 directory_list = []
-
+```
 But that’s okay, even necessary.
 
-Think of each call to list_files as a worker:
+Think of each call to `list_files` as a worker:
 
-    Each worker gets:
-        A directory (parent_directory)
-        The path so far (current_filepath)
+* Each worker gets:
+  * A directory (`parent_directory`)
+  * The path so far (`current_filepath`)
 
-    It creates its own directory_list to collect only the files inside that directory and its subdirectories.
+* It creates its own `directory_list` to collect **only the files inside that directory and its subdirectories**.
 
-    When it’s done, it returns its list to its caller.
+    When it’s done, it `returns` *its* list to its caller.
 
     The caller then does:
-
-    directory_list.extend( child_result )
+```py
+directory_list.extend( child_result )
+```
 
 So the overall behavior is:
 
-    Top-level call has its own directory_list.
-    For each subdirectory, it spawns a recursive call.
-    Each recursive call builds its own list, returns it.
-    The caller merges those child lists into its own with .extend(...).
-    Eventually, the top-most caller returns the final, fully merged list.
+* Top-level call has its own `directory_list`.
+* For each subdirectory, it spawns a recursive call.
+* Each recursive call builds its own list, returns it.
+* The caller merges those child lists into its own with `.extend(...)`.
+* Eventually, the top-most caller returns the final, fully merged list.
 
 This doesn’t cause duplication or resets, because:
 
-    Each call has its own directory_list.
-    Lists don’t need to be shared between calls; they’re combined by extend when the recursive call returns.
+* Each call has its own `directory_list`.
+* Lists don’t need to be shared between calls; they’re combined by `extend` when the recursive call returns.
 
 If you reused the same list across all calls (e.g., as a global), the logic would get harder to reason about and easier to break.
