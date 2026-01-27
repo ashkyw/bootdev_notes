@@ -138,4 +138,17 @@ for item in tree:
 ```
 I most often use recursion on tree-like problems (file systems, nested dictionaries, etc). If I'm just iterating over a one-dimensional list then a loop (*gasp...*) is typically simpler, even if it's not as "pure" in the academic sense.
 
+# Debugging Recursion Tip:
+
+When you debug recursive stuff a couple of safe habits:
+```py
+    Always ask: “What does this function return at every level?”
+
+    Temporarily log both the argument and the return value, e.g.:
+
+    print("ENTER", parent_directory, current_filepath)
+    ...
+    print("EXIT", directory_list)
+```
+
 *Remember: The rules of functional programming are just philosophies to help you write better code, but it's not always the right tool for the job.* The same goes for any programming paradigm.
