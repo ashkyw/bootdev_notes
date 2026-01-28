@@ -260,4 +260,17 @@ def find_longest_word(document, longest_word=""):
 
 ```
 
+Another recursion example. Don't worry, you didn't understand it when you first did it. If you're looking at this example now, chances are you *still* don't understand it.
 
+```py
+def count_nested_levels(nested_documents, target_document_id, level=1):
+    for document_id in nested_documents:
+        if document_id == target_document_id:
+            return level
+        found_level = count_nested_levels(
+            nested_documents[document_id], target_document_id, level + 1
+        )
+        if found_level != -1:
+            return found_level
+    return -1
+```
