@@ -29,4 +29,4 @@ print(double_func(5))
 # prints 10
 ```
 
-The `self_math` function takes a function that operates on two *different* paraments (e.g. `multiply` or `add`) and returns a new function that operates on *one* paramenter *twice* (e.g. `square` or `double`)
+The `self_math` function takes a function that operates on two *different* paraments (e.g. `multiply` or `add`) and returns a new function that operates on *one* parameter *twice* (e.g. `square` or `double`)
