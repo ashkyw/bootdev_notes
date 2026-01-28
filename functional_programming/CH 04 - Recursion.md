@@ -242,4 +242,22 @@ Recursion is great because it's simple and elegant (simple != easy). It's often 
   2. If you don't have a solid base case, you can end up in an infinite loop (which will likely lead to a stack overflow).
   3. Recursion (especially in a language like Python) is often slower than a for loop because each function call requires some memory. [Tail call optimization](https://exploringjs.com/es6/ch_tail-calls.html) can help with this, but Python doesn't support it.
 
+Another recursion example
+
+```py
+def find_longest_word(document, longest_word=""):
+    if len(document) == 0:
+        return longest_word
+    words = document.split(maxsplit=1)
+    if len(words) < 1:
+        return longest_word
+    first_word = words[0]
+    if len(first_word) > len(longest_word):
+        longest_word = first_word
+    if len(words) < 2:
+        return longest_word
+    return find_longest_word(words[1], longest_word)
+
+```
+
 
