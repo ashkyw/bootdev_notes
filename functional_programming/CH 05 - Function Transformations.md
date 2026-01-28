@@ -91,5 +91,5 @@ print(bullet_point_formatter("Hello"))
 # * Hello
 ```
 
-> [Note] 
+> ![Note] 
 > [Default Argument Values](https://docs.python.org/3/tutorial/controlflow.html#default-argument-values)
