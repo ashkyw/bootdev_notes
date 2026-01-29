@@ -39,3 +39,15 @@ When `concatter()` is called, it creates a new "stateful" function that *remembe
 
 Python has a keyword called [nonlocal](https://docs.python.org/3/reference/simple_stmts.html#nonlocal) that's required to modify a variable from an enclosing scope. Most programming languages don't require this keyword, but Python does.
 
+Another example of closure and nonlocal:
+
+```py
+def word_count_aggregator():
+    count = 0
+    def word_count(doc):
+        for item in doc.split():
+            nonlocal count
+            count += 1
+        return count
+    return word_count
+```
