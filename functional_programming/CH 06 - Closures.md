@@ -35,7 +35,11 @@ print(harry_potter_aggregator("Drive"))
 ```
 When `concatter()` is called, it creates a new "stateful" function that *remembers* the value of its internal `doc` variable. Each successive call to `harry_potter_aggregator` appends to that same `doc`.
 
-#nonlocal
+The whole point of a closure is that it's stateful. It's a function that "remembers" the values from the enclosing scope even after the enclosing scope has finished executing.
+
+It's as if you're saving the state of a function at a particular point in time, and then you can use and update that state later on.
+
+# nonlocal
 
 Python has a keyword called [nonlocal](https://docs.python.org/3/reference/simple_stmts.html#nonlocal) that's required to modify a variable from an enclosing scope. Most programming languages don't require this keyword, but Python does.
 
