@@ -94,8 +94,9 @@ print(bullet_point_formatter("Hello"))
 > [!Note] 
 > [Default Argument Values](https://docs.python.org/3/tutorial/controlflow.html#default-argument-values)
 
-In the below example closure is used to pass the defined functions into the `get_filter_cmd()` function. Basically, as we're passing in functions filter_one and filter_two get set to those functions.
+In the below example closure is used to pass the defined functions into the `filter_cmd()` function. Basically, as we're passing in functions filter_one and filter_two get set to those functions. Then the next function remembers the functions from the parent function. Thus closure.
 Due to closure, it means that `filter_one` & `filter_two` are now variables holding the functions passed in. Thus `filter_one` becomes `filter_one()`.
+
 ```py
 def get_filter_cmd(filter_one, filter_two):
     def filter_cmd(content, option="--one"):
@@ -125,3 +126,30 @@ def replace_ellipsis(text):
 def fix_ellipsis(text):
     return text.replace("....", "...")
 ```
+
+When you call:
+```py
+filter_cmd = get_filter_cmd(replace_bad, replace_ellipsis)
+```
+here’s what happens step by step:
+
+1. `get_filter_cmd` is called with:
+   * `filter_one` = `replace_bad`
+   * `filter_two` = `replace_ellipsis`
+
+2. Inside `get_filter_cmd`, you *define* `filter_cmd`. At that moment, Python *remembers* the values of `filter_one` and `filter_two` that were in scope when `filter_cmd` was created.
+
+3. `get_filter_cmd` returns the `filter_cmd` function. Even though `get_filter_cmd` finishes, the returned `filter_cmd` still carries along the references to `filter_one` and `filter_two` from when it was created.
+
+That “remembering of outer variables by an inner function” is called a **closure**.
+
+So later, when you do:
+```py
+result = filter_cmd(content, "--one")
+```
+inside `filter_cmd`, `filter_one` and `filter_two` still refer to the original functions you passed in (`replace_bad`, `replace_ellipsis`), so calls like:
+```py
+filter_one(content)
+filter_two(content)
+```
+work just like any normal function calls.
