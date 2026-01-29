@@ -93,3 +93,35 @@ print(bullet_point_formatter("Hello"))
 
 > [!Note] 
 > [Default Argument Values](https://docs.python.org/3/tutorial/controlflow.html#default-argument-values)
+
+In the below example closure is used to pass the defined functions into the `get_filter_cmd()` function. Basically, as we're passing in functions filter_one and filter_two get set to those functions.
+Due to closure, it means that `filter_one` & `filter_two` are now variables holding the functions passed in. Thus `filter_one` becomes `filter_one()`.
+```py
+def get_filter_cmd(filter_one, filter_two):
+    def filter_cmd(content, option="--one"):
+        if option == "--one":
+            return filter_one(content)
+        elif option == "--two":
+            return filter_two(content)
+        elif option == "--three":
+            return filter_two(filter_one(content))
+        else:
+            raise Exception("invalid option")
+
+    return filter_cmd
+
+
+# don't touch below this line
+
+
+def replace_bad(text):
+    return text.replace("bad", "good")
+
+
+def replace_ellipsis(text):
+    return text.replace("..", "...")
+
+
+def fix_ellipsis(text):
+    return text.replace("....", "...")
+```
