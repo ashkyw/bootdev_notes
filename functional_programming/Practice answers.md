@@ -69,3 +69,17 @@ def file_type_aggregator(func_to_decorate):
 def process_doc(doc, file_type):
     return f"Processing doc: '{doc}'. File Type: {file_type}"
 ```
+
+# CH8 - L2:
+
+```py
+def args_logger(*args, **kwargs):
+    n = 0
+    sort_kwargs = sorted(kwargs)
+    for item in args:
+        n += 1
+        print(f"{n}. {item}")
+
+    for kw in sort_kwargs:
+        print(f"* {kw}: {kwargs[kw]}")
+```
