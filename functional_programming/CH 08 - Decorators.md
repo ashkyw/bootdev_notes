@@ -53,6 +53,27 @@ def process_doc(doc):
 process_doc = vowel_counter(process_doc)
 process_doc("Something wicked this way comes")
 ```
+Another example of decorator use:
+
+```py
+def file_type_aggregator(func_to_decorate):
+    # dict of file_type -> count
+    counts = {}
+
+    def wrapper(doc, file_type):
+        if file_type not in counts:
+            counts[file_type] = 0
+        counts[file_type] += 1
+        result = func_to_decorate(doc, file_type)
+
+        return result, counts
+
+    return wrapper
+
+@file_type_aggregator
+def process_doc(doc, file_type):
+    return f"Processing doc: '{doc}'. File Type: {file_type}"
+```
 
 # Args & Kwargs
 
@@ -98,4 +119,13 @@ res = sub(a=3, b=2)
 Any positional arguments *must come **before*** keyword arguments. This will *not* work:
 ```py
 sub(b=3, 2)
+```
+Another example of args and kwargs:
+
+```py
+def args_logger(*args, **kwargs):
+    for i in range(len(args)):
+        print(f"{i + 1}. {args[i]}")
+    for key, value in sorted(kwargs.items()):
+        print(f"* {key}: {value}")
 ```
