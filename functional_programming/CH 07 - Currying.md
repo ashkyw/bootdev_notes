@@ -77,3 +77,21 @@ def markdown_to_html(asterisk_style):
 markdown_to_html_italic = markdown_to_html('italic')
 colorize(markdown_to_html_italic, doc)
 ```
+
+Another example of currying:
+```py
+def lines_with_sequence(char):
+    def with_char(length):
+        sequence = char * length
+        def with_length(doc):
+            doc_split = doc.split()
+            count = 0
+            for item in doc_split:
+                if sequence in item:
+                    count +=1
+            return count
+        
+        return with_length
+    return with_char
+
+```
