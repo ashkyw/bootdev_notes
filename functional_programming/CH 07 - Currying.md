@@ -95,3 +95,39 @@ def lines_with_sequence(char):
     return with_char
 
 ```
+
+Another example of currying:
+```py
+def create_markdown_image(alt_text):
+    enclosed_alt_text = f"![{alt_text}]"
+
+    def add_url(url):
+        escaped_url = url.replace("(", "%28").replace(")", "%29")
+        image_syntax = enclosed_alt_text + f"({escaped_url})"
+
+        def add_title(title=None):
+            if title:
+                return image_syntax[:-1] + f' "{title}")'
+            return image_syntax
+
+        return add_title
+
+    return add_url
+```
+
+Another example of currying:
+```py
+def new_resizer(max_width, max_height):
+    def set_min_size(min_width=0, min_height=0):
+        if min_width > max_width or min_height > max_height:
+            raise Exception("minimum size cannot exceed maximum size")
+
+        def resize_image(width, height):
+            new_width = max(min_width, min(width, max_width))
+            new_height = max(min_height, min(height, max_height))
+            return new_width, new_height
+
+        return resize_image
+
+    return set_min_size
+```
