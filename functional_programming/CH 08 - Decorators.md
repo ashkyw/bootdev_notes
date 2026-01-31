@@ -129,3 +129,25 @@ def args_logger(*args, **kwargs):
     for key, value in sorted(kwargs.items()):
         print(f"* {key}: {value}")
 ```
+
+# Decorators
+
+The `*args` and `**kwargs` syntax is great for decorators that are intended to work on functions with different [signatures](https://developer.mozilla.org/en-US/docs/Glossary/Signature/Function)
+
+Example
+
+The `log_call_count` function below doesn't care about the number or type of the decorated function's (`func_to_decorate`) arguments. It just wants to count how many times the function is called. However, it still needs to pass any arguments through to the wrapped function.
+```py
+def log_call_count(func_to_decorate):
+    count = 0
+
+    def wrapper(*args, **kwargs):
+        nonlocal count
+        count += 1
+        print(f"Called {count} times")
+        # The * and ** syntax unpacks the arguments
+        # and passes them to the decorated function
+        return func_to_decorate(*args, **kwargs)
+
+    return wrapper
+```
