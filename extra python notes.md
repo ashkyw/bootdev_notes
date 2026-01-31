@@ -83,3 +83,4 @@ You may also call the .update() method for every member of a group by calling it
 ```py
 group.update(dt)
 ```
+# [Splat operator](https://www.bitecode.dev/p/the-splat-operator-or-args-and-kwargs?open=false#%C2%A7unpacking-arguments)
