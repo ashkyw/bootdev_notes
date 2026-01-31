@@ -21,7 +21,7 @@ The Group class is a container that holds and manages multiple game objects. We 
 
 You can think of them as a sort of Venn diagram. An object can be in multiple groups at the same time!
 
-![Alt text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/groups.png)
+![Alt text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/groups.png "Pygame Groups")
 
 
 Examples of Using Groups
