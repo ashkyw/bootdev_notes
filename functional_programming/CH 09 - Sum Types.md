@@ -7,8 +7,8 @@ man.has_trust_fund = False
 ```
 The total number of combinations a man can have is 4, the product of 2 * 2:
 
-|studies_finance  |	has_trust_fund |
-| -------------------------------- |
+| studies_finance | has_trust_fund |
+|:---------------:|:--------------:|
 | True            | True           |
 | True 	          | False          |
 | False           | True           |
