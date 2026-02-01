@@ -85,6 +85,10 @@ group.update(dt)
 ```
 # [Splat operator](https://www.bitecode.dev/p/the-splat-operator-or-args-and-kwargs?open=false#%C2%A7unpacking-arguments)
 
+Using the * allows us to unpack wrapped items such as tuples and dictionaries.
+* * = unpack Tuples
+* ** = unpack dictionaries
+
 Example of Splat operator
 ```py
 def configure_plugin_decorator(func):
