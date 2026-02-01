@@ -15,15 +15,17 @@ The total number of combinations a man can have is 4, the product of 2 * 2:
 | False           | False          |
 
 If we add a third attribute, perhaps a has_blue_eyes boolean, the total number of possibilities multiplies again, to 8!
-studies_finance 	has_trust_fund 	has_blue_eyes
-True 	True 	True
-True 	True 	False
-True 	False 	True
-True 	False 	False
-False 	True 	True
-False 	True 	False
-False 	False 	True
-False 	False 	False
+
+|studies_finance  |	has_trust_fund  |  has_blue_eyes  |
+|:---------------:|:---------------:|:---------------:|
+|    True 	      |     True 	    |       True      |
+|    True 	      |     True 	    |       False     |     
+|    True 	      |     False 	    |       True      |
+|    True 	      |     False 	    |       False     |
+|    False 	      |     True 	    |       True      |
+|    False 	      |     True 	    |       False     |
+|    False 	      |     False 	    |       True      |
+|    False 	      |     False 	    |       False     |
 
 But let's pretend that we live in a world where there are really only three types of people that our program cares about:
 
