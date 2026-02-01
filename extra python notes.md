@@ -84,3 +84,12 @@ You may also call the .update() method for every member of a group by calling it
 group.update(dt)
 ```
 # [Splat operator](https://www.bitecode.dev/p/the-splat-operator-or-args-and-kwargs?open=false#%C2%A7unpacking-arguments)
+
+Example of Splat operator
+```py
+def configure_plugin_decorator(func):
+    def wrapper(*args):
+        dict_args = dict(args)
+        return func(**dict_args)
+    return wrapper
+```
