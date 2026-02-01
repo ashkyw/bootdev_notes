@@ -95,5 +95,6 @@ def configure_plugin_decorator(func):
     def wrapper(*args):
         dict_args = dict(args)
         return func(**dict_args)
+# unpack dict_args in func call
     return wrapper
 ```
