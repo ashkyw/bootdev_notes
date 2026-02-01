@@ -242,3 +242,24 @@ print_input("Keep Calm and Carry On")
 ```
 
 Observe that `to_uppercase` wrapped `get_truncate(9)`, and `get_truncate(9)` returned `truncate` which wrapped `print_input`, then `print_input` printed "KEEP CALM" from "Keep Calm and Carry On".
+
+Another example of currying and decorators
+
+```py
+def replacer(old, new):
+    def replace(decorated_func):
+        def wrapper(text):
+            return decorated_func(text.replace(old, new))
+
+        return wrapper
+
+    return replace
+@replacer("&", "&amp;")
+@replacer("<", "&lt;")
+@replacer(">", "&gt;")
+@replacer('"', "&quot;")
+@replacer("'", "&#27;")
+
+def tag_pre(text):
+    return f"<pre>{text}</pre>"
+```
