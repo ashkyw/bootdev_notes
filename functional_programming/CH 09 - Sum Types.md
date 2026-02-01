@@ -132,3 +132,51 @@ fn color_to_hex(color: Color) -> String {
 ```
 Notice how there isn't any case for an unknown value? That's because the Rust code will fail to compile (a step that happens before the code runs at all) if the `Color` is a different value. *This static enforcement is a huge benefit of sum types*, and it's a shame we can't get that in Python.
 
+# Match
+
+Let's take another look at our example Enum from the previous lesson:
+```py
+Color = Enum("Color", ["RED", "GREEN", "BLUE"])
+```
+# Working With Enums
+
+Python has a `match` statement that tends to be a lot cleaner than a series of `if/else/elif` statements when we're working with a fixed set of possible values (like a sum type, or more specifically an enum):
+```py
+def get_hex(color):
+    match color:
+        case Color.RED:
+            return "#FF0000"
+        case Color.GREEN:
+            return "#00FF00"
+        case Color.BLUE:
+            return "#0000FF"
+
+        # default case
+        # (invalid Color)
+        case _:
+            return "#FFFFFF"
+```
+If you have two values to match, you can use a `tuple`:
+```py
+def get_hex(color, shade):
+    match (color, shade):
+        case (Color.RED, Shade.LIGHT):
+            return "#FFAAAA"
+        case (Color.RED, Shade.DARK):
+            return "#AA0000"
+        case (Color.GREEN, Shade.LIGHT):
+            return "#AAFFAA"
+        case (Color.GREEN, Shade.DARK):
+            return "#00AA00"
+        case (Color.BLUE, Shade.LIGHT):
+            return "#AAAAFF"
+        case (Color.BLUE, Shade.DARK):
+            return "#0000AA"
+
+        # default case
+        # (invalid combination)
+        case _:
+            return "#FFFFFF"
+```
+The value we want to compare is set after the `match` keyword, which is then compared against different cases/patterns. If a match is found, the code in the block is executed.
+
