@@ -5,7 +5,7 @@ A "sum" type is the opposite of a "product" type. This Python object is an examp
 man.studies_finance = True
 man.has_trust_fund = False
 ```
-The total number of combinations a man can have is 4, the product of 2 * 2:
+The total number of combinations a `man` can have is `4`, the *product* of `2 * 2`:
 
 | studies_finance | has_trust_fund |
 |:---------------:|:--------------:|
@@ -14,7 +14,7 @@ The total number of combinations a man can have is 4, the product of 2 * 2:
 | False           | True           |
 | False           | False          |
 
-If we add a third attribute, perhaps a has_blue_eyes boolean, the total number of possibilities multiplies again, to 8!
+If we add a third attribute, perhaps a `has_blue_eyes` boolean, the total number of possibilities multiplies again, to `8`!
 
 |studies_finance  |	has_trust_fund  |  has_blue_eyes  |
 |:---------------:|:---------------:|:---------------:|
@@ -27,14 +27,14 @@ If we add a third attribute, perhaps a has_blue_eyes boolean, the total number o
 |    False 	      |     False 	    |       True      |
 |    False 	      |     False 	    |       False     |
 
-But let's pretend that we live in a world where there are really only three types of people that our program cares about:
+But let's pretend that we live in a world where there are *really* only three types of people that our program cares about:
 
-    Dateable
-    Undateable
-    Maybe dateable
+1. Dateable
+2. Undateable
+3. Maybe dateable
 
-We can reduce the number of cases our code needs to handle by using a (admittedly fake Pythonic) sum type with only 3 possible types:
-
+We can *reduce* the number of cases our code needs to handle by using a (admittedly fake Pythonic) sum type with only 3 possible *types*:
+```py
 class Person:
     def __init__(self, name):
         self.name = name
@@ -47,9 +47,9 @@ class MaybeDateable(Person):
 
 class Undateable(Person):
     pass
-
-Then we can use the isinstance built-in function to check if a Person is an instance of one of the subclasses. It's a clunky way to represent sum types, but hey, it's Python.
-
+```
+Then we can use the isinstance built-in function to check if a `Person` is an instance of one of the subclasses. It's a clunky way to represent sum types, but hey, it's Python.
+```py
 def respond_to_text(guy_at_bar):
     if isinstance(guy_at_bar, Dateable):
         return f"Hey {guy_at_bar.name}, I'd love to go out with you!"
@@ -59,7 +59,7 @@ def respond_to_text(guy_at_bar):
         return "Have you tried being rich?"
     else:
         raise ValueError("invalid person type")
+```
+# Sum Types
 
-Sum Types
-
-As opposed to product types, which can have many (often infinite) combinations, sum types have a fixed number of possible values. To be clear: Python doesn't really support sum types. We have to use a workaround and invent our own little system and enforce it ourselves.
+As opposed to product types, which can have many (often infinite) combinations, sum types have a *fixed* number of possible values. To be clear: **Python doesn't really support sum types**. We have to use a workaround and invent our own little system and enforce it ourselves.
