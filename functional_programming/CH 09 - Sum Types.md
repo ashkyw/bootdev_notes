@@ -103,3 +103,32 @@ There are a few benefits:
 1. A "Color" can only be `RED`, `GREEN`, or `BLUE`. If you try to use `Color.TEAL`, Python raises an exception.
 2. There is a central place to see the "valid" values for a `Color`.
 3. Each "Color" has a "name" (e.g. `Color.RED`) and a "value" (e.g. `1`). The value is an integer and is used under the hood instead of the name. Integers take up less memory than strings, which helps with performance.
+
+# Sum Types
+
+Unfortunately, Python does not support sum types as well as some of the other [statically typed](https://developer.mozilla.org/en-US/docs/Glossary/Static_typing) languages.
+
+Python [does not enforce](https://docs.python.org/3/library/typing.html) your types before your code runs. That's why we need this line here to `raise` an `Exception` if a color is invalid:
+```py
+def color_to_hex(color):
+    if color == Color.GREEN:
+        return '#00FF00'
+    elif color == Color.BLUE:
+        return '#0000FF'
+    elif color == Color.RED:
+        return '#FF0000'
+    # handle the case where the color is invalid
+    raise Exception('unknown color')
+```
+In a language like Rust we could write the same thing like this:
+```py
+fn color_to_hex(color: Color) -> String {
+    match color {
+        Color::Green => "#00FF00".to_string(),
+        Color::Blue => "#0000FF".to_string(),
+        Color::Red => "#FF0000".to_string(),
+    }
+}
+```
+Notice how there isn't any case for an unknown value? That's because the Rust code will fail to compile (a step that happens before the code runs at all) if the `Color` is a different value. *This static enforcement is a huge benefit of sum types*, and it's a shame we can't get that in Python.
+
