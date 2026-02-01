@@ -195,3 +195,21 @@ factorial_r(12) # makes two new recursive calls, the other 11 are cached
 ```
 
 Since the `factorial` function is recursive and the inputs are sequential numbers, it's called repeatedly with the same inputs. Without the cache, the function would be called 30 times. With `lru_cache`, the function is only called 13 times. While you don't often need to compute factorials, this example ties together how to use a decorator *and* memoization *and* recursion.
+
+Another example of recursion and `lru_cache`:
+
+```py
+from functools import lru_cache
+
+
+@lru_cache()
+def is_palindrome(word):
+    if len(word) < 2:
+        return True
+    first = word[0]
+    last = word[-1]
+    if first != last:
+        return False
+    trimmed_word = word[1:-1]
+    return is_palindrome(trimmed_word)
+```
