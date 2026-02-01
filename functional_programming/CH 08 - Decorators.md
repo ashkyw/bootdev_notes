@@ -213,3 +213,32 @@ def is_palindrome(word):
     trimmed_word = word[1:-1]
     return is_palindrome(trimmed_word)
 ```
+
+You can stack decorators, and use currying with decorators.
+
+```py
+def to_uppercase(func):
+    def wrapper(document):
+        return func(document.upper())
+
+    return wrapper
+
+def get_truncate(length):
+    def truncate(func):
+        def wrapper(document):
+            return func(document[:length])
+
+        return wrapper
+
+    return truncate
+
+@to_uppercase
+@get_truncate(9) # currying
+def print_input(input):
+    print(input)
+
+print_input("Keep Calm and Carry On")
+# prints: "KEEP CALM"
+```
+
+Observe that `to_uppercase` wrapped `get_truncate(9)`, and `get_truncate(9)` returned `truncate` which wrapped `print_input`, then `print_input` printed "KEEP CALM" from "Keep Calm and Carry On".
