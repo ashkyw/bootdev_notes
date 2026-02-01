@@ -1,9 +1,12 @@
-CH8 - L3:
-
+CH9 - L2
 ```py
-def configure_plugin_decorator(func):
-    def wrapper(*args):
-        dict_args = dict(args)
-        return func(**dict_args)
-    return wrapper
+from enum import Enum
+
+class Doctype(Enum):
+    PDF = 1
+    TXT = 2
+    DOCX = 3
+    MD = 4
+    HTML = 5
 ```
+
