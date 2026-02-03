@@ -113,3 +113,9 @@ def markdown_to_text_decorator(func):
 
     return wrapper
 ```
+
+# Argparse
+
+[Argparse](https://docs.python.org/3/library/argparse.html)
+
+The way `argparse` works is that we create a parser object, define the arguments we want to accept, and then parse whatever arguments the user actually provided when they ran the script. See the example code below; you may want to customize the description, argument name, help message, etc. But the idea is that we're telling the argument parser to expect a single positional argument, i.e., the user-provided prompt.
