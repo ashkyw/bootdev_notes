@@ -4,7 +4,7 @@
 
   1. **State the bug precisely**
    * “When I do X, I expected Y, but I got Z.”
-   * Example: “Calling run_python_file("./calculator", "tests.py") returns ‘does not exist’.”
+   * Example: “Calling `run_python_file("./calculator", "tests.py")` returns ‘does not exist’.”
 
   2. **Narrow the suspect area**
    * Which one or two functions are closest to the bad behavior?
