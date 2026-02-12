@@ -18,4 +18,4 @@ def get_estimated_spread(audiences_followers):
 
 # Exponential Growth & Geometric sequences:
 
-![Alt Text](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/Geometric-Sequences-v1-1920x1080.mp4)
+![Geometric Sequence Video](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/Geometric-Sequences-v1-1920x1080.mp4)
