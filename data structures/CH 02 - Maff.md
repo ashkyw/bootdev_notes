@@ -33,6 +33,8 @@ def get_follower_prediction(follower_count, influencer_type, num_months):
 
 # Logarithm: L7
 
+![Logarithm Video](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/Logarithms-1920x1080.mp4)
+
 Example of log in python:
 ```py
 import math
