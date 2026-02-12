@@ -1,4 +1,4 @@
-# Exponents: L1
+# Exponents
 
 Example of exponentiation in python:
 ```py
@@ -29,4 +29,14 @@ def get_follower_prediction(follower_count, influencer_type, num_months):
         return follower_count * (3**num_months)
     return follower_count * (2**num_months)
 
+```
+
+# Logarithm: L7
+
+Example of log in python:
+```py
+import math
+
+print(f"Logarithm base 2 of 16 is: {math.log(16, 2)}")
+# Logarithm base 2 of 16 is: 4.0
 ```
