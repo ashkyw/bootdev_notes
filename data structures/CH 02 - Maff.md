@@ -42,3 +42,31 @@ import math
 print(f"Logarithm base 2 of 16 is: {math.log(16, 2)}")
 # Logarithm base 2 of 16 is: 4.0
 ```
+
+# Factorials:
+
+Factorial of a positive integer `n`, written as `n!` is the product of all positive integers <= `n`
+
+```math
+5! = 5 * 4 * 3 * 2 * 1 = 120
+```
+
+Results of factorials grow even *faster* than exponentiation!
+-------------------
+|    |  n!  | 2^n |
+-------------------
+| 2  |  2   | 4   |
+| 3  |  6   | 8   |
+| 4  | 24   | 16  |
+| 5  | 120  | 32  |
+| 6  | 720  | 64  |
+-------------------
+
+Python representation of Factorial:
+```py
+def factorial(n):
+    product = 1
+    for i in range(2, n+1):
+        product *= i
+return product
+```
