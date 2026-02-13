@@ -52,15 +52,15 @@ Factorial of a positive integer `n`, written as `n!` is the product of all posit
 ```
 
 Results of factorials grow even *faster* than exponentiation!
--------------------
+
 |    |  n!  | 2^n |
--------------------
+|:--:|:----:|:---:|
 | 2  |  2   | 4   |
 | 3  |  6   | 8   |
 | 4  | 24   | 16  |
 | 5  | 120  | 32  |
 | 6  | 720  | 64  |
--------------------
+
 
 Python representation of Factorial:
 ```py
