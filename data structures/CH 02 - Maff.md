@@ -71,3 +71,8 @@ def factorial(n):
 return product
 ```
 # [Exponential Decay](https://en.wikipedia.org/wiki/Exponential_decay)
+
+```math
+ A=a(1−r)t
+```
+where A is the final amount, a is the initial amount, r is the decay rate, and t is the time interval.
