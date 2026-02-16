@@ -70,3 +70,4 @@ def factorial(n):
         product *= i
 return product
 ```
+# [Exponential Decay](https://en.wikipedia.org/wiki/Exponential_decay)
