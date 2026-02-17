@@ -76,3 +76,38 @@ return product
  A=a(1−r)t
 ```
 where A is the final amount, a is the initial amount, r is the decay rate, and t is the time interval.
+
+# Logarithmic Scale
+
+In some cases, data can span several orders of magnitude, making it difficult to visualize on a linear scale. A logarithmic scale can help by compressing the data so that it's easier to understand.
+
+# [Mean and Median](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/Mean-And-Median-V1-1920x1080.mp4)
+
+# Mean
+
+    The mean (or "average") of a group of numbers is the sum divided by the count of those numbers.
+
+For example, say we have the numbers 2, 5, 1, 6, 75:
+
+```math
+2 + 5 + 1 + 6 + 75 = 89
+89 / 5 = 17.8
+```
+The mean is 17.8.
+
+# Median
+
+    The median of a group of numbers is the middle number after sorting them.
+
+For example, say we have the numbers 2, 5, 1, 6, 75:
+
+    Sort the numbers: 1, 2, 5, 6, 75
+    The middle number is 5, so the median is 5.
+
+If there is an even count of numbers, the median is the mean of the two middle numbers.
+
+Which Is Usually Best?
+
+It feels like everyone always talks about averages... so you might think that the mean is the more useful "representative" value from a group of numbers. The problem is, as you can see above, a big outlier like 75 skews the mean, while the median is less affected by it.
+
+As a rule of thumb, the median is often a more accurate representative number of a group, especially if there are outliers in the data. It can just be a bit more work to calculate because it involves sorting instead of simple arithmetic.
