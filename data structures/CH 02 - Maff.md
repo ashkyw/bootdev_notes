@@ -110,4 +110,4 @@ Which Is Usually Best?
 
 It feels like everyone always talks about averages... so you might think that the mean is the more useful "representative" value from a group of numbers. The problem is, as you can see above, a big outlier like 75 skews the mean, while the median is less affected by it.
 
-As a rule of thumb, the median is often a more accurate representative number of a group, especially if there are outliers in the data. It can just be a bit more work to calculate because it involves sorting instead of simple arithmetic.
+    As a rule of thumb, the median is often a more accurate representative number of a group, especially if there are outliers in the data. It can just be a bit more work     to calculate because it involves sorting instead of simple arithmetic.
