@@ -56,3 +56,17 @@ def does_name_exist(first_names, last_names, full_name):
                 return True
     return False
 ```
+
+# O(nm)
+
+Example of O(nm)
+
+```py
+def get_avg_brand_followers(all_handles, brand_name):
+    count = 0
+    for handles in all_handles:
+        for handle in handles:
+            if brand_name in handle:
+                count += 1
+    return count / len(all_handles)
+```
