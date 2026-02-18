@@ -57,7 +57,7 @@ def does_name_exist(first_names, last_names, full_name):
     return False
 ```
 
-# O(nm)
+# O(nm) - L6
 
 Example of O(nm)
 
