@@ -153,3 +153,21 @@ Do the following:
   * Return `False`
 
 At each iteration of loop, we halve the list. Which makes the algorithm `O(log(n))`. In other words, to add one more step to the runtime, we'd have to **double the size of the input**. Binary searches are fast.
+
+Example of a binary search:
+
+```py
+def binary_search(target, arr):
+    low = 0
+    high = len(arr) - 1
+    while low <= high:
+        median = (low + high) // 2
+        if arr[median] == target:
+            return True
+        elif arr[median] < target:
+            low = median + 1
+        else:
+            high = median - 1
+    
+    return 
+```
