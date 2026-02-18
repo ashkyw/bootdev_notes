@@ -71,7 +71,7 @@ def get_avg_brand_followers(all_handles, brand_name):
     return count / len(all_handles)
 ```
 
-# Constants Don't Matter - L7
+# ![Constants Don't Matter - L7](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/why-constants-dont-matter-1920x1080.mp4)
 
 For example, take a look at the following functions:
 ```py
@@ -94,5 +94,3 @@ Constants affect *actual* runtime, but in Big O analysis we drop them because th
   * `O(n + 3) -> O(n)`
   * `O(2 * n) -> O(n)`
   * `O(10 * n^2) -> O(n^2)`
-
-![Video](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/why-constants-dont-matter-1920x1080.mp4)
