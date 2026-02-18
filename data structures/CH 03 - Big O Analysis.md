@@ -129,7 +129,7 @@ Dictionary lookups are `O(1)`. *Which is one of the reasons dictionaries and dic
 |1024     | 10 ms |
 |1048576  | 20 ms |
 
-Binary Search
+# Binary Search
 ![Alt Text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/Binary%20Search.png)
 
 A [binary search](https://en.wikipedia.org/wiki/Binary_search_algorithm) is a common example of an O(log(n)) algorithm. Binary searches work on a **pre-sorted list** of elements.
