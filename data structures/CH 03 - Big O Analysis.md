@@ -27,3 +27,14 @@ Then we can estimate the following:
 | `find_min(100 items)`  |     20ms     |
 | `find_min(1000 items)`  |     200ms     |
 | `find_min(10000 items)`  |     2000ms     |
+
+# Order N Squared - L3
+
+```py
+for person_one in persons:
+    for person_two in persons:
+        # every combination of people
+        # will go on a date... twice!
+        go_on_date(person_one, person_two)
+
+```
