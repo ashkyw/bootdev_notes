@@ -94,3 +94,5 @@ Constants affect *actual* runtime, but in Big O analysis we drop them because th
   * `O(n + 3) -> O(n)`
   * `O(2 * n) -> O(n)`
   * `O(10 * n^2) -> O(n^2)`
+
+![Video](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/why-constants-dont-matter-1920x1080.mp4)
