@@ -70,3 +70,27 @@ def get_avg_brand_followers(all_handles, brand_name):
                 count += 1
     return count / len(all_handles)
 ```
+
+# Constants Don't Matter - L7
+
+For example, take a look at the following functions:
+```py
+def print_names_once(names):
+    for name in names:
+        print(name)
+
+def print_names_twice(names):
+    for name in names:
+        print(name)
+    for name in names:
+        print(name)
+```
+As you would expect, `print_names_once` will take half the time to run as `print_names_twice`. And in the real world of software engineering, doubling the speed is *awesome*. The funny thing about Big O analysis is that **we don't care**. We're academics™.
+
+Both of the functions above have the same rate of growth, `O(n)`. You might be tempted to say, "`print_names_twice should be O(2 * n)`" but you would be missing the whole point of Big O.
+
+Constants affect *actual* runtime, but in Big O analysis we drop them because they don't affect how the runtime scales.
+
+  * `O(n + 3) -> O(n)`
+  * `O(2 * n) -> O(n)`
+  * `O(10 * n^2) -> O(n^2)`
