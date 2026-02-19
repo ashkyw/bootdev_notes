@@ -11,7 +11,7 @@ print(sorted(items)) # [1, 3, 5]
 
 Notes on the `sorted` function with example
 
-The `key` parameter in the `sorted` function doesn't want the result of the function; it wants the function itself. Think of it like giving a set of instructions to the sorting algorithm. You don't perform the instructions yourself; you just hand the manual to the algorithm so it can use it on every item in the list.
+The `key` parameter in the `sorted` function doesn't want the *result* of the function; it wants the **function itself**. Think of it like giving a set of instructions to the sorting algorithm. You don't perform the instructions yourself; you just hand the manual to the algorithm so it can use it on every item in the list.
 
 Example:
 
