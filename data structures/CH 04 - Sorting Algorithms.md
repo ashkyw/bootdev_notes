@@ -49,3 +49,21 @@ Bubble sort repeatedly steps through a slice and compares adjacent elements, swa
            2. Set `swapping` to `True`
     3. Decrement `end` by one
 4. Return the sorted list
+
+Example of Bubble sort:
+```py
+def bubble_sort(nums):
+    swapping = True
+    end = len(nums)
+    while swapping:
+        swapping = False
+        for i in range(1, end):
+            swap = nums[i]
+            if swap < nums[i-1]:
+                nums[i] = nums[i-1]
+                nums[i-1] = swap
+                swapping = True
+        end -= 1
+    
+    return nums
+```
