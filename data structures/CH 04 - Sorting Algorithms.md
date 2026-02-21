@@ -67,3 +67,10 @@ def bubble_sort(nums):
     
     return nums
 ```
+Best and Worst Case
+
+Sometimes it's useful to know how the algorithm will perform based on what the input data is instead of just how much data there is. In the case of bubble sort (and many other algorithms), the best and worst case scenarios can actually change the time complexity.
+
+    Best case: If the data is pre-sorted, bubble sort becomes really fast. Can you see why?
+    Worst case: If the data is in reverse order, bubble sort becomes really slow (but still in the same complexity class as random data). Can you see why?
+
