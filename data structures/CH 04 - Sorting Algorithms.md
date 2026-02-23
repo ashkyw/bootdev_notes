@@ -78,8 +78,8 @@ Sometimes it's useful to know how the algorithm will perform based on what the i
 
 Merge sort is a recursive sorting algorithm and it's quite a bit faster than bubble sort. It's a [divide and conquer algorithm](https://en.wikipedia.org/wiki/Divide-and-conquer_algorithm).:
 
-* Divide: divide the large problem into smaller problems, and recursively solve the smaller problems
-* Conquer: Combine the results of the smaller problems to solve the large problem
+* **Divide**: divide the large problem into smaller problems, and recursively solve the smaller problems
+* **Conquer**: Combine the results of the smaller problems to solve the large problem
 
 In merge sort we:
 
