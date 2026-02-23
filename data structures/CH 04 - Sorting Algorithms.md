@@ -71,6 +71,49 @@ Best and Worst Case
 
 Sometimes it's useful to know how the algorithm will perform based on what the input data is instead of just how much data there is. In the case of bubble sort (and many other algorithms), the best and worst case scenarios can actually change the time complexity.
 
-    Best case: If the data is pre-sorted, bubble sort becomes really fast. Can you see why?
-    Worst case: If the data is in reverse order, bubble sort becomes really slow (but still in the same complexity class as random data). Can you see why?
+* Best case: If the data is pre-sorted, bubble sort becomes really fast. Can you see why?
+* Worst case: If the data is in reverse order, bubble sort becomes really slow (but still in the same complexity class as random data). Can you see why?
+
+# Merge Sort
+
+Merge sort is a recursive sorting algorithm and it's quite a bit faster than bubble sort. It's a [divide and conquer algorithm](https://en.wikipedia.org/wiki/Divide-and-conquer_algorithm).:
+
+* Divide: divide the large problem into smaller problems, and recursively solve the smaller problems
+* Conquer: Combine the results of the smaller problems to solve the large problem
+
+In merge sort we:
+
+* Divide the array into two (equal) halves (divide)
+* Recursively sort the two halves
+* Merge the two halves to form a sorted array (conquer)
+
+# Algorithm
+
+The algorithm consists of two separate functions, `merge_sort()` and `merge()`.
+
+`merge_sort()` divides the input array into two halves, calls itself on each half, and then merges the two sorted halves back together in order.
+
+The `merge()` function merges two already sorted lists back into a single sorted list. At the lowest level of recursion, the two "sorted" lists will each only have one element. Those single element lists will be merged into a sorted list of length two, and we can build from there.
+
+*In other words, all the "real" sorting happens in the merge() function.*
+
+merge_sort() pseudocode
+
+Input: `A`, an unsorted list of integers
+
+1. If the length of `A` is less than `2`, it's already sorted so return it
+2. Split the input array into two halves down the middle
+3. Call `merge_sort()` twice, once on each half
+4. Return the result of calling merge(`sorted_left_side`, `sorted_right_side`) on the results of the `merge_sort()` calls
+
+merge() pseudocode
+
+Inputs: `A` and `B`. Two sorted lists of integers
+
+1. Create a new `final` list of integers.
+2. Set `i` and `j` equal to zero. They will be used to keep track of indexes in the input lists (`A` and `B`).
+3. Use a loop to compare the current elements of `A` and `B`. If an element in `A` is less than or equal to its respective element in `B`, add it to the final list and increment `i`. Otherwise, add the item in `B` to the final list and increment `j`. Continue until all items from one of the lists have been added.
+4. After comparing all the items, there may be some items left over in either `A` or `B`. Add those extra items to the final list.
+5. Return the final list.
+
 
