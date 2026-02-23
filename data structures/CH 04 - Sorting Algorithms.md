@@ -74,7 +74,7 @@ Sometimes it's useful to know how the algorithm will perform based on what the i
 * Best case: If the data is pre-sorted, bubble sort becomes really fast. Can you see why?
 * Worst case: If the data is in reverse order, bubble sort becomes really slow (but still in the same complexity class as random data). Can you see why?
 
-# Merge Sort
+# ![Merge Sort](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/merge-sort-1920x1080.mp4)
 
 Merge sort is a recursive sorting algorithm and it's quite a bit faster than bubble sort. It's a [divide and conquer algorithm](https://en.wikipedia.org/wiki/Divide-and-conquer_algorithm).:
 
@@ -96,6 +96,9 @@ The algorithm consists of two separate functions, `merge_sort()` and `merge()`.
 The `merge()` function merges two already sorted lists back into a single sorted list. At the lowest level of recursion, the two "sorted" lists will each only have one element. Those single element lists will be merged into a sorted list of length two, and we can build from there.
 
 *In other words, all the "real" sorting happens in the merge() function.*
+
+In big O terms, Merge Sort is O(n log n)
+However, Merge Sort requires copies of the list to iterate through, so it's memory requirements are much higher than Bubble sort. It is not ideal on smaller lists.
 
 merge_sort() pseudocode
 
