@@ -97,8 +97,17 @@ The `merge()` function merges two already sorted lists back into a single sorted
 
 *In other words, all the "real" sorting happens in the merge() function.*
 
-In big O terms, Merge Sort is O(n log n)
-However, Merge Sort requires copies of the list to iterate through, so it's memory requirements are much higher than Bubble sort. It is not ideal on smaller lists.
+# Why Merge Sort?
+
+Pros:
+
+* **Fast**: Merge sort is much faster than bubble sort. `O(n*log(n))` instead of `O(n^2)` (liked Bubble Sort.
+* **Stable**: Merge sort is a [stable sort](https://en.wikipedia.org/wiki/Category:Stable_sorts) which means that values with duplicate keys in the original list will be in the same order in the sorted list.
+
+Cons:
+
+* **Memory usage**: Most sorting algorithms can be performed using a single copy of the original array. Merge sort requires extra subarrays in memory.
+* **Recursive**: Merge sort requires many recursive function calls, and in many languages (like Python), this can incur a performance penalty.
 
 merge_sort() pseudocode
 
@@ -125,32 +134,27 @@ Code example of Merge Sort:
 def merge_sort(nums):
     if len(nums) < 2:
         return nums
-    list_middle = len(nums) // 2
-    left_side = nums[:list_middle]
-    right_side = nums[list_middle:]
-    left_half = merge_sort(left_side)
-    right_half = merge_sort(right_side)
-    return merge(left_half, right_half)
+    first = merge_sort(nums[: len(nums) // 2])
+    second = merge_sort(nums[len(nums) // 2 :])
+    return merge(first, second)
+
 
 def merge(first, second):
-    merged_sorted_list = []
-    i = j = 0
-
+    final = []
+    i = 0
+    j = 0
     while i < len(first) and j < len(second):
-        if first[i] < second[j]:
-            merged_sorted_list.append(first[i])
+        if first[i] <= second[j]:
+            final.append(first[i])
             i += 1
         else:
-            merged_sorted_list.append(second[j])
+            final.append(second[j])
             j += 1
-
     while i < len(first):
-        merged_sorted_list.append(first[i])
+        final.append(first[i])
         i += 1
-    
     while j < len(second):
-        merged_sorted_list.append(second[j])
+        final.append(second[j])
         j += 1
-    
-    return merged_sorted_list
+    return final
 ```
