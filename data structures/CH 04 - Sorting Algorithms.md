@@ -161,3 +161,15 @@ def merge(first, second):
 ### ![Insertion Sort](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/insertion-sort-1920x1080.mp4)
 
 Insertion sort builds a sorted list one item at a time. It's much less efficient on large lists than merge sort because it's `O(n^2)`, but it's actually faster (not in Big O terms, but due to smaller constants) than merge sort on small lists.
+
+Example of Insertion Sort:
+
+```py
+def insertion_sort(nums):
+    for i in range(1, len(nums)):
+        j = i
+        while j > 0 and nums[j - 1] > nums[j]:
+            nums[j], nums[j - 1] = nums[j - 1], nums[j]
+            j -= 1
+    return nums
+```
