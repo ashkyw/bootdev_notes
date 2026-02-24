@@ -119,4 +119,38 @@ Inputs: `A` and `B`. Two sorted lists of integers
 4. After comparing all the items, there may be some items left over in either `A` or `B`. Add those extra items to the final list.
 5. Return the final list.
 
+Code example of Merge Sort:
 
+```py
+def merge_sort(nums):
+    if len(nums) < 2:
+        return nums
+    list_middle = len(nums) // 2
+    left_side = nums[:list_middle]
+    right_side = nums[list_middle:]
+    left_half = merge_sort(left_side)
+    right_half = merge_sort(right_side)
+    return merge(left_half, right_half)
+
+def merge(first, second):
+    merged_sorted_list = []
+    i = j = 0
+
+    while i < len(first) and j < len(second):
+        if first[i] < second[j]:
+            merged_sorted_list.append(first[i])
+            i += 1
+        else:
+            merged_sorted_list.append(second[j])
+            j += 1
+
+    while i < len(first):
+        merged_sorted_list.append(first[i])
+        i += 1
+    
+    while j < len(second):
+        merged_sorted_list.append(second[j])
+        j += 1
+    
+    return merged_sorted_list
+``
