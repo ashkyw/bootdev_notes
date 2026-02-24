@@ -1,4 +1,4 @@
-# Sorting Algorithms
+### Sorting Algorithms
 
 Almost every action you take in a web app relies on sorted data. Just looking up a user's profile in a database likely relies on a sorted index (which we'll talk about in another course).
 
@@ -158,3 +158,6 @@ def merge(first, second):
         j += 1
     return final
 ```
+# ![Insertion Sort](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/insertion-sort-1920x1080.mp4)
+
+Insertion sort builds a sorted list one item at a time. It's much less efficient on large lists than merge sort because it's `O(n^2)`, but it's actually faster (not in Big O terms, but due to smaller constants) than merge sort on small lists.
