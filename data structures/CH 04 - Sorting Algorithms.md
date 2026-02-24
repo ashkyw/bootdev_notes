@@ -31,7 +31,7 @@ def vanity_sort(influencers):
     return sorted(influencers, key=vanity)
 ```
 
-## Bubble Sort
+### Bubble Sort
 
 [Bubble Sort](https://en.wikipedia.org/wiki/Bubble_sort) is a very basic sorting algorithm named for the way elements "bubble up" to the top of the list.
 
@@ -74,7 +74,7 @@ Sometimes it's useful to know how the algorithm will perform based on what the i
 * Best case: If the data is pre-sorted, bubble sort becomes really fast. Can you see why?
 * Worst case: If the data is in reverse order, bubble sort becomes really slow (but still in the same complexity class as random data). Can you see why?
 
-## ![Merge Sort](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/merge-sort-1920x1080.mp4)
+### ![Merge Sort](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/merge-sort-1920x1080.mp4)
 
 Merge sort is a recursive sorting algorithm and it's quite a bit faster than bubble sort. It's a [divide and conquer algorithm](https://en.wikipedia.org/wiki/Divide-and-conquer_algorithm).:
 
@@ -97,7 +97,7 @@ The `merge()` function merges two already sorted lists back into a single sorted
 
 *In other words, all the "real" sorting happens in the merge() function.*
 
-## Why Merge Sort?
+### Why Merge Sort?
 
 Pros:
 
@@ -158,6 +158,6 @@ def merge(first, second):
         j += 1
     return final
 ```
-## ![Insertion Sort](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/insertion-sort-1920x1080.mp4)
+### ![Insertion Sort](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/insertion-sort-1920x1080.mp4)
 
 Insertion sort builds a sorted list one item at a time. It's much less efficient on large lists than merge sort because it's `O(n^2)`, but it's actually faster (not in Big O terms, but due to smaller constants) than merge sort on small lists.
