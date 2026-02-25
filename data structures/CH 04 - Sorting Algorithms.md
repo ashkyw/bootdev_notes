@@ -199,4 +199,47 @@ Many production sorting implementations use insertion sort for very small inputs
 * It has a tiny memory footprint
 * It's a stable sort as described above
 
+# Quick Sort
 
+Quick sort is an efficient sorting algorithm that's widely used in production sorting implementations. Like merge sort, quick sort is a recursive divide and conquer algorithm.
+
+Divide:
+
+* Select a pivot element that will preferably end up close to the center of the sorted pack
+* Move everything onto the "greater than" or "less than" side of the pivot
+* The pivot is now in its final position
+* Recursively repeat the operation on both sides of the pivot
+
+Conquer:
+
+* The array is sorted after all elements have been through the pivot operation
+
+![Explainer Video](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/quick-sort-1920x1080.mp4)
+
+
+### Pseudocode
+
+* Select a "pivot" element - We'll arbitrarily choose the last element in the list
+* Move through all the elements in the list and swap them around until all the numbers less than the pivot are on the left, and the numbers greater than the pivot are on the right
+* Move the pivot between the two sections where it belongs
+* Recursively repeat for both sections
+
+Quick sort example in Python:
+
+```py
+def quick_sort(nums, low, high):
+    if low < high:
+        p = partition(nums, low, high)
+        quick_sort(nums, low, p-1)
+        quick_sort(nums, p+1, high)
+        
+def partition(nums, low, high):
+    pivot = nums[high]
+    i = low-1
+    for j in range(low, high):
+        if nums[j] < pivot:
+            i += 1
+            nums[i], nums[j] = nums[j], nums[i]
+    nums[i+1], nums[high] = nums[high], nums[i+1]
+    return i+1
+```
