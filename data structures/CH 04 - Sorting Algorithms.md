@@ -272,3 +272,31 @@ The function simply shuffles the list into random order before sorting it, which
 Another popular solution is to use the "median of three" approach. Three elements (for example: the first, middle, and last elements) of each partition are chosen and the median is found between them. That item is then used as the pivot.
 
 This approach has less overhead, and also doesn't require randomness to be injected into the function, meaning it can remain deterministic and pure.
+
+### Why Use Quick Sort?
+
+Pros:
+
+* **Very fast**: At least it is in the average case
+* **In-Place**: Saves on memory, doesn't need to do a lot of copying and allocating
+
+Cons:
+
+* **Typically unstable**: changes the relative order of elements with equal keys
+* **Recursive**: can incur a performance penalty in some implementations
+* **Pivot sensitivity**: if the pivot is poorly chosen, it can lead to poor performance
+
+All this said, quicksort is widely used in the real world because the trade-offs are often worth it. For example, it's a default in PostgreSQL, a popular open-source database.
+
+# Selection Sort
+
+Another sorting algorithm we never covered in-depth is called "selection sort". It's similar to bubble sort in that it works by repeatedly swapping items in a list. However, it's slightly more efficient than bubble sort because it only makes one swap per iteration.
+
+### Selection sort pseudocode:
+
+1. For each index:
+   1. Set smallest_idx to the current index (of the outer loop)
+   2. For each index from i + 1 to the end of the list:
+      1. If the number at the inner loop index is smaller than the number at smallest_idx, set smallest_idx to the inner loop index
+    3. Swap the number at the outer loop index with the number at smallest_idx
+2. Return the sorted list
