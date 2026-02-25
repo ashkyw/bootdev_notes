@@ -34,3 +34,12 @@ In comparison, exponential-time algorithms are almost always too slow to be prac
 | 18|  324|  262144|
 | 19|  361|  524288|
 | 20|  400| 1048576|
+
+### Polynomial Time = P
+
+Back in the 1970s, some computer scientists wanted to come up with a good, descriptive name for the set of polynomial time algorithms. After much deliberation, they settled on the letter `P` [(naming things is hard)](https://xkcd.com/910/).
+
+The hand-wavy takeaway is that:
+
+* Problems that fall into class `P` are practical to solve on computers.
+* Problems that don't fall into `P` are hard, slow, and impractical.
