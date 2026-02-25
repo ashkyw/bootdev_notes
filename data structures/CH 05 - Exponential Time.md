@@ -13,7 +13,7 @@ An algorithm runs in "Polynomial time" if its runtime does not grow faster than 
 
 In comparison, exponential-time algorithms are almost always too slow to be practical. (However, sometimes you're trying to force someone to be slow, like in the case of cryptography and security). Even when `n` is as low as `20`, `2^n` is already over a million!
 
-| n |	n^2 |	2^n |
+| `n` |	`n^2` |	`2^n` |
 |:-:|:---:|:---:|
 | 2 |	 4  | 	4    |
 | 3 |	 9  |	 8     |
