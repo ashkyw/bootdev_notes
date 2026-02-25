@@ -300,3 +300,16 @@ Another sorting algorithm we never covered in-depth is called "selection sort". 
       1. If the number at the inner loop index is smaller than the number at smallest_idx, set smallest_idx to the inner loop index
     3. Swap the number at the outer loop index with the number at smallest_idx
 2. Return the sorted list
+
+Example of Selection sort in python:
+
+```py
+def selection_sort(nums):
+    for i in range(len(nums)):
+        smallest_idx = i
+        for j in range(i+1, len(nums)):
+            if nums[j] < nums[smallest_idx]:
+                smallest_idx = j
+        nums[i], nums[smallest_idx] = nums[smallest_idx], nums[i]
+    return nums
+```
