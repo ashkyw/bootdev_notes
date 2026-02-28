@@ -14,11 +14,11 @@ Data structures are just organizational tools that allow for more advanced algor
 * **Graphs**: A collection of nodes connected by edges.
 
 ### What Are Data Structures?
-```text
-    A data structure is a data organization, management, and storage format that enables efficient access and modification. More precisely, a data structure is a collection     of data values, the relationships among them, and the functions or operations that can be applied to the data.
 
-    -- Wikipedia Definition
-```
+A data structure is a data organization, management, and storage format that enables efficient access and modification. 
+More precisely, a data structure is a collection of data values, the relationships among them, and the functions or 
+operations that can be applied to the data.
+
 ### In other words, a data structure:
 
 * Stores data
