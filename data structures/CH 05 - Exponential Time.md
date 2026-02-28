@@ -90,3 +90,9 @@ def fib(n):
         
     return current
 ```
+
+### Order K^N – Exponential
+
+`O(K^N)` – where `K` represents a constant branching factor, e.g. `3^N` – is the first Big O class that we've dealt with that falls into the scary exponential category of algorithms.
+
+Algorithms that grow at an exponential rate become impossible to compute after so little scale-up that they're usually almost worthless in practicality.
