@@ -109,3 +109,5 @@ Algorithms that grow at an exponential rate become impossible to compute after s
 |O(n^3) |	cubic |	**Slower** If you have 100 items, this does 100^3 = 1,000,000 units of work. Example: A triple nested for loop to find all the ordered triples in a list.|
 |O(2^n) |	exponential |	**Horrible** We want to avoid this kind of algorithm at all costs. Adding one to the input doubles the amount of steps. Example: Brute-force guessing results of a sequence of n coin flips.|
 |O(n!) |	factorial |	**Even More Horrible** The algorithm becomes so slow so fast, that it is practically unusable. Example: Generating all the permutations of a list|
+
+![](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/big%20o%20complexity.png)
