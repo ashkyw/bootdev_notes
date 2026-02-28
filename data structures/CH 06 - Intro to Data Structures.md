@@ -12,3 +12,15 @@ Data structures are just organizational tools that allow for more advanced algor
 * **Hashmaps**: A data structure that maps keys to values.
 * **Tries**: A tree used for storing and searching words efficiently.
 * **Graphs**: A collection of nodes connected by edges.
+
+### What Are Data Structures?
+
+    A data structure is a data organization, management, and storage format that enables efficient access and modification. More precisely, a data structure is a collection of data values, the relationships among them, and the functions or operations that can be applied to the data.
+
+    -- Wikipedia Definition
+
+### In other words, a data structure:
+
+    Stores data
+    Organizes data so that it can easily be accessed and modified
+    Contains algorithmic functions to expose the ability to read and modify the data
