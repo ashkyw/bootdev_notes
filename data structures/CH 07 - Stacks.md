@@ -22,4 +22,10 @@ And you'd be right! A stack is a list with fewer features, but that's the point.
 |peek 	  |O(1) |	Return the top item from the stack without modifying the stack |
 |size 	  |O(1) |	Return the number of items in the stack 
 
+* All supported operations are `O(1)` by themselves. However, some tasks, like getting to an item at the bottom of the stack have a higher time complexity because they require multiple `pop` operations.
+* Stack operations are limited: no searching, no sorting, no random access
+* Stacks, like all abstract data types, can store items of any type. What makes it a stack is the behavior of the operations, not the type of data it stores.
+
 It's *all* `O(1)`! That means no matter how many items are in the stack, these operations will always take the same amount of time. Stacks are *really fast* and are usually the best choice when the behavior of a stack is all you need.
+
+The `[del](https://docs.python.org/3/tutorial/datastructures.html#the-del-statement)` keyword can be used to remove entire indices from a list.
