@@ -11,6 +11,6 @@ For python lists, remember to think of queues backwards. Where `list[0]` is the 
 Some terms are interchangable:
 
 |term 1 |	term 2 |	description|
--
+|---------|---------|---------|
 |Push |	Enqueue |	Adds an item to the tail of the queue |
 |Pop |	Dequeue |	Removes and returns an item from the head of the queue |
