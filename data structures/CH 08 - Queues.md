@@ -14,3 +14,16 @@ Some terms are interchangable:
 |---------|---------|---------|
 |Push |	Enqueue |	Adds an item to the tail of the queue |
 |Pop |	Dequeue |	Removes and returns an item from the head of the queue |
+
+### Queue Speed
+---
+|Operation |	Big O |	Description|
+|---------|---------|---------|
+|Push |	`O(1)` |	Add an item to the back of the queue |
+|Pop |	`O(1)` |	Removes and returns an item from the head of the queue |
+|Pop |	`O(1)` | Return the fornt item form the queue without modifying the queue |
+|Pop |	`O(1)` | Return the number of items in the queue |
+
+Much like a stack, *all* the operations are `O(1)`! No matter how many items are in the queue, they will always take the same amount of time. The reason to choose a queue over a stack is all about the *ordering*, Queues should be used when you need to process items in the order they were added.
+
+`LIFO`(stack) vs. `FIFO` (queue)
