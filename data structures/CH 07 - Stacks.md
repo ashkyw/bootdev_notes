@@ -28,4 +28,46 @@ And you'd be right! A stack is a list with fewer features, but that's the point.
 
 It's *all* `O(1)`! That means no matter how many items are in the stack, these operations will always take the same amount of time. Stacks are *really fast* and are usually the best choice when the behavior of a stack is all you need.
 
-The `[del](https://docs.python.org/3/tutorial/datastructures.html#the-del-statement)` keyword can be used to remove entire indices from a list.
+The [del](https://docs.python.org/3/tutorial/datastructures.html#the-del-statement) keyword can be used to remove entire indices from a list.
+
+Example of checking for parenthesis in text editors:
+```py
+class Stack:
+        def __init__(self):
+            self.items = []
+    
+        def push(self, item):
+            self.items.append(item)
+    
+        def size(self):
+            return len(self.items)
+    
+        def peek(self):
+            if self.items == []:
+                return None
+            return self.items[-1]
+    
+        def pop(self):
+            if self.items == []:
+                return None
+            item = self.items[-1]
+            del self.items[-1]
+            return item
+
+from stack import Stack
+
+
+def is_balanced(input_str):
+    stack = Stack()
+    for i in input_str:
+        if i == "(":
+            stack.push(i)
+        else:
+            if stack.pop() == None:
+                return False
+    
+    if stack.size() == 0:
+        return True
+
+    return False
+```
