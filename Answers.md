@@ -14,19 +14,19 @@ class Queue:
         self.items.insert(0, item)
 
     def pop(self):
-        try:
-            item = self.items[-1]
-            del self.items[-1]
-        except IndexError:
+        if len(self.items) == 0:
             return None
+        item = self.items[-1]
+        del self.items[-1]
         return item
 
     def peek(self):
+        if len(self.items) == 0:
+            return None
         return self.items[-1]
 
     def size(self):
         return len(self.items)
-
 
 ```
 
