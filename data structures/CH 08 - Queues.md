@@ -27,3 +27,45 @@ Some terms are interchangable:
 Much like a stack, *all* the operations are `O(1)`! No matter how many items are in the queue, they will always take the same amount of time. The reason to choose a queue over a stack is all about the *ordering*, Queues should be used when you need to process items in the order they were added.
 
 `LIFO`(stack) vs. `FIFO` (queue)
+
+Example of a Queue in Python:
+
+```py
+class Queue:
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        self.items.insert(0, item)
+
+    def pop(self):
+        if len(self.items) == 0:
+            return None
+        item = self.items[-1]
+        del self.items[-1]
+        return item
+
+    def peek(self):
+        if len(self.items) == 0:
+            return None
+        return self.items[-1]
+
+    def size(self):
+        return len(self.items)
+
+def matchmake(queue, user):
+    name, action = user
+    
+    if action == "leave":
+        queue.search_and_remove(name)
+    if action == "join":
+        queue.push(name)
+
+    if queue.size() >= 4:
+        user1 = queue.pop()
+        user2 = queue.pop()
+    elif queue.size() < 4:
+        return "No match found"
+    
+    return f"{user1} matched {user2}!"
+```
