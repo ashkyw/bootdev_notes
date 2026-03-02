@@ -41,9 +41,9 @@ class Queue:
     def pop(self):
         if len(self.items) == 0:
             return None
-        item = self.items[-1]
+        temp = self.items[-1]
         del self.items[-1]
-        return item
+        return temp
 
     def peek(self):
         if len(self.items) == 0:
@@ -52,6 +52,15 @@ class Queue:
 
     def size(self):
         return len(self.items)
+
+    def search_and_remove(self, item):
+        if item not in self.items:
+            return None
+        self.items.remove(item)
+        return item
+
+    def __repr__(self):
+        return f"[{', '.join(self.items)}]"
 
 def matchmake(queue, user):
     name, action = user
