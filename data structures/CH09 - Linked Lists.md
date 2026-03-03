@@ -15,8 +15,6 @@ class Node:
     def set_next(self, node):
         self.next = node
 
-    # don't touch below this line
-
     def __repr__(self):
         return self.val
 
@@ -78,3 +76,36 @@ print(third)  # prints: friend
 ```
 
 In the above, everytime the `create_message_generator` function is called it creates a new generator instange .To continue from where you left off, you need to assign the generator to a variable (gen in the example above). When you start using `next()`, or loop over the generator, you continue using the same instance rather than starting a new one.
+
+Next step of the linked list:
+
+```py
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+
+    def set_next(self, node):
+        self.next = node
+
+    def __repr__(self):
+        return self.val
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def __iter__(self):
+        node = self.head
+        while node is not None:
+            yield node
+            node = node.next
+
+    def __repr__(self):
+        nodes = []
+        current = self.head
+        while current and hasattr(current, "val"):
+            nodes.append(current.val)
+            current = current.next
+        return " -> ".join(nodes)
+```
