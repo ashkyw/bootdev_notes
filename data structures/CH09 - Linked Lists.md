@@ -22,4 +22,4 @@ class Node:
 
 ```
 
-![]()
+![](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/list%20vs%20linked%20list.png)
