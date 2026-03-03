@@ -60,7 +60,7 @@ Even though iterating with linked lists is more challenging when compared to the
 ### `yield` keyword
 
 The [`yield`](https://docs.python.org/3/reference/simple_stmts.html#grammar-token-python-grammar-yield_stmt) keyword in Python returns a value, similar to `return`. However, it's used to turn a function into a [generator function](https://docs.python.org/3/glossary.html#term-generator). 
-Generator functions create a new function object. When *that* function is called, it executest the code in the generator function until it hits a `yield` statement. Here the function pauses and returns the value of the `yield` statement. Next time the function is called it starts where it left off.
+Generator functions create a new function object. When *that* function is called, it executes the code in the generator function until it hits a `yield` statement. Here the function pauses and returns the value of the `yield` statement. Next time the function is called it starts where it left off.
 
 ```py
 def create_message_generator():
