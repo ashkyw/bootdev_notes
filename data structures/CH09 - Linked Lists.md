@@ -242,3 +242,50 @@ class LinkedList:
         return " -> ".join(nodes)
 
 ```
+### Remove from Head
+
+We're one method away from having a fully functioning `O(1)` Queue! We just need a way to remove the first element from the linked list in constant time. When we're finished, our `LinkedList` will fulfill the basic requirements of a Queue:
+
+* `add_to_tail`: Constant time insert
+* `remove_from_head`: Constant time pop
+
+Let's rename the `LinkedList` class to `LLQueue` and remove the `add_to_head` functionality because Queues don't allow inserting into the wrong end.
+
+```py
+from node import Node
+
+class LLQueue:
+    def remove_from_head(self):
+        if self.head is None:
+            return None
+        temp = self.head
+        self.head = self.head.next
+        if self.head is None:
+            self.tail = None
+        temp.set_next(None)
+        return temp
+
+    def add_to_tail(self, node):
+        if self.head is None:
+            self.head = node
+            self.tail = node
+            return
+        self.tail.set_next(node)
+        self.tail = node
+
+    def __init__(self):
+        self.tail = None
+        self.head = None
+
+    def __iter__(self):
+        node = self.head
+        while node is not None:
+            yield node
+            node = node.next
+
+    def __repr__(self):
+        nodes = []
+        for node in self:
+            nodes.append(node.val)
+        return " <- ".join(nodes)
+```
