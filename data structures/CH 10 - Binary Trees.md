@@ -8,3 +8,14 @@ Trees are kind of like linked lists in the sense that the root node simply holds
 
   * Each node has a value and may have a list of "children"
   * Children can only have a single "parent"
+
+### Binary Trees
+
+Trees aren't particularly useful data structures unless they're ordered in some way. One of the most common types of ordered tree is a [Binary search tree](https://en.wikipedia.org/wiki/Binary_search_tree) or `BST`. A `BST` has some additional constraints:
+
+1, Instead of an unbounded list of children, each node has *at most* 2 children
+2. The left child's value must be *less than* its parent's value
+3. The right child's value must be *greater than* its parent's value
+4. No two nodes in the `BST` can have the same value
+
+By ordering the tree like this, we can traverse the tree to find the node we want much faster.
