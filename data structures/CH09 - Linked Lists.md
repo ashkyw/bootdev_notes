@@ -109,3 +109,62 @@ class LinkedList:
             current = current.next
         return " -> ".join(nodes)
 ```
+
+Linked List adding item to the tail of the list:
+```py
+from node import Node
+
+class LinkedList:
+    def add_to_tail(self, node):
+        if self.head is None:
+            self.head = node
+            return
+        
+        last_node = None
+
+        for i in self:
+            last_node = i
+        last_node.next = node
+            
+    # don't touch below this line
+
+    def __init__(self):
+        self.head = None
+
+    def __iter__(self):
+        node = self.head
+        while node is not None:
+            yield node
+            node = node.next
+
+    def __repr__(self):
+        nodes = []
+        for node in self:
+            nodes.append(node.val)
+        return " -> ".join(nodes)
+```
+### Some extra info on linked lists
+
+### Classes and Composition
+
+One important distinction: `LinkedList` does **not** inherit from `Node`. Instead, it uses composition.
+
+* A `Node` is a simple container for data and a pointer.
+* A `LinkedList` is a manager that holds a reference to the first `Node` (`self.head`).
+* Because the `LinkedList` manages `Node` objects, and those objects have a `.next` attribute, you can access that attribute on any node you find while traversing the list.
+
+### How the `for` loop and `yield` work
+
+You hit the nail on the head! Because you defined the `__iter__` method using `yield`, the `LinkedList` becomes an "iterable" object.
+
+1. When you write `for i in self:`, Python calls your `__iter__` method.
+2. Inside `__iter__`, the `while` loop starts at `self.head`.
+3. Each time it hits `yield` node, it "gives" that node to the `for` loop variable `i`.
+4. The `for` loop body runs (`last_node = i`).
+5. Then, the `__iter__` method resumes right where it left off, moving to `node.next`.
+
+By the time the `for` loop finishes, `i` (and thus `last_node`) is left holding the very last node that was yielded—the tail of your list.
+
+### The Final Connection
+
+Once the loop is done and you have a reference to the actual tail node in memory, `last_node.next = node` physically connects that old tail to your new node.
