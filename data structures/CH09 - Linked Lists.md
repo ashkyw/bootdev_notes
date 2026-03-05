@@ -119,15 +119,11 @@ class LinkedList:
         if self.head is None:
             self.head = node
             return
-        
         last_node = None
-
         for i in self:
             last_node = i
         last_node.next = node
             
-    # don't touch below this line
-
     def __init__(self):
         self.head = None
 
@@ -168,3 +164,39 @@ By the time the `for` loop finishes, `i` (and thus `last_node`) is left holding 
 ### The Final Connection
 
 Once the loop is done and you have a reference to the actual tail node in memory, `last_node.next = node` physically connects that old tail to your new node.
+
+Adding to head functionality:
+
+```py
+from node import Node
+
+class LinkedList:
+    def add_to_head(self, node):
+        node.next = self.head
+        self.head = node
+        return
+
+    def add_to_tail(self, node):
+        if self.head is None:
+            self.head = node
+            return
+        last_node = None
+        for current_node in self:
+            last_node = current_node
+        last_node.set_next(node)
+
+    def __init__(self):
+        self.head = None
+
+    def __iter__(self):
+        node = self.head
+        while node is not None:
+            yield node
+            node = node.next
+
+    def __repr__(self):
+        nodes = []
+        for node in self:
+            nodes.append(node.val)
+        return " -> ".join(nodes)
+```
