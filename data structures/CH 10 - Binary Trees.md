@@ -205,3 +205,43 @@ Would be traversed in this order:
     [4, 2, 1, 7, 6]
 
 Sometimes it's useful (albeit a bit slow) to iterate over all the nodes in the tree. In the case of LockedIn, we've been asked to build a way to create a backup of our database indexes - this traversal will allow us to save all the data in the tree to a file.
+
+Adding preorder traversal functionality:
+
+```py
+class BSTNode:
+    def preorder(self, visited):
+        if self.val is not None:
+            visited.append(self.val)
+        if self.left is not None:
+            self.left.preorder(visited)
+        if self.right is not None:
+            self.right.preorder(visited)
+        return visited
+
+    def __init__(self, val=None):
+        self.left = None
+        self.right = None
+        self.val = val
+
+    def insert(self, val):
+        if not self.val:
+            self.val = val
+            return
+
+        if self.val == val:
+            return
+
+        if val < self.val:
+            if self.left:
+                self.left.insert(val)
+                return
+            self.left = BSTNode(val)
+            return
+
+        if self.right:
+            self.right.insert(val)
+            return
+        self.right = BSTNode(val)
+
+```
