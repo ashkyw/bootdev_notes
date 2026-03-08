@@ -190,3 +190,18 @@ class BSTNode:
         return current.val
 
 ```
+Preorder Traversal
+
+A "preorder" traversal is a way to visit all the nodes in a tree. It's called "preorder" because the current node is visited before its children. This tree:
+
+        > 7
+            > 6
+    > 4
+        > 2
+            > 1
+
+Would be traversed in this order:
+
+    [4, 2, 1, 7, 6]
+
+Sometimes it's useful (albeit a bit slow) to iterate over all the nodes in the tree. In the case of LockedIn, we've been asked to build a way to create a backup of our database indexes - this traversal will allow us to save all the data in the tree to a file.
