@@ -103,6 +103,29 @@ class BSTNode:
 
 ```
 
+### Deletion Review
+
+The delete method is O(log(n)) because, like most binary tree operations, we don't have to search the entire tree. We only have to search one path from the root to the leaf node we want to delete.
+
+The depth of the tree on average is equal to log base 2 of the number of nodes in the tree. For example:
+|Nodes |	Depth |
+|------|------|
+| 1 |	0 |
+| 2 |	1 |
+| 4 |	2 |
+| 8 |	3 |
+| 16 |	4 |
+| 32 |	5 |
+| 64 |	6 |
+| 128 |	7 |
+| 256 |	8 |
+| 512 |	9 |
+| 1024 |	10 |
+| 2048 |	11 |
+| 4096 |	12 |
+
+We only need to use ~10 steps to delete a node from a tree of ~1000 nodes.
+
 Adding delete function to BST:
 
 ```py
