@@ -358,9 +358,9 @@ In recursive functions, you can think of each call as a new "layer" or a separat
 
 To visualize it:
 
-    1. `Root`: "Hey `LeftChild`, do you have the value?"
-    2. `LeftChild`: "I found it! It's `True`!" (Returns `True`)
-    3. `Root`: (If you didn't have `return`) "Thanks for the info, `LeftChild`. Now I'll continue to my own next line and eventually return `False` because I'm not the value."
+   1. `Root`: "Hey `LeftChild`, do you have the value?"
+   2. `LeftChild`: "I found it! It's `True`!" (Returns `True`)
+   3. `Root`: (If you didn't have `return`) "Thanks for the info, `LeftChild`. Now I'll continue to my own next line and eventually return `False` because I'm not the value."
 
 
 Adding search functionality to BST:
