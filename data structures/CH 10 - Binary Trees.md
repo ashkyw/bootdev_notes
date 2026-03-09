@@ -352,3 +352,56 @@ class BSTNode:
             return
         self.right = BSTNode(val)
 ```
+# Note on recursive function usage:
+
+In recursive functions, you can think of each call as a new "layer" or a separate worker. If you don't use the return keyword when calling the next layer, the worker finishes their job, finds the answer, and then just... throws it away instead of handing it back to the person who asked.
+
+To visualize it:
+
+    1. `Root`: "Hey `LeftChild`, do you have the value?"
+    2. `LeftChild`: "I found it! It's `True`!" (Returns `True`)
+    3. `Root`: (If you didn't have `return`) "Thanks for the info, `LeftChild`. Now I'll continue to my own next line and eventually return `False` because I'm not the value."
+
+
+Adding search functionality to BST:
+
+```py
+class BSTNode:
+    def exists(self, val):
+        if val == self.val:
+            return True
+
+        if val < self.val:
+            if self.left is None:
+                return False
+            return self.left.exists(val)
+
+        if self.right is None:
+            return False
+        return self.right.exists(val)
+
+    def __init__(self, val=None):
+        self.left = None
+        self.right = None
+        self.val = val
+
+    def insert(self, val):
+        if not self.val:
+            self.val = val
+            return
+
+        if self.val == val:
+            return
+
+        if val < self.val:
+            if self.left:
+                self.left.insert(val)
+                return
+            self.left = BSTNode(val)
+            return
+
+        if self.right:
+            self.right.insert(val)
+            return
+        self.right = BSTNode(val)
+```
