@@ -188,7 +188,6 @@ class BSTNode:
         while current.right is not None:
             current = current.right
         return current.val
-
 ```
 Preorder Traversal
 
@@ -299,5 +298,57 @@ class BSTNode:
             self.right.insert(val)
             return
         self.right = BSTNode(val)
+```
 
+### Inorder Traversal
+
+An "inorder" traversal is the most intuitive way to visit all the nodes in a tree. It's called "inorder" because the current node is visited between its children. It results in an ordered list of the nodes in the tree. The following tree:
+
+        > 7
+            > 6
+    > 4
+        > 2
+            > 1
+
+Would be visited in this order:
+
+    [1, 2, 4, 6, 7]
+
+Adding Inorder Traversal:
+
+```py
+class BSTNode:
+    def inorder(self, visited):
+        if self.left is not None:
+            self.left.inorder(visited)
+        if self.val is not None:
+            visited.append(self.val)
+        if self.right is not None:
+            self.right.inorder(visited)
+        return visited
+
+    def __init__(self, val=None):
+        self.left = None
+        self.right = None
+        self.val = val
+
+    def insert(self, val):
+        if not self.val:
+            self.val = val
+            return
+
+        if self.val == val:
+            return
+
+        if val < self.val:
+            if self.left:
+                self.left.insert(val)
+                return
+            self.left = BSTNode(val)
+            return
+
+        if self.right:
+            self.right.insert(val)
+            return
+        self.right = BSTNode(val)
 ```
