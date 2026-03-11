@@ -55,4 +55,16 @@ Perfectly Balanced?
 
 The re-balancing of a red-black tree does not result in a perfectly balanced tree. It only limits how unbalanced a tree may become. However, its insertion and deletion operations, along with the tree rearrangement and recoloring, are always performed in `O(log(n))` time.
 
+### Rotation
 
+"Rotations" are what actually keep a _red-black tree balanced_. Every time one branch of the tree starts to get too long, we will "rotate" those branches to keep the tree shallow. A shallow tree is a healthy (fast) tree!
+
+   * A properly-ordered tree pre-rotation remains a properly-ordered tree post-rotation
+   * Rotations are `O(1)` operations
+   * When rotating left:
+       * The "pivot" node's initial parent becomes its left child
+       * The "pivot" node's old left child becomes its initial parent's new right child
+
+Here's the process of a "left rotation":
+
+![](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/rotation.png)
