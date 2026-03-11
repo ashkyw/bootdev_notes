@@ -34,3 +34,25 @@ List of Very Simple Rules
 As it turns out, we've been inserting user records into our tree with incrementing numerical IDs (pre sorted data)! The app's user lookups are starting to get really slow. Let's start implementing a Red-Black tree to speed things up.
 
 In a normal BST, the child nodes don't need to know about, or carry a reference to their parent. The same is not true for Red-Black trees.
+
+Beginnings of Red Black Tree:
+
+```py
+
+```
+
+### Rules
+
+In addition to all the rules of a Binary Search Tree, a red-black tree must follow some additional ones:
+
+   1. Each node is either red or black
+   2. The root is black. This rule is sometimes omitted. Since the root can always be changed from red to black, but not necessarily vice versa, this rule has little effect on analysis.
+   3. All `Nil` leaf nodes are black.
+   4. If a node is red, then both its children are black.
+   5. All paths from a single node go through the same number of black nodes to reach any of its descendant `NIL` nodes.
+
+Perfectly Balanced?
+
+The re-balancing of a red-black tree does not result in a perfectly balanced tree. It only limits how unbalanced a tree may become. However, its insertion and deletion operations, along with the tree rearrangement and recoloring, are always performed in `O(log(n))` time.
+
+
