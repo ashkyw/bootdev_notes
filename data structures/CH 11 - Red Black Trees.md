@@ -122,7 +122,6 @@ class RBNode:
         self.left = None
         self.right = None
 
-
 class RBTree:
     def __init__(self):
         self.nil = RBNode(None)
