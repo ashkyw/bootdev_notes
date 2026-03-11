@@ -6,9 +6,9 @@ If mostly sorted data, or even worse, completely sorted data, is inserted into a
 
 ### Unbalanced Tree
 
-[](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/unbalanced%20tree.png)
+![](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/unbalanced%20tree.png)
 
 ### Balanced Tree
-[](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/balanced%20tree.png)
+![](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/balanced%20tree.png)
 
 Notice that both trees are valid BSTs, and both have the same number of nodes. The trouble is, in the unbalanced tree, there are more levels to traverse, bringing the Big O complexity closer to `O(n)` than `O(log(n))`.
