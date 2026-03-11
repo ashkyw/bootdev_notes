@@ -21,7 +21,7 @@ A [red-black](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree) tree is a _k
 
 Each node in an RB Tree stores an extra bit, called the "color": either red or black. The "color" ensures that the tree remains approximately balanced during insertions and deletions. When the tree is modified, the new tree is rearranged and repainted to restore the coloring properties that constrain how unbalanced the tree can become in the worst case.
 
->The "red" and "black" nomenclature is arbitrary - you could call them "red vs blue" trees >(shout-out rooster teeth), or not even call it "color" at all. The important part is just that we >now have two "types" of nodes and that will affect the algorithm for balancing it.
+>The "red" and "black" nomenclature is arbitrary - you could call them "red vs blue" trees (shout-out rooster teeth), or not even call it "color" at all. The important part is just that we now have two "types" of nodes and that will affect the algorithm for balancing it.
 
 List of Very Simple Rules
 
