@@ -3,8 +3,8 @@
 A [hash map](https://en.wikipedia.org/wiki/Hash_table) or "hash table" is a data structure that maps keys to values:
 
 > "bob" -> "ross"
-  "pablo" -> "picasso"
-  "leonardo" -> "davinci"
+> "pablo" -> "picasso"
+> "leonardo" -> "davinci"
 
 The lookup, insertion, and deletion operations of a hashmap have an average computational cost of O(1). Assuming you know the key, nothing beats a hashmap! A Python dictionary is an example of a hashmap. See, you already know what a hashmap is!
 Under the Hood
