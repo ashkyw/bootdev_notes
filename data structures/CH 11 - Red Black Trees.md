@@ -193,4 +193,42 @@ class RBTree:
         else:
             parent.right = new_node
 
+
 ```
+### Fix Insert
+
+Rotations are only useful if we can use them. When new nodes are inserted into the tree, they can break the red-black properties. We'll fix that by rotating the tree as new nodes are inserted, ensuring the tree remains balanced.
+
+When we're done here, we will have a fully functional (albeit insert-only) red-black tree. As you can see if you look at the bottom of the test suite, we'll be inserting numbers into our tree in order. A normal binary tree would break down into a single unruly branch:
+
+                      > 7
+                   > 6
+                > 5
+             > 4
+          > 3
+       > 2
+    > 1
+
+But our red-black tree will remain balanced:
+
+          > 7
+       > 6
+          > 5
+    > 4
+          > 3
+       > 2
+          > 1
+
+Adding insert fix to red black tree:
+
+```py
+
+```
+
+### Red-Black Tree Rules
+
+  1. Each node is either red or black
+  2. The root is black. This rule is sometimes omitted. Since the root can always be changed from red to black, but not necessarily vice versa, this rule has little effect on analysis.
+  3. All Nil leaf nodes are black.
+  4. If a node is red, then both its children are black.
+  5. All paths from a single node go through the same number of black nodes in order to reach any of its descendant NIL nodes.
