@@ -56,8 +56,9 @@ class HashMap:
     def insert(self, key, value):
         self.hashmap[self.key_to_index(key)] = key, value
     
-    def __init__(self, size):
-        self.hashmap = [None for i in range(size)]
+    def insert(self, key, value):
+        i = self.key_to_index(key)
+        self.hashmap[i] = (key, value)
 
     def key_to_index(self, key):
         total = 0
