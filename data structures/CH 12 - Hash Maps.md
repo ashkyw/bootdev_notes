@@ -81,5 +81,32 @@ class HashMap:
 Now that we can insert our users and their records into our hashmap, we need a way to retrieve that information when requested!
 
 ```py
+class HashMap:
+    def get(self, key):
+        try:
+            i = self.key_to_index(key)
+            return self.hashmap[i][1]
+        except:
+            raise Exception("sorry, key not found")
+
+    def __init__(self, size):
+        self.hashmap = [None for i in range(size)]
+
+    def key_to_index(self, key):
+        total = 0
+        for c in key:
+            total += ord(c)
+        return total % len(self.hashmap)
+
+    def insert(self, key, value):
+        i = self.key_to_index(key)
+        self.hashmap[i] = (key, value)
+
+    def __repr__(self):
+        final = ""
+        for i, v in enumerate(self.hashmap):
+            if v != None:
+                final += f" - {str(v)}\n"
+        return final
 
 ```
