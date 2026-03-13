@@ -24,7 +24,9 @@ Ideally the hash function hashes each key to a unique index, but most hash table
 
 Such collisions are typically accommodated for, and are _not_ a problem in practice.
 
-Creating index function for a hashmap:
+### Hash Function
+
+Let's build a toy hash map in Python. In the real world, you would almost always use the built-in Python dictionary if you need a hash map. However, just using a dictionary doesn't teach us about what's going on under the hood!
 
 ```py
 class HashMap:
@@ -45,7 +47,9 @@ class HashMap:
         return str(buckets)
 ```
 
-Adding insert functionality:
+### Insert
+
+Now that we have some building blocks for our hashmap, we need a way to start inserting values.
 
 ```py
 class HashMap:
@@ -69,4 +73,12 @@ class HashMap:
             else:
                 final += f" - {i}: None\n"
         return final
+```
+
+### Get
+
+Now that we can insert our users and their records into our hashmap, we need a way to retrieve that information when requested!
+
+```py
+
 ```
