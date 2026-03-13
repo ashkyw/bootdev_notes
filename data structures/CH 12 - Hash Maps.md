@@ -126,3 +126,15 @@ In Python, that means dictionaries. In Go, it means maps. In JavaScript, it mean
 * **Hashable Keys**: Keys must be hashable. This means they must be immutable and have a consistent hash value. For example, in Python, a tuple can be a key, but a list cannot.
 * **Efficient Resizing**: When a hashmap's capacity is exceeded, it dynamically resizes (usually by doubling in size) and rehashes the elements. A good hashmap manages this resizing efficiently, minimizing performance hits.
 * **Uniform Distribution**: A good hash function ensures keys are distributed evenly across the hashmap's underlying array, minimizing the number of collisions and optimizing lookup speed.
+
+### Resizing
+
+In the current implementation of `HashMap`, our hashmap has a lot of collisions. This is because we are using a fixed size for our hashmap.
+
+To reduce the chances of a collision, we can increase the number of slots in our hashmap. This is called resizing. This will not eliminate all possible collisions, but it will help reduce the chance of one happening.
+
+When resizing, we create a new hashmap with a larger number of slots. Then, we re-insert all the key-value pairs from the old hashmap into the new hashmap.
+
+```py
+
+```
