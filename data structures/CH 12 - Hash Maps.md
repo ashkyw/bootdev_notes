@@ -24,5 +24,49 @@ Ideally the hash function hashes each key to a unique index, but most hash table
 
 Such collisions are typically accommodated for, and are _not_ a problem in practice.
 
+Creating index function for a hashmap:
 
+```py
+class HashMap:
+    def key_to_index(self, key):
+        total = 0
+        for c in key:
+            total += ord(c)
+        return total % len(self.hashmap)
 
+    def __init__(self, size):
+        self.hashmap = [None for i in range(size)]
+
+    def __repr__(self):
+        buckets = []
+        for v in self.hashmap:
+            if v != None:
+                buckets.append(v)
+        return str(buckets)
+```
+
+Adding insert functionality:
+
+```py
+class HashMap:
+    def insert(self, key, value):
+        self.hashmap[self.key_to_index(key)] = key, value
+    
+    def __init__(self, size):
+        self.hashmap = [None for i in range(size)]
+
+    def key_to_index(self, key):
+        total = 0
+        for c in key:
+            total += ord(c)
+        return total % len(self.hashmap)
+
+    def __repr__(self):
+        final = ""
+        for i, v in enumerate(self.hashmap):
+            if v != None:
+                final += f" - {i}: {str(v)}\n"
+            else:
+                final += f" - {i}: None\n"
+        return final
+```
