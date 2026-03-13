@@ -68,3 +68,54 @@ CH 12 L8:
 2
 
 CH 12 L9:
+```py
+class HashMap:
+    def insert(self, key, value):
+        self.resize()
+        index = self.key_to_index(key)
+        self.hashmap[index] = (key, value)
+
+    def resize(self):
+        if len(self.hashmap) == 0:
+            self.hashmap.append(None)
+            return
+        if self.current_load() < 0.05:
+            return
+        else:
+            temp_map = self.hashmap
+            new_hashmap = [None for index in range(len(self.hashmap)*10)]
+            self.hashmap = new_hashmap
+            for item in temp_map:
+                if item is not None:
+                    key, value = item
+                    self.hashmap[self.key_to_index(key)] = item
+            
+    def current_load(self):
+        if len(self.hashmap) == 0:
+            return 1
+
+        counter = 0
+        for i in range(len(self.hashmap)):
+            if self.hashmap[i] is not None:
+                counter += 1
+
+        return counter / len(self.hashmap)
+
+    # don't touch below this line
+
+    def __init__(self, size):
+        self.hashmap = [None for i in range(size)]
+
+    def key_to_index(self, key):
+        total = 0
+        for c in key:
+            total += ord(c)
+        return total % len(self.hashmap)
+
+    def __repr__(self):
+        final = ""
+        for i, v in enumerate(self.hashmap):
+            if v != None:
+                final += f" - {str(v)}\n"
+        return final
+```
