@@ -193,3 +193,52 @@ In the previous lessons, we've built a basic hash map that can add and retrieve 
 Collisions happen when two different keys have the same index after applying the `key_to_index` function. To handle collisions, we can use a technique called [linear probing](https://en.wikipedia.org/wiki/Linear_probing).
 
 Linear probing works by finding the next available slot after the collision index and placing the new key*value pair there.
+
+Linear probing a hashmap in python:
+
+```py
+class HashMap:
+    def insert(self, key, value):
+        index = self.key_to_index(key)
+        original_index = index
+        first_iteration = True
+        while self.hashmap[index] is not None and self.hashmap[index][0] != key:
+            if not first_iteration and index == original_index:
+                raise Exception("hashmap is full")
+            index += 1 #
+            index = index % len(self.hashmap) #
+            first_iteration = False
+        self.hashmap[index] = (key, value)
+                
+    def get(self, key):
+        index = self.key_to_index(key)
+        original_index = index
+        first_iteration = True
+        while self.hashmap[index] is not None:
+            if self.hashmap[index][0] == key:
+                return self.hashmap[index][1]
+            if not first_iteration and index == original_index:
+                raise Exception("sorry key not found")
+            if self.hashmap[index] != key:
+                index += 1
+                index = index % len(self.hashmap)
+            first_iteration = False
+        raise Exception("sorry key not found")
+
+    def __init__(self, size):
+        self.hashmap = [None for i in range(size)]
+
+    def key_to_index(self, key):
+        total = 0
+        for c in key:
+            total += ord(c)
+        return total % len(self.hashmap)
+
+    def __repr__(self):
+        final = ""
+        for i, v in enumerate(self.hashmap):
+            if v != None:
+                final += f" - {str(v)}\n"
+        return final
+
+```
