@@ -185,3 +185,11 @@ class HashMap:
         return final
 
 ```
+
+### Linear Probing
+
+In the previous lessons, we've built a basic hash map that can add and retrieve key-value pairs. However, our current implementation does not handle collisions well. In the context of LockedIn, we want to make sure that user information can never be lost or overwritten.
+
+Collisions happen when two different keys have the same index after applying the `key_to_index` function. To handle collisions, we can use a technique called [linear probing](https://en.wikipedia.org/wiki/Linear_probing).
+
+Linear probing works by finding the next available slot after the collision index and placing the new key*value pair there.
