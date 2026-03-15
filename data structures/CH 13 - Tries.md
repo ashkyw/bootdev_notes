@@ -28,6 +28,48 @@ Would be represented as:
 	}
 }
 ```
-The * character (paired with True instead of a dictionary) is used to indicate the end of a word.
+The `*` character (paired with `True` instead of a dictionary) is used to indicate the end of a word.
 
 A trie is also often referred to as a "prefix tree" because it can be used to efficiently find all of the words that start with a given prefix.
+
+Add function in a Trie:
+
+```py
+class Trie:
+    def add(self, word):
+        current = self.root
+        for letter in word:
+            if letter not in current:
+                current[letter] = {}
+            current = current[letter]
+        current[self.end_symbol] = True
+
+    def __init__(self):
+        self.root = {}
+        self.end_symbol = "*"
+```
+
+Exists function in a Trie:
+
+```py
+class Trie:
+    def exists(self, word):
+        current = self.root
+        for letter in word:
+            if letter not in current:
+                return False
+            current = current[letter]
+        return self.end_symbol in current
+
+    def add(self, word):
+        current = self.root
+        for letter in word:
+            if letter not in current:
+                current[letter] = {}
+            current = current[letter]
+        current[self.end_symbol] = True
+
+    def __init__(self):
+        self.root = {}
+        self.end_symbol = "*"
+```
