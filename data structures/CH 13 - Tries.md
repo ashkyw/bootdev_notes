@@ -73,3 +73,39 @@ class Trie:
         self.root = {}
         self.end_symbol = "*"
 ```
+
+### Prefix Matching
+
+Tries tend to be most useful for prefix matching. For example, if you wanted to find all the words in a dictionary that start with a given prefix, a trie works great! Autocomplete, keyword search, and spellcheck are all good examples of where a trie can be useful.
+
+Remember, a hash table is only good for exact matches, whereas a trie allows you to look up all of the words that match a given prefix. For example, given this trie:
+```py
+{
+	"h": {
+		"e": {
+			"l": {
+				"l": {
+					"o": {
+                        "*": True
+                    }
+				},
+				"p": {
+                    "*": True
+                }
+			}
+		},
+        "a": {
+			"r": {
+				"d": {
+					"*": True
+				}
+			}
+		}
+	}
+}
+```
+We could quickly find all the words that start with "hel" and get:
+
+* hello
+* help
+
