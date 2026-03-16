@@ -109,3 +109,47 @@ We could quickly find all the words that start with "hel" and get:
 * hello
 * help
 
+Adding get prefix for text prediction functionality:
+
+```py
+class Trie:
+    def search_level(self, current_level, current_prefix, words):
+        if self.end_symbol in current_level.keys():
+            words.append(current_prefix)
+        sorted_list = list(sorted(current_level.keys()))
+        for letter in sorted_list:
+            if letter != self.end_symbol:
+                next_prefix = current_prefix + letter
+                self.search_level(current_level[letter], next_prefix, words)
+        
+        return words
+    
+    def words_with_prefix(self, prefix):
+        matching_words = []
+        current_level = self.root
+        for char in prefix:
+            if char not in current_level:
+                return []
+            current_level = current_level[char]
+        self.search_level(current_level, prefix, matching_words)
+        
+        return matching_words
+
+    def __init__(self):
+        self.root = {}
+        self.end_symbol = "*"
+
+    def add(self, word):
+        current_level = self.root
+        for letter in word:
+            if letter not in current_level:
+                current_level[letter] = {}
+            current_level = current_level[letter]
+        current_level[self.end_symbol] = True
+```
+
+### Find Matches
+
+Tries are super efficient when it comes to finding substrings in a large document of text. For LockedIn, we want to be able to find all of the instances of bad words in chat messages and filter them out.
+
+If we just split on whitespace and matched against a dictionary, we would miss substrings. For example, if we had the word "darn" in our dictionary, we would allow the word "darnit" to slip through undetected. That's why we'll use a trie.
