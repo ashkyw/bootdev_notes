@@ -153,3 +153,33 @@ class Trie:
 Tries are super efficient when it comes to finding substrings in a large document of text. For LockedIn, we want to be able to find all of the instances of bad words in chat messages and filter them out.
 
 If we just split on whitespace and matched against a dictionary, we would miss substrings. For example, if we had the word "darn" in our dictionary, we would allow the word "darnit" to slip through undetected. That's why we'll use a trie.
+
+Adding match functionality:
+
+```py
+class Trie:
+    def find_matches(self, document):
+        matches = set()
+        for i in range(len(document)):
+            level = self.root
+            for j in range(i, len(document)):
+                ch = document[j]
+                if ch not in level:
+                    break
+                level = level[ch]
+                if self.end_symbol in level:
+                    matches.add(document[i : j + 1])
+        return matches
+
+    def __init__(self):
+        self.root = {}
+        self.end_symbol = "*"
+
+    def add(self, word):
+        current = self.root
+        for letter in word:
+            if letter not in current:
+                current[letter] = {}
+            current = current[letter]
+        current[self.end_symbol] = True
+```
