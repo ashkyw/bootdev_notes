@@ -51,3 +51,23 @@ class Graph:
             return False
         return self.graph[u][v]
 ```
+
+When an algorithm traverses a graph, it typically moves across the _edges_.
+
+### Common use cases:
+
+| Use Case | Vertex | Edge |
+|----|----|---|
+| Social Networks | User | Connection |
+| Road Maps | Location | Road |
+| Networks | Computer | Cable |
+| Game Dev | Tile | Path |
+| AI Decision | State | Action |
+
+### Properties:
+
+* Graphs can have any number of vertices
+* An undirected graph can have up to `n(n-1)/2` edges for `n` vertice
+* Vertices can exist without edges but may be disconnected (and thus kinda useless)
+* Typically graphs (with the exception of multigraphs) can only have a single edge between two vertices
+* Weighted graphs assing values (costs) to edges (we'll cover this in a future course)
