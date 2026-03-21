@@ -6,8 +6,8 @@ A [graph](https://en.wikipedia.org/wiki/Graph_%28discrete_mathematics%29) is a s
 
 For now, we'll use a matrix to represent the edges in a graph that connect each pair of vertices. For example, here's a matrix that represents the graph above.
 
-| 0 | 1 | 2 | 3 | 4 |
-|----|---|---|----|---|
+|  | 0 | 1 | 2 | 3 | 4 |
+|---|----|---|---|----|---|
 | 0 | False | True | False | False | True |
 | 1 | True | False | True | True | True |
 | 2 | False | True | False | True | False |
