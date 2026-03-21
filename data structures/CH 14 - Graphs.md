@@ -71,3 +71,14 @@ When an algorithm traverses a graph, it typically moves across the _edges_.
 * Vertices can exist without edges but may be disconnected (and thus kinda useless)
 * Typically graphs (with the exception of multigraphs) can only have a single edge between two vertices
 * Weighted graphs assing values (costs) to edges (we'll cover this in a future course)
+
+### Adjacency list
+
+An [adjacency list](https://en.wikipedia.org/wiki/Adjacency_list) stores a list of vertices for ech vertex that indicates where the connections are:
+
+|----|---|---|----|---|
+| 0 | connects with | 1 | 4 |  |  |
+| 1 | connects with | 0 | 2 | 3 | 4 |
+| 2 | connects with | 1 | 3 |  |  |
+| 3 | connects with | 1 | 2 | 4 |  |
+| 4 | connects with | 0 | 1 | 3 |  |
