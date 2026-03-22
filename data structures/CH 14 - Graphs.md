@@ -76,8 +76,8 @@ When an algorithm traverses a graph, it typically moves across the _edges_.
 
 An [adjacency list](https://en.wikipedia.org/wiki/Adjacency_list) stores a list of vertices for ech vertex that indicates where the connections are:
 
-| - | - | - | - | - |
-|----|---|---|----|---|
+| - | - | - | - | - | - |
+|----|---|---|----|---|---|
 | 0 | connects with | 1 | 4 | . | . |
 | 1 | connects with | 0 | 2 | 3 | 4 |
 | 2 | connects with | 1 | 3 | . | . |
