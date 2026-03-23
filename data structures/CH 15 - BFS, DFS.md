@@ -61,7 +61,7 @@ A complete graph is a graph where every pair of vertices is connected by an edge
 
 The formula for the number of edges in a complete graph is `n(n - 1)/2`, where `n` is the number of vertices.
 
-# Depth-first search:
+# Depth First Search (DFS):
 
 ![](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/dfs.png)
 
