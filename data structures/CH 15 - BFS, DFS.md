@@ -53,3 +53,10 @@ class Graph:
         return result
 ```
 
+### Complete graphs:
+
+A complete graph is a graph where every pair of vertices is connected by an edge.
+
+![](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/complete_graph.png)
+
+The formula for the number of edges in a complete graph is `n(n - 1)/2`, where `n` is the number of vertices.
