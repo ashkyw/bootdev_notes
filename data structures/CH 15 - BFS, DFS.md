@@ -60,3 +60,9 @@ A complete graph is a graph where every pair of vertices is connected by an edge
 ![](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/complete_graph.png)
 
 The formula for the number of edges in a complete graph is `n(n - 1)/2`, where `n` is the number of vertices.
+
+# Depth-first search:
+
+![](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/dfs.png)
+
+Depth-first search (DFS) is just another algorithm to traverse a graph - kind of like breadth first search. It starts at a root node (some arbitrary node on the graph) and explores as far as possible along each branch before backtracking and starting down the next branch.
