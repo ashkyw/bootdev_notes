@@ -26,4 +26,6 @@ The version of the problem that we will solve can be stated!
         Given a list of citios, the distances between each pair of cities, and a total distance, 
         is there a path through all the cities that is less than the distance given?
 
-  
+  ![](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/traveling%20salesman%20problem.png)
+
+  For example, with the above graph, the problem could be, "Is there any way to travel through A, B, C, and D in less than a distance of `67`? The answer would be "yes" by way of `A→B→D→C`
