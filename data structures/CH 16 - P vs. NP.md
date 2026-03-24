@@ -23,7 +23,7 @@ A famous example of a problem in `NP` is the [Traveling Salesman Problem](https:
 
 The version of the problem that we will solve can be stated!
 
-        Given a list of citios, the distances between each pair of cities, and a total distance, 
+        Given a list of cities, the distances between each pair of cities, and a total distance, 
         is there a path through all the cities that is less than the distance given?
 
   ![](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/traveling%20salesman%20problem.png)
