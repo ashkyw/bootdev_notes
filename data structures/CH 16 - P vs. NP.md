@@ -30,7 +30,7 @@ The version of the problem that we will solve can be stated!
 
   For example, with the above graph, the problem could be, "Is there any way to travel through A, B, C, and D in less than a distance of `67`? The answer would be "yes" by way of `A→B→D→C`
 
-Brute force solution to TSP:
+Brute force solution to TSP in `NP`, due to being `O(n!)` time:
 
   ```py
 def tsp(cities, paths, dist):
@@ -60,4 +60,15 @@ def helper(res, arr, n):
             else:
                 arr[0], arr[n - 1] = arr[n - 1], arr[0]
     return res
+```
+
+Easy solution in `P` to verify TSP:
+
+```py
+def verify_tsp(paths, dist, actual_path):
+    total = 0
+    for i in range(len(actual_path)):
+        if i != 0:
+            total += paths[actual_path[i - 1]][actual_path[i]]
+    return total < dist
 ```
