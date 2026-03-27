@@ -156,4 +156,4 @@ Finding a number's prime factors is an `NP` algorithm.
    * When given two primes and their product, all we need to do is some simple multiplication to verify correctness. (polynomial time)
    * Given a number, finding its prime factors is a much more difficult problem. Exponential time is the best we know of.
 
-The trouble is that no one has formally proven that there is not a polynomial time algorithm for finding prime factors. So, we're technically unsure if the problem is in `P` or if it's `NP-complete`.
+>The trouble is that no one has formally proven that there is not a polynomial time algorithm for finding prime factors. So, we're technically unsure if the problem is in `P` or if it's `NP-complete`.
