@@ -109,4 +109,17 @@ should_grant_access = user_input == saved_password
 ```
 The useful bit is that it takes _much_ longer to guess the correct password.
 
+### Does P Equal NP?
+
+The `P` versus `NP` problem is a [major unsolved problem](https://en.wikipedia.org/wiki/P_versus_NP_problem) in computer science. It asks whether every problem whose solution can be quickly _verified_ (is in `NP`) can also be solved quickly (is in `P`).
+
+The question is, "Are all `NP` problems really just `P` problems?"
+
+The answer is, "We don't know, but probably not".
+
+### Why Do We Care?
+
+All problems in `NP` (you know, hard ones like the traveling salesman problem) have been proven to also be solvable in polynomial time if we can find a solution to just one `NP-Complete` problem.
+
+If a _single_ `NP-complete` problem can be solved quickly (in polynomial time) that means that all problems in NP can be solved in polynomial time. That would be a huge deal, particularly because it would break digital security systems that rely on the difficulty of certain `NP` problems.
 
