@@ -128,3 +128,19 @@ If a _single_ `NP-complete` problem can be solved quickly (in polynomial time) t
 We do not know for sure if `P` equals `NP` because we can't find any polynomial-time solutions to NP-complete problems. Additionally, we have been unable to prove whether `P` does _not_ equal `NP`. We _suspect_ `P` does not equal `NP` because it has been so difficult to prove that `P = NP`.
 
 That said, it's actually more complicated to prove the negative case. To prove the positive case, that `P = NP`, we simply need to solve an NP-complete problem like TSP in polynomial time. In order to _prove_ the negative case, that `P != NP`, we would need to exhaustively prove that there's no _possible way_ to solve TSP in polynomial time. That's a lot trickier.
+
+### NP-Hard
+
+All `NP-complete` problems are [NP-hard](https://en.wikipedia.org/wiki/NP-hardness), but not all `NP-hard` problems are NP-complete. The determining factor between `NP-complete` and `NP-hard` is that _not all_ `NP-hard` problems are `NP`
+
+![](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/NP%20Hard.png)
+
+Definition:
+ 
+    A problem is `NP-hard` if _every_ problem in `NP` can be reduced into it in polynomial time
+
+Compare this to the slightly different definiton of `NP-complete`:
+
+    A problem is `NP-complete` if it is in `NP` and _every_ other problem in `NP` can be reduced into it in polynomial time.
+
+The difference is that `NP-complete` problems _must_ be in `NP`, or in other words, they must be verifiable in polynomial time. `NP-hard` has no such restriction
