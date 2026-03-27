@@ -144,3 +144,16 @@ Compare this to the slightly different definiton of `NP-complete`:
     A problem is `NP-complete` if it is in `NP` and _every_ other problem in `NP` can be reduced into it in polynomial time.
 
 The difference is that `NP-complete` problems _must_ be in `NP`, or in other words, they must be verifiable in polynomial time. `NP-hard` has no such restriction
+
+### Prime Factorization
+
+Let's solve a commonly misunderstood problem in computer science - **finding the prime factors of a number**. Almost all modern cryptography, including your browser's HTTPS encryption, is based on the fact that **prime factorization** is slow.
+
+For now, let's focus on the speed of factorization, and how it relates to `P` and `NP`.
+
+Finding a number's prime factors is an `NP` algorithm.
+
+   * When given two primes and their product, all we need to do is some simple multiplication to verify correctness. (polynomial time)
+   * Given a number, finding its prime factors is a much more difficult problem. Exponential time is the best we know of.
+
+The trouble is that no one has formally proven that there is not a polynomial time algorithm for finding prime factors. So, we're technically unsure if the problem is in `P` or if it's `NP-complete`.
