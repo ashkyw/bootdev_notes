@@ -123,3 +123,8 @@ All problems in `NP` (you know, hard ones like the traveling salesman problem) h
 
 If a _single_ `NP-complete` problem can be solved quickly (in polynomial time) that means that all problems in NP can be solved in polynomial time. That would be a huge deal, particularly because it would break digital security systems that rely on the difficulty of certain `NP` problems.
 
+### The Negative Case
+
+We do not know for sure if `P` equals `NP` because we can't find any polynomial-time solutions to NP-complete problems. Additionally, we have been unable to prove whether `P` does _not_ equal `NP`. We _suspect_ `P` does not equal `NP` because it has been so difficult to prove that `P = NP`.
+
+That said, it's actually more complicated to prove the negative case. To prove the positive case, that `P = NP`, we simply need to solve an NP-complete problem like TSP in polynomial time. In order to _prove_ the negative case, that `P != NP`, we would need to exhaustively prove that there's no _possible way_ to solve TSP in polynomial time. That's a lot trickier.
