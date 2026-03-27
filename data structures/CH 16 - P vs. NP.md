@@ -95,3 +95,18 @@ Well, this means that if we can find an algorithm that solves any of the `NP-com
 
 Super-duper-smart computer scientists have proven it. Trust me. Or optionally [read more about it](https://web.stanford.edu/class/archive/cs/cs103/cs103.1134/lectures/26/Small26.pdf) if you're interested.
 
+### Verifying Solutions
+
+Let's circle back to this idea of "slow to solve, fast to verify".
+
+Even when we aren't specifically talking about P and NP, the concept of "slow to solve, fast to verify" is very important in real-world software. As a trivial example, imagine the password on an email account. When a user inputs a password like:
+
+`p@ssword4Mi`
+
+It's easy to verify if that password matches the one we have saved on file. It's literally as easy as:
+```py
+should_grant_access = user_input == saved_password
+```
+The useful bit is that it takes _much_ longer to guess the correct password.
+
+
