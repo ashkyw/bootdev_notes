@@ -137,11 +137,11 @@ All `NP-complete` problems are [NP-hard](https://en.wikipedia.org/wiki/NP-hardne
 
 Definition:
  
-    A problem is `NP-hard` if _every_ problem in `NP` can be reduced into it in polynomial time
+>A problem is `NP-hard` if _every_ problem in `NP` can be reduced into it in polynomial time
 
 Compare this to the slightly different definiton of `NP-complete`:
 
-    A problem is `NP-complete` if it is in `NP` and _every_ other problem in `NP` can be reduced into it in polynomial time.
+>A problem is `NP-complete` if it is in `NP` and _every_ other problem in `NP` can be reduced into it in polynomial time.
 
 The difference is that `NP-complete` problems _must_ be in `NP`, or in other words, they must be verifiable in polynomial time. `NP-hard` has no such restriction
 
