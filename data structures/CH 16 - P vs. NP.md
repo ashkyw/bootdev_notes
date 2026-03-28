@@ -157,3 +157,44 @@ Finding a number's prime factors is an `NP` algorithm.
    * Given a number, finding its prime factors is a much more difficult problem. Exponential time is the best we know of.
 
 >The trouble is that no one has formally proven that there is not a polynomial time algorithm for finding prime factors. So, we're technically unsure if the problem is in `P` or if it's `NP-complete`.
+
+## Prime Factoring Review:
+
+### Big O Analysis
+
+Let us denote `n` as the integer input, and `s` as the size of `n` in bits. `s = log2(n)`
+
+Notice that our first loop iterates `log(n)` times and the second loop iterates `sqrt(n)` times. The Big O with respect to `n` is `O(sqrt(n))`! That's fast! That's polynomial complexity which would lead us to believe the problem is in `P`
+
+### Wait!
+
+The problem is that, by definition, when computer scientists talk about this problem, they are talking about the length of `n` in bits. What we will call `s`. For example, the integer `255` only takes `8` bits.
+
+`241` = `11110001` in binary
+
+Since `s = log2(n)`, we know that `2^s = n`. Therefore, a complexity of `O(sqrt(n))` is equivalent to `O(sqrt(2^s))`
+
+The complexity in respect to the number of bits is exponential.
+
+### Code
+
+```py
+def prime_factors(n):
+    prime_factors = []
+    while n % 2 == 0:
+        n /= 2
+        prime_factors.append(2)
+    for i in range(3, int(math.sqrt(n)) + 1, 2):
+        while n % i == 0:
+            n /= i
+            prime_factors.append(i)
+    if n > 2:
+        prime_factors.append(int(n))
+    return prime_factors
+```
+
+### Subset Sum Problem
+
+In LockedIn, we have a list of influencers and their respective follower counts. We want to find a subset of influencers whose total follower count is equal to a target number.
+
+This problem is known as the [Subset Sum Problem](https://en.wikipedia.org/wiki/Subset_sum_problem), which is an NP-hard problem. It asks the question, "Can we pick numbers from a list to add up to a target number?"
