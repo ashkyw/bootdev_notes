@@ -1,4 +1,4 @@
-#HTML
+# HTML
 
 The primary output of a static site generator is [HTML(HyperText Markup Language)](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics), because HTML containstt all the _content_ of a web page.
 
@@ -39,3 +39,20 @@ HTML is a tree-like structure where each "tag" (e.g. `<p>`, the bits enclosed in
   * `<h1>` is a top-level heading
   * `<p>` is a paragraph of text
   * `<a>` is a hyperlink. The `<href>` [attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes) is the URL the link points to.m Attributes are key-value pairs that provide additional information about an element, like `href="https://www.boot.dev"`.
+
+# CSS
+
+[CSS (Cascading Style Sheets)](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics) is another "not-really-a-programming-language" that styles [HTML elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element). It's a way to dress up your HTML with colors, fonts, responsive layouts, animations, etc.
+```css
+/* Make all <h1> HTML elements red */
+h1 {
+  color: red;
+}
+```
+Or maybe we want the max-width of our paragraphs to be 50% of the screen width:
+```css
+/* Make all <p> HTML elements 50% of the screen width */
+p {
+  max-width: 50%;
+}
+```
