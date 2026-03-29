@@ -63,6 +63,8 @@ p {
 
 **Writing [Markdown](https://www.markdownguide.org/getting-started/) is pure bliss**. Markdown is a less-verbose markup language designed for _ease of writing_. The trouble is web browsers don't understand Markdown. They only understand HTML and CSS. **The #1 job of a static site generator is to convert Markdown into HTML**.
 
+Instead of writing a verbose HTML list:
+
 ```html
 <ul>
   <li>I really</li>
