@@ -56,3 +56,29 @@ p {
   max-width: 50%;
 }
 ```
+
+# Markdown
+
+**Writing HTML by hand sucks**. Even if you're a grubby front-end programmer, you probably don't want to write entire documents in raw HTML.
+
+**Writing [Markdown](https://www.markdownguide.org/getting-started/) is pure bliss**. Markdown is a less-verbose markup language designed for _ease of writing_. The trouble is web browsers don't understand Markdown. They only understand HTML and CSS. **The #1 job of a static site generator is to convert Markdown into HTML**.
+
+```html
+<ul>
+  <li>I really</li>
+  <li>hate writing</li>
+  <li>in raw html</li>
+</ul>
+```
+
+We can write this in Markdown
+
+```md
+- I really
+- hate writing
+- in raw html
+```
+
+Our static site generator will take a directory of Markdown files (one for each web page), and build a directory of HTML files. Because we're not savages, we'll also include a single CSS file to style the site.
+
+ >All lessons on Boot.dev are written in Markdown!
