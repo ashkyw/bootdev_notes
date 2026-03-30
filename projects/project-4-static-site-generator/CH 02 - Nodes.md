@@ -6,7 +6,7 @@ When I say "inline" I just mean text that is part of a larger block of text. For
 * text (plain)
 *  `**Bold text**`
 *  `_ Italic text_`
-*  `"`"Code text`"``
+*  `Code text`
 *  links, in this format: `[anchor text](url)`
 *  images, in this format: `![alt text](url)`
 
