@@ -11,3 +11,11 @@ When I say "inline" I just mean text that is part of a larger block of text. For
 *  images, in this format: `![alt text](url)`
 
 Everything else we're considering [block level](https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements), like headings, paragraphs, and bullet lists, and we'll handle those later.
+
+### TextNode Tests
+
+[Unit tests](https://en.wikipedia.org/wiki/Unit_testing) are a way to verify that the code you write works as expected. In other Boot.dev courses, you write code that passes the unit tests provided. As a developer, you'll be expected to write your _own_ tests to ensure that your code, "units", work as expected.
+
+It can feel like a lot of extra work...
+... but it's often worth it, especially if the logic you're testing is particularly complex while simultaneously easy to test (e.g. it doesn't rely on external stuff like files or the network). Once you have some good tests, you can run them whenever you make changes to ensure you don't break anything.
+
