@@ -19,3 +19,4 @@ Everything else we're considering [block level](https://developer.mozilla.org/en
 It can feel like a lot of extra work...
 ... but it's often worth it, especially if the logic you're testing is particularly complex while simultaneously easy to test (e.g. it doesn't rely on external stuff like files or the network). Once you have some good tests, you can run them whenever you make changes to ensure you don't break anything.
 
+[unittest library documentation](https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertEqual)
