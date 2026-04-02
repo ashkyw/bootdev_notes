@@ -20,3 +20,20 @@ It can feel like a lot of extra work...
 ... but it's often worth it, especially if the logic you're testing is particularly complex while simultaneously easy to test (e.g. it doesn't rely on external stuff like files or the network). Once you have some good tests, you can run them whenever you make changes to ensure you don't break anything.
 
 [unittest library documentation](https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertEqual)
+
+# LeafNode
+
+Time to render some HTML strings!
+
+A `LeafNode` is a type of `HTMLNode` that represents a single HTML tag with _no children_. For example, a simple `<p>` tag with some text inside of it:
+```html
+<p>This is a paragraph of text.</p>
+```
+We call it a "leaf" node because it's a "leaf" in the tree of HTML nodes. It's a node with no children. In this next example, `<p>` is not a leaf node, but `<b>` is.
+```html
+<p>
+  This is a paragraph. It can have a lot of text inside tbh.
+  <b>This is bold text.</b>
+  This is the last sentence.
+</p>
+```
