@@ -53,6 +53,21 @@ print(matches)  # [('lane', 'example.com'), ('hunter', 'example.com')]
 * `\w` macthes any word character ([alphanumeric](https://en.wikipedia.org/wiki/Alphanumericals) characters and underscores)
 * `+` means "one or more peceding character"
 * `@` is just a literal `@` symbol that we want to match
-* `\.` is a literal `.` that we want to match (The `.` is a special character in regex, so we escape ti with a leading backslash)
+* `\.` is a literal `.` that we want to match (The `.` is a special character in regex, so we escape it with a leading backslash)
 
 ### Negative Lookbehind
+Sometimes you need to match something that is NOT preceded by something else. This is where a negative lookbehind comes in handy.
+
+```py
+text = "The word cat appears here, but not in concat"
+matches = re.findall(r"(?<!con)cat", text)
+print(matches)  # ['cat']
+```
+
+* `(?<!con)cat` is a negative lookbehind that matches "cat" only if it's NOT preceded by "con"
+* This allows us to match "cat" in "concat"
+* The general syntax is `(?<!pattern)` where `pattern` is what you don't want to see before your match
+
+# Testing Regex
+
+[regexr.com](https://regexr.com/) is useful for interactive Regex testing. It breaks down each part of the pattern and explains what it does.
