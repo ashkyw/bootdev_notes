@@ -86,3 +86,21 @@ def css_styles(initial_styles):
 
     return add_style
 ```
+
+Another example of closure withot nonlocal
+
+```py
+def create_damage_calculator(base_damage, crit_multiplier):
+    def deal_damage(enemy_armor, is_critical):
+        if is_critical:
+            raw_damage = base_damage * crit_multiplier
+        else:
+            raw_damage = base_damage
+
+        final_damage = raw_damage - enemy_armor
+        if final_damage < 1:
+            return 1
+        return final_damage
+
+    return deal_damage
+```
