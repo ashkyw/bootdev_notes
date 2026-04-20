@@ -53,6 +53,32 @@ class Graph:
         return result
 ```
 
+Another example of  BFS
+
+```py
+def bfs_traversal(graph, start):
+    if start not in graph:
+        return []
+
+    visited = []
+    seen = set([start])
+    queue = [start]
+    index = 0
+
+    while index < len(queue):
+        node = queue[index]
+        index += 1
+        visited.append(node)
+
+        neighbors = graph.get(node, [])
+        for neighbor in neighbors:
+            if neighbor not in seen:
+                seen.add(neighbor)
+                queue.append(neighbor)
+
+    return visited
+
+```
 ### Complete graphs:
 
 A complete graph is a graph where every pair of vertices is connected by an edge.
