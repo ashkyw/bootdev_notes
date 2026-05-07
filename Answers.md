@@ -1,3 +1,11 @@
+Need to accomodate things strung together. This falis:
+
+Input: Mix ![a](1.png)[b](2) text ![c](3.jpg)
+
+Expected: [('image', 'a', '1.png'), ('link', 'b', '2'), ('image', 'c', '3.jpg')]
+Actual:   [('image', 'a', '1.png'), ('image', 'c', '3.jpg')]
+Fail
+
 ```python
 import re
 
