@@ -3,23 +3,16 @@ import re
 
 def extract_inline_segments(text):
     inline_list = []
-    for block in text:
-        if block == "[":
-            links = extract_markdown_links(text)
-            if links is not None:
-                for link in links:
-                    link = ("link", ) + link
-                    inline_list.append(link)
-        if block == "!":
-            check = block
-            if block == "[":
-                check = check + block
-                if check == "![":
-                    image = extract_markdown_images(text)
-                    if image is not None:
-                        for item in image:
-                            item = ("image", ) + item
-                            inline_list.append(item)
+    links = extract_markdown_links(text)
+    if links is not None:
+        for link in links:
+            link = ("link", ) + link
+            inline_list.append(link)
+    image = extract_markdown_images(text)
+    if image is not None:
+        for item in image:
+            item = ("image", ) + item
+            inline_list.append(item)
    
     return inline_list
 
