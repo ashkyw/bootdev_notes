@@ -97,7 +97,7 @@ def modify_list(inner_lst):
 
 outer_lst = [1, 2, 3]
 modify_list(outer_lst)
-# outer_lst = [1, 2, 3, 4]````
+# outer_lst = [1, 2, 3, 4]
 ```
 
 # Example of Pass by Value (Immutable)
