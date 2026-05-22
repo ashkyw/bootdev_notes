@@ -189,4 +189,123 @@ int main() {
 
 ## Printing variables
 
-You've seen `printf` magic a few times. 
+You've seen `printf()` magic a few times. Unfortunately, in C it isn't as easy to do string interpolation (f-strings in Python).
+
+Instead of:
+
+```py
+print(f"Hello, {name}. You're {age} years old.")
+```
+
+We have to tell C _how_ we want particular values to be printed using "format specifiers."
+
+Common ![format specifiers](https://cplusplus.com/reference/cstdio/printf/#:~:text=Parameters-,format,-C%20string%20that) are:
+
+* `%d` - digit (integer)
+* `%c` - character
+* `%f` - floating point number
+* `%s` - string (char *)
+
+```C
+printf("Hello, %s. You're %d years old. \n", name, age);
+```
+
+### Newline Character
+
+The `print()` function in Python automatically adds a !(newline character)[https://en.wikipedia.org/wiki/Newline] (`\n`) at the end of the string. In C, we have to do this manually.
+
+```C
+printf("Hello, world!\n")
+```
+
+```C
+// End of lesson code:
+#include <stdio.h>
+
+int main() {
+  int sneklang_default_max_threads = 8;
+  char sneklang_default_perms = 'r';
+  float sneklang_default_pi = 3.141592;
+  char *sneklang_title = "Sneklang";
+  // don't touch above this line
+
+  printf("Default max threads: %d\n", sneklang_default_max_threads);
+  printf("Custom perms: %c\n", sneklang_default_perms);
+  printf("Constant pi value: %f\n", sneklang_default_pi);
+  printf("Sneklang title: %s\n", sneklang_title);
+  return 0;
+}
+```
+
+## Compilation Types
+
+You're probably familiar with the idea of `types` from Python, but C does them quite a bit differently.
+
+In Python it's OK (but still disgusting) to change the type of a variable:
+
+```py
+x = 12345
+x = "Wow, a new type"
+x = False
+x = None
+x = "ok a string again :'("
+```
+
+In C, changing the type of an existing variable is not allowed:
+
+```C
+int main() {
+  char *max_threads = "5";
+
+  // call badcop
+  // this is illegal
+  max_threads = 5;
+}
+```
+
+## Variables
+
+As we talked about, variables cannot change types:
+
+```C
+int main() {
+  int x = 5;
+  float x = 3.14; // error
+}
+```
+
+However, a variable's _value_ can change:
+
+```C
+int main() {
+  int x = 5;
+  x = 10; // this is ok
+  x = 15; // still ok
+}
+```
+When updating a variable's value, you do not need to redeclare the type. In fact, you can't.
+
+```C
+// End of lesson code:
+#include <stdio.h>
+
+int main() {
+  int sneklang_int_size = 64;
+  sneklang_int_size = 32;
+  printf("Sneklang int size: %d bits\n", sneklang_int_size);
+  return 0;
+}
+```
+
+## Constants
+
+So a variable's _value_ can change:
+
+```C
+int main() {
+  int x = 5:
+  x = 10: // this is ok
+}
+```
+
+But what if we want to create a value that _can't_ change? We can use the ![`const` type qualifier](https://en.cppreference.com/w/c/language/const).
