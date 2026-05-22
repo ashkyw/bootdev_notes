@@ -309,3 +309,10 @@ int main() {
 ```
 
 But what if we want to create a value that _can't_ change? We can use the [const type qualifier](https://en.cppreference.com/w/c/language/const).
+
+```C
+int main() {
+  const int x = 5;
+  x = 10; // error
+}
+```
