@@ -37,7 +37,7 @@ int main() {
 But a lot is happening here....
 
   * A function named `main` is _always_ the entry point to a C program (unlike Python, which enters at the top of the file).
-  * `int` is the return type of the function and is short for "integer". Because this is the `main` function, the return value is the ![exit code](https://en.wikipedia.org/wiki/Exit_status) of the program. `0` means success, anything else means failure.
+  * `int` is the return type of the function and is short for "integer". Because this is the `main` function, the return value is the [exit code](https://en.wikipedia.org/wiki/Exit_status) of the program. `0` means success, anything else means failure.
       * You"ll find a lot of abbreviations in C because 1) programmers are lazy, and 2) it used to matter how many bytes your source code was.
   * The openinig bracket, `{` is the start of the function's body (C ignores whitespace, so indentation is just for style, not for syntax)
   * `return 0` returns the `0` value (an integer) from the function. Again, this is the exit code because it's the `main` function.
@@ -47,19 +47,19 @@ But a lot is happening here....
 
 ## Print
 
-It feels very different coming from Python, but printing in C is done with a function called `printf` from the ![stdio.h](https://www.ibm.com/docs/en/zos/2.4.0?topic=files-stdioh-standard-input-output) (standard input/output) library with a lot of weird formatting rules. To use it, you need an `#include`at the top of your file:
+It feels very different coming from Python, but printing in C is done with a function called `printf` from the [stdio.h](https://www.ibm.com/docs/en/zos/2.4.0?topic=files-stdioh-standard-input-output) (standard input/output) library with a lot of weird formatting rules. To use it, you need an `#include`at the top of your file:
 
 ```C
 #include <stdio.h>
 ```
 
-Then you can use ![printf](https://devdocs.io/c/io/fprintf) for inside a function:
+Then you can use [printf](https://devdocs.io/c/io/fprintf) for inside a function:
 
 ```C
 printf("Hello, world!\n");
 ```
 
-_Notice the `\n`: it's required to print a_ ![newline character](https://en.wikipedia.org/wiki/Newline) _(and flush the buffer in the browser), which `print()` in Python does automatically._
+_Notice the `\n`: it's required to print a_ [newline character](https://en.wikipedia.org/wiki/Newline) _(and flush the buffer in the browser), which `print()` in Python does automatically._
 
 _In case you're wondering, the `f` in `printf` stands for "print formatted"._
 
@@ -199,7 +199,7 @@ print(f"Hello, {name}. You're {age} years old.")
 
 We have to tell C _how_ we want particular values to be printed using "format specifiers."
 
-Common ![format specifiers](https://cplusplus.com/reference/cstdio/printf/#:~:text=Parameters-,format,-C%20string%20that) are:
+Common [format specifiers](https://cplusplus.com/reference/cstdio/printf/#:~:text=Parameters-,format,-C%20string%20that) are:
 
 * `%d` - digit (integer)
 * `%c` - character
@@ -308,4 +308,4 @@ int main() {
 }
 ```
 
-But what if we want to create a value that _can't_ change? We can use the ![const type qualifier](https://en.cppreference.com/w/c/language/const).
+But what if we want to create a value that _can't_ change? We can use the [const type qualifier](https://en.cppreference.com/w/c/language/const).
