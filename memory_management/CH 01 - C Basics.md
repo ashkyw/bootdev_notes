@@ -59,7 +59,7 @@ Then you can use ![printf](https://devdocs.io/c/io/fprintf) for inside a functio
 printf("Hello, world!\n");
 ```
 
-_Notice the `\n`: it's required to print a ![newline character](https://en.wikipedia.org/wiki/Newline) (and flush the buffer in the browser), which `print()` in Python does automatically._
+_Notice the `\n`: it's required to print a_ ![newline character](https://en.wikipedia.org/wiki/Newline) _(and flush the buffer in the browser), which `print()` in Python does automatically._
 
 _In case you're wondering, the `f` in `printf` stands for "print formatted"._
 
