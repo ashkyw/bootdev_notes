@@ -43,7 +43,7 @@ It feels very different coming from Python, but printing in C is done with a fun
 #include <stdio.h>
 ```
 
-Then you can use `!(printf)[https://devdocs.io/c/io/fprintf]` for inside a function:
+Then you can use !(printf)[https://devdocs.io/c/io/fprintf] for inside a function:
 
 ```C
 printf("Hello, world!\n");
