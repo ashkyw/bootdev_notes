@@ -52,3 +52,18 @@ printf("Hello, world!\n");
 _Notice the `\n`: it's required to print a ![newline character](https://en.wikipedia.org/wiki/Newline) (and flush the buffer in the browser), which `print()` in Python does automatically._
 
 _In case you're wondering, the `f` in `printf` stands for "print formatted"._
+
+# C is compiled
+
+This Python code prints "starting" _before_ it crashes:
+
+```py
+print("starting")
+func_that_doesnt_exist("uh oh")
+print("finished")
+```
+
+But in C, it crashes _before it can even run_. If's there's a problem, the compiler tells us before the program even starts.
+
+Now... C doesn't tell us about all the possible problems (read: skill issue) that might arise in our program. But it does tell us about _some_ of them.
+
