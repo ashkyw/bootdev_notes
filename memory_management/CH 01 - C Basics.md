@@ -373,3 +373,7 @@ int main() {
   return 0;
 }
 ```
+
+# Void
+
+In C, there's a special type for function signatures: [`void`](https://en.wikipedia.org/wiki/Void_type)
