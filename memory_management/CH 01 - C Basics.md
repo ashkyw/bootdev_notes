@@ -432,3 +432,50 @@ int b = a++; // b is assigned to 5, then a becomes 6
 int a = 5;
 int b = ++a // a becomes 6, then is assigned to b
 ```
+> [!Note]
+> Avoid Prefix. Postfix is more common, especially in loops.
+
+```C
+// End of lesson code:
+float snek_score(int num_files, int num_contributors, int num_commits,
+                 float avg_bug_criticality) {
+  int project_size = num_files * num_commits;
+  int project_complexity = project_size + num_contributors;
+  return (float)project_complexity * avg_bug_criticality;
+}
+```
+
+# If statements
+
+`if` statements are the most basic form of control flow in C: very similar to other languages. Basic syntax:
+
+```C
+if (x > 3) {
+  printf("x is greater than 3\n");
+}
+```
+
+`if`/`else`/`else if` are also available:
+
+```C
+if (x > 3) {
+  printf("x is greater than 3\n");
+} else if (x == 3) {
+  printf("x is equal to 3\n");
+} else {
+  printf("x is less than 3\n");
+}
+```
+
+### Janky syntax
+
+You _can_ write an `if` statement without braces is you only have one statement in the body:
+
+```C
+if (x > 3) printf("x is greater than 3\n");
+```
+
+> [!Warning]
+> This is C. It's known for providing a myriad of ways to shoot yourself in the foot. It's easy to mess up, don't use this syntax.
+
+ 
