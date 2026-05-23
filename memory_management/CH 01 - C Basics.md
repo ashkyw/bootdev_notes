@@ -478,4 +478,61 @@ if (x > 3) printf("x is greater than 3\n");
 > [!Warning]
 > This is C. It's known for providing a myriad of ways to shoot yourself in the foot. It's easy to mess up, don't use this syntax.
 
- 
+```C
+// End of lesson code:
+
+#include "exercise.h"
+
+char *get_temperature_status(int temp) {
+  if (temp < 70) {
+    return "too cold";
+  } else if (temp > 90) {
+    return "too hot";
+  } else {
+    return "just right";
+  }
+}
+```
+
+# Logical Operators
+
+Logical operators let you combine multiple conditions in C. There are three main logical operators you'll use all the time:
+
+* `&&` - Logical `AND`: true if _both_ conditions are true
+* `||` - Logical `OR`: true if _either_ conditions is true
+* `!` - Logical `NOT`: inverts a boolean value
+
+```C
+int age = 25;
+bool has_license = true;
+
+if (age >= 18 && has_license) {
+  printf("Can drive \n");
+}
+```
+
+### Short-Circuit Evaluation
+
+C uses short-circuit evaluation with logical operators. This means:
+  * With `&&`, if the first condition is false, the second isn't even checked (because the whole thing is already false)
+  * With `||`, if the firs condition is true, the second isn't even checked (because the whole thing is already true)
+
+```C
+if (x != 0 && 10 / x > 2) {
+  // The divison only happens if x != 0
+  // This prevents a divison by zero error
+  printf("Safe!\n")
+}
+```
+
+## Operator Precedence
+
+Logical NOT (`!`) has higher precedence than AND (`&&`), which has higher precedence than OR (`||`). When in doubt, use parentheses to make your intent crystal clear:
+
+```C
+// without parentheses - might be confusing
+if (!is_raining && is_sunny || is_weekend)
+
+// with parentheses - much clearer
+if ((!is_raining && is_sunny) || is_weekend)
+```
