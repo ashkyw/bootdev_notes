@@ -376,4 +376,59 @@ int main() {
 
 # Void
 
-In C, there's a special type for function signatures: [`void`](https://en.wikipedia.org/wiki/Void_type)
+In C, there's a special type for function signatures: [`void`](https://en.wikipedia.org/wiki/Void_type). There are two primary ways you'll use `void`:
+
+To explicitly state that a function takes no arguments:
+
+```C
+int get_integer(void) {
+  return 42;
+}
+```
+
+When a function doesn't return anything:
+
+```C
+void print_integer(int x) {
+  printf("this is an int %d", x)
+}
+```
+
+It's important to note that `void` in C is **_not_** like `None` in Python. It's not a value that can be assigned to a variable. _It's just a way to say that a function doesn't return anything or doesn't take any arguments._
+
+## Math Operators
+
+All the same operators you'd expect exist in C:
+
+```C
+x + y;
+x - y;
+x * y;
+x / y;
+```
+
+Coming from Python `+=`,`-=`,`*=`,`/=` are all the same.
+
+In addition, there are also [`++` and `--` operators](https://en.cppreference.com/w/cpp/language/operator_incdec):
+
+```C
+x++; // += 1
+x--; // -= 1
+```
+_The name of C++ is a bit of a joke by the creator, it's meant to be "incremented C" or "better C"._
+
+These increment (`++`) and decrement (`--`) operators can be used in two forms: postfix and prefix.
+
+**Postfix (`x++` or `x--`)**: The value of `x` is used in the expression first, and then `x` is incremented or decremented. For example:
+
+```C
+int a = 5;
+int b = a++; // b is assigned to 5, then a becomes 6
+```
+
+**Prefix (`++x` or `--x`)**: `x` is incremented or decremented first, and then the new value of `x` is used in the expression. For example:
+
+```C
+int a = 5;
+int b = ++a // a becomes 6, then is assigned to b
+```
