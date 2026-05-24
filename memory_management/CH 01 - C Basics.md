@@ -515,7 +515,7 @@ if (age >= 18 && has_license) {
 
 C uses short-circuit evaluation with logical operators. This means:
   * With `&&`, if the first condition is false, the second isn't even checked (because the whole thing is already false)
-  * With `||`, if the firs condition is true, the second isn't even checked (because the whole thing is already true)
+  * With `||`, if the first condition is true, the second isn't even checked (because the whole thing is already true)
 
 ```C
 if (x != 0 && 10 / x > 2) {
@@ -536,3 +536,69 @@ if (!is_raining && is_sunny || is_weekend)
 // with parentheses - much clearer
 if ((!is_raining && is_sunny) || is_weekend)
 ```
+
+```C
+// End of lesson code:
+#include "exercise.h"
+
+int can_access_registry(int is_premium, int reputation, int has_2fa){
+  if ((is_premium == 1) || (reputation >= 100 && has_2fa)){
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+```
+
+> [Note]
+> In C we use `1` for true and `0` for false when returning boolean-like values from functions that return `int`.
+
+# Ternary
+
+Like Javascript, C has a ternary operator:
+
+```C
+int a = 5;
+int b = 10;
+int max = a > b ? a : b;
+printf("max: %d\n", max);
+// max: 10
+```
+Let's break down this syntax:
+
+```C
+a > b ? a : b
+```
+* `a > b` is the condition
+* `?` begins the "then" value
+* `a` is the final value is the condition is true
+* `:` separates the "else" value
+* `b` is the final value is the condition is false
+* The entire expression (`a > b ? a : b`) evaluates to either `a` or `b`, which is then assigned to `max` in the example.
+
+_Ternaries are a way to write simple if/else statements in one line_
+
+# Type sizes
+
+In C, the "size" (in memory) of a type is not guaranteed to be the same on all systems. That's because the size of a type is dependent on the system's architecture. 
+For example, on a 32-bit system, the size of an `int` is usually 4 bytes, while on a 64-bit system, the size of an `int` can sometimes be 8 bytes - of course, you never know until you run `sizeof` with the compilier.
+
+However, some types are always guaranteed to be the same. Here's a list of the basic C data types along with their typical sizes in bytes. Note that sizes can vary based on the platform (e.g. 32-bit vs. 64-bit systems):
+
+###### Basic C types and sizes
+
+* `char`
+  * Size: **1 byte**
+  * Represents: **single character**
+  * Notes: **Always 1 byte, but can be signed or unsigned**
+    
+* `float`
+  * Size: **4 bytes**
+  * Represents: **Single-precision floating-point number**
+     
+* `double`
+  * Size: **8 bytes**
+  * Represents: **Double-precision floating-point number**
+
+The actual sizes of these types can be deteremined using the `sizeof` operator in C for a specific platform.
