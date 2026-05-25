@@ -737,7 +737,7 @@ int main() {
     printf("%d\n", i);
     i++;
   }
-  return 0
+  return 0;
 }
 // Prints:
 // 0
@@ -769,3 +769,106 @@ void print_numbers_reverse(int start, int end) {
 A `do while` loop in C is a control flow statement that allows code to be executed repeatedely based on a given boolean condition. 
 
 Unlike the `while` loop, the `do while` loop checks the condition after executing the loop body, so the loop body is **always** executed at least once.
+
+## Syntax
+```C
+do {
+  // Loop Body
+} while (condition);
+```
+
+### Parts of a `do while` loop
+
+1. **Loop Body**
+  * The block of code that is executed _before_ checking the condition, and then repeatedly as long as the condition is true
+2. **Condition**
+  * Checked _after_ each iteration.
+  * If `true`, execute the body again.
+  * If `false`, terminate the loop
+
+#### Examples
+```C
+#include <stdio.h>
+
+int main() {
+  int i = 0;
+  do {
+    printf("%d\n", i);
+    i++;
+  } while (i < 5);
+  return 0;
+}
+// Prints:
+// 0
+// 1
+// 2
+// 3
+// 4
+```
+```C
+#include <stdio.h>
+
+int main() {
+  int i = 100;
+  do {
+    printf("i = %d\n", i);
+    i++;
+  } while (i < 5);
+  return 0;
+}
+// Prints:
+// i = 100
+```
+
+### Key Points
+
+The `do while` loop guarantees that the loop body is executed at least once, even if the condition is false initially. 
+
+The most common scenario you will see a do-while loop used is in [C Macros](https://gcc.gnu.org/onlinedocs/cpp/Macros.html) -- they let you define a block of code and execute it exactly once in a way that is safe across different compilers, and ensures that the variables created/referenced within the macro do not leak to the surrounding environment.
+
+```C
+// End of lesson code
+#include <stdio.h>
+
+void print_numbers_reverse(int start, int end) {
+  do {
+    printf("%d\n", start);
+    start--;
+  } while (start >= end);
+}
+```
+
+# Pragma Once and Header Guards
+
+We saw how `.h` header files are used in previous lessons, but before we go further let's talk about a potential issue you might run into: multiple inclusions. If the same header file gets included more than once, you can end up with some nasty errors caused by redefining things like functions or structs.
+
+### Pragma Once
+
+One simple solution (and the one we'll use for the rest of this course) is `#pragma once`. Adding this line to the top of a header file tells the compiler to include the file only once, even if it's referenced multiple times across your program.
+
+```C
+// my_header.h
+
+#pragma once
+
+struct Point {
+  int x;
+  int y;
+};
+```
+### Header Guards
+
+Another common way to avoid multiple inclusions is with include guards, which use preprocessor directives like this:
+
+```C
+#ifndef MY_HEADER_H
+#define MY_HEADER_H
+
+// some cool code
+
+#endif
+```
+
+This method works by defining a unique macro for the header file. If it's already been included, the guard prevents it from being processed again.
+
+Throughout this course we'll be using `#pragma once` in our header files. It's quicker and less error-prone then traditional include guards, and it works well with most modern compilers.
