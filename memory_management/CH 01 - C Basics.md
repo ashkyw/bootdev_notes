@@ -602,3 +602,13 @@ However, some types are always guaranteed to be the same. Here's a list of the b
   * Represents: **Double-precision floating-point number**
 
 The actual sizes of these types can be deteremined using the `sizeof` operator in C for a specific platform.
+
+## Sizeof
+
+C gives us a way to check the size of a type or a variable: [sizeof](https://en.cppreference.com/w/c/language/sizeof).
+
+You can use `sizeof` like a function (although, technically it's a [`unary operator`](https://en.wikipedia.org/wiki/Unary_operation), but that distincstion is generally only useful for winning _super important_ internet arguments).
+
+We'll use the `sizeof` operator in the next few lessons to give us insight into the memory layout of different types in C. This will be particularly useful as we move deeper into C, and **_essential_** for understanding pointers.
+
+### **`size_t`**
