@@ -612,3 +612,160 @@ You can use `sizeof` like a function (although, technically it's a [`unary opera
 We'll use the `sizeof` operator in the next few lessons to give us insight into the memory layout of different types in C. This will be particularly useful as we move deeper into C, and **_essential_** for understanding pointers.
 
 ### **`size_t`**
+
+The [`size_t` type](https://en.cppreference.com/w/c/types/size_t) is a special type that is guaranteed to be able to represent the size of the largest possible object in the target platform's address space (i.e. can fit any single non-struct value inside of it).
+
+It's also the type that `sizeof` returns.
+
+```C
+// End of lesson code:
+
+#include <stdbool.h>
+#include <stdio.h>
+
+int main() {
+  // Use %zu is for printing `sizeof` result
+  printf("sizeof(char)   = %zu\n", sizeof(char));
+  printf("sizeof(bool)   = %zu\n", sizeof(bool));
+  printf("sizeof(int)    = %zu\n", sizeof(int));
+  printf("sizeof(float)  = %zu\n", sizeof(float));
+  printf("sizeof(double) = %zu\n", sizeof(double));
+  printf("sizeof(size_t) = %zu\n", sizeof(size_t));
+}
+
+```
+
+# For loop
+
+A `for` loop in C is a control flow statement for repeated execution of a block of code. Very similay to Python, but with a different syntax.
+
+The syntax of a `for` loop in C consists of three main parts:
+
+  1. Initialization
+  2. Condition
+  3. Final-expression.
+  
+There is no "for each" (iterables) in C. For example, there is no way to do:
+
+```py
+for car in cars:
+  print(car)
+```
+
+Instead, we have to iterate over the numbers on indices in a list, and then we can access the item using the index.
+
+## Syntax
+
+```C
+for (initialization; condition; final-expression) {
+  // Loop Body
+}
+```
+
+### Parts of a `for` loop
+
+1. **Initialization**
+  * Executed only once at the beginning of the loop.
+  * Is typically used to initialize the loop counter: `int i = 0;` for example
+2. **Condition**
+  * Checked before each iteration.
+  * If `true`, execute the body. If `false`, terminate the loop
+  * Often checks to ensure `i` is less than some value: `i <  5;` for example
+3. **Final-expression**
+  * Executed after each iteration of the loop body.
+  * Can be used to update the loop counter or run any other code: `i++` for example
+4. **Loop Body**
+  * The block of code that is executed while the condition is true.
+
+#### Example: Basic loop
+```C
+#include <stdio.h>
+
+int main() {
+  for (int i = 0; i < 5; i++) {
+    printf("%d\n", i);
+  }
+  return 0;
+}
+
+// Prints:
+// 0
+// 1
+// 2
+// 3
+// 4
+```
+
+```C
+// End of lesson code
+
+#include <stdio.h>
+
+void print_numbers(int start, int end) {
+  for (int i = start; i <= end; i++) {
+    printf("%d\n", i);
+  }
+}
+```
+
+# While loop
+
+A `while` loop in C is a control flow statement that allows code to be executed repeatedly based on a given boolean (`true`/`false`) condition. The loop continues to execute as long as the condition remains true.
+
+## Syntax
+```C
+while (condition) {
+  // Loop Body
+}
+```
+
+### Parts of a `while` loop
+
+1. **Condition**
+  * Checked before each iteration.
+  * If `true`, execute the body. If `false`, terminate the loop
+2. **Loop Body**
+  * The block of code that is executed while `condition` is true.
+
+#### Example: Basic loop
+```C
+#include <stdio.h>
+
+int main() {
+  int i = 0;
+  while (i < 5) {
+    printf("%d\n", i);
+    i++;
+  }
+  return 0
+}
+// Prints:
+// 0
+// 1
+// 2
+// 3
+// 4
+```
+
+### Key Points
+  * The condition is evaluate _before_ the execution of the loop body.
+  * If the condition is `false` initially, the loop body will never even start.
+  * If the condition never becomes `false`, you will get an infinite loop.
+
+```C
+// End of lesson code
+#include <stdio.h>
+
+void print_numbers_reverse(int start, int end) {
+  while (start >= end) {
+    printf("%d\n", start);
+    start--;
+  }
+}
+```
+
+# Do While Loop
+
+A `do while` loop in C is a control flow statement that allows code to be executed repeatedely based on a given boolean condition. 
+
+Unlike the `while` loop, the `do while` loop checks the condition after executing the loop body, so the loop body is **always** executed at least once.
