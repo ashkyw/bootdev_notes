@@ -1,5 +1,17 @@
 # Structs
 
+[Video notes](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/what-are-structs-1920x1080.mp4)
+
+Structs in C are similar to objects & classes in other languages, but simpler. There's no concepts of inheritance, class methods, or static variables.
+Instead, they are simply a way to group multiple fields or data points and put them all into one _object_. This way they can be moved around and stored together.
+
+Instead of typing numerous variables for a function, we can logically group them into a struct and pass them around together. 
+Much like how classes in Python group things together. 
+
+Structs do not have any behavior, they are simply just data.
+
+Struct fields can be accessed with the `.` operator. If you have a pointer, it can be accessed with the `->` operator.
+
 ```C
 // End of lesson code
 
