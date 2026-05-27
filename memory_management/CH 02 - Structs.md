@@ -255,3 +255,38 @@ coordinate_t scale_coordinate(coordinate_t, int factor);
 # Sizeof
 
 As we saw earlier, [sizeof]() can be used to view the size of a type (for once, programmers thought of a name that was actually helpful!) But this isn't just true of builtin types like `int` or `float`, it can also be used to find out the size of `struct`s!
+
+```C
+printf("Size of coordinate_t: %zu bytes\n", sizeof(coordinate_t));
+```
+## Memory Layout
+
+Structs are stored contiguously in memory one field after another. Take this struct:
+```C
+typedef struct Coordinate {
+    int x;
+    int y;
+    int z;
+} coordinate_t;
+```
+Assuming `int` is 4 bytes, the memory layout for `coordinate_t` would look like:
+
+![Alt text]()
+
+## Mixed Type Structs
+```C
+typedef struct Human {
+    char first_intial;
+    int age;
+    double height;
+} human_t;
+```
+Assuming `char` is 1 byte, `int` is 4 bytes, and `double` is 8 bytes, the memory layout for `human_t` might look like this:
+
+![Alt text]()
+
+Wait! What is that `padding` doing there?
+
+It turns out, CPUs don't like accessing data that isn't [aligne](https://en.wikipedia.org/wiki/Data_structure_alignment) (this is a radical oversimplification), so C inserts padding to maintain alignment (e.g. every 4 bytes in this example).
+
+_**HUGE CAVEAT:** these layouts can vary depending on the compiler and system architecture._
