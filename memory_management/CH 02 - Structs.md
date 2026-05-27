@@ -290,3 +290,49 @@ Wait! What is that `padding` doing there?
 It turns out, CPUs don't like accessing data that isn't [aligne](https://en.wikipedia.org/wiki/Data_structure_alignment) (this is a radical oversimplification), so C inserts padding to maintain alignment (e.g. every 4 bytes in this example).
 
 _**HUGE CAVEAT:** these layouts can vary depending on the compiler and system architecture._
+
+# Struct Padding
+
+There are a bunch of complicated rules and heuristics that different compilers use to determine how to lay out your structs. But to oversimppify:
+
+  1. The structs are laid out in memory contiguously.
+  2. Structs can vary in size depending on how they are laid out.
+
+C is a language that aims to give tight control over memory, so the fact that you can control the layout of your structs is a _feature_, not a bug.
+
+Compilers + modern hardware + optimizations + skill issues means that sometimes what you _think_ the computer is going to do isn't exactly what it actually _does_. That said, C is designed to get you close to the machine and allows you to dig in and figure out what's going on if you want to for a specific compiler or architecture. 
+
+As a _rule of thumb_, ordering your fields from largest to smallest will help the compiler minimize padding:
+```C
+typedef struct {
+    char* a;
+    double b;
+    char c;
+    char d;
+    long e;
+    char f;
+} poorly_aligned_t;
+
+typedef struct {
+    double b;
+    long e;
+    char* a;
+    char c;
+    char d;
+    char f;
+} better_t;
+```
+```C
+// End of lesson .h
+#pragma once
+
+typedef struct SneklangVar {
+  double weight;
+  char *name;
+  int scope_level;
+  int value;
+  char type;
+  char is_constant;
+} sneklang_var_t;
+
+```
