@@ -28,3 +28,33 @@ int main() {
 
 > [!Note]
 > The [`*p` format specifier](https://en.cppreference.com/w/c/io/fprintf#:~:text=The%20following%20format%20specifiers%20are%20available%3A) will format a pointer (memory address) to be printed.
+
+```C
+// End of lesson .c file
+
+#include "snek.h"
+
+unsigned long size_of_addr(long long i) {
+  unsigned long sizeof_snek_version = sizeof(&i);
+  return sizeof_snek_version;
+}
+
+// End of lesson .h file
+
+unsigned long size_of_addr(long long i);
+```
+
+#  Virtual Memory
+
+As it turns out, code doesn't have direct access te the physical RAM in your computer. 
+
+Instead, the OS provides a layer of abstraction called **virtual memory**. Virtual memory makes it seem like your program has direct access to all the memory on the machine, even if it doesn't.
+
+* **Physical Memory**: The actual RAM sticks in your PC.
+* **Operating Sysetm**: The software that manages access te the physical memory.
+* **Your Program**: When it runs, it becomes a [`process`](https://en.wikipedia.org/wiki/Process_(computing)) and is given access to a chunk of virtual memory by the OS.
+* **Virutal Memory**: This abstracted chunk of memory that your program can use.
+
+  _There are exceptions to this. For example, if you're using C to build embedded firmware that runs without an OS, your code might interact directly with physical memory_.
+
+  [!Alt Text]()
