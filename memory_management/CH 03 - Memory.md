@@ -2,8 +2,8 @@
 
 Some mental models to think about variables in memory:
 
-> [Information]
 > Variables are human readable names that refer to some data in memory
+
 > Memory is a big array of bytes, and data is stored in the array.
 
 A variable is a human readable name that refers to an address in memory, which is an index into the big array of bytes. Here's a diagram:
