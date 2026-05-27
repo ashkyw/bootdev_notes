@@ -46,7 +46,7 @@ unsigned long size_of_addr(long long i);
 
 #  Virtual Memory
 
-As it turns out, code doesn't have direct access te the physical RAM in your computer. 
+As it turns out, code doesn't have direct access to the physical RAM in your computer. 
 
 Instead, the OS provides a layer of abstraction called **virtual memory**. Virtual memory makes it seem like your program has direct access to all the memory on the machine, even if it doesn't.
 
@@ -57,4 +57,14 @@ Instead, the OS provides a layer of abstraction called **virtual memory**. Virtu
 
   _There are exceptions to this. For example, if you're using C to build embedded firmware that runs without an OS, your code might interact directly with physical memory_.
 
-  [!Alt Text]()
+  [!Alt Text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/Memory%20-%20Virtual.png)
+
+By only giving processes access to a chunk of virtual memory, the operating system can do some cool things:
+  1. **Isolation**: One process can't access the memory of another process.
+  2. **Security**: The OS can prevent processes from accessing certain parts of memory.
+  3. **Simplicity**: Developers don't have to worry about managing physical memory of other processes.
+  4. **Performance**: The OS can optimize memory access depending on the hardware and needs of the program. For example, by moving data between physical memory and the hard drive.
+
+At the end of the day, your program has direct access to a virtual chunk of memory. Just like physical memory, it can be thought of as a big array of bytes, where each byte has an address.
+
+# Pointers
