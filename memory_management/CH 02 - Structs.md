@@ -125,3 +125,14 @@ struct City c;
 c.lat = 41; // Set the latitude
 printf("Latitude: %d", c.lat); // Print the latitude
 ```
+
+```C
+// End of lesson code
+
+#include "coord.h"
+
+struct Coordinate new_coord(int x, int y, int z) {
+  struct Coordinate coord = {.x = x, .y = y, .z = z};
+  return coord;
+}
+```
