@@ -271,7 +271,7 @@ typedef struct Coordinate {
 ```
 Assuming `int` is 4 bytes, the memory layout for `coordinate_t` would look like:
 
-![Alt text]()
+![Alt text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/Coordinate%20Struct.png)
 
 ## Mixed Type Structs
 ```C
@@ -283,7 +283,7 @@ typedef struct Human {
 ```
 Assuming `char` is 1 byte, `int` is 4 bytes, and `double` is 8 bytes, the memory layout for `human_t` might look like this:
 
-![Alt text]()
+![Alt text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/Human%20Struct.png)
 
 Wait! What is that `padding` doing there?
 
