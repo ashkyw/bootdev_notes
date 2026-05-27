@@ -221,17 +221,37 @@ pastry_t muffin = {"Muffin", 0.3};
 In this case you'd only be able te refer to the type as `pastry_t`. In general, give the struct an actual name (e.g. `Pastry`).
 ```C
 // End of lesson .c file
+#include "coord.h"
 
+
+coordinate_t new_coord(int x, int y, int z) {
+  coordinate_t coord = {.x = x, .y = y, .z = z};
+
+  return coord;
+}
+
+coordinate_t scale_coordinate(coordinate_t coord, int factor) {
+  coordinate_t scaled = coord;
+  scaled.x *= factor;
+  scaled.y *= factor;
+  scaled.z *= factor;
+
+  return scaled;
+}
 
 // End of lesson .h file
 #pragma once
 
-struct Coordinate {
+typedef struct Coordinate {
   int x;
   int y;
   int z;
-};
+} coordinate_t;
 
-struct Coordinate new_coord(int x, int y, int z);
-struct Coordinate scale_coordinate(struct Coordinate coord, int factor);
+coordinate_t new_coord(int x, int y, int z);
+coordinate_t scale_coordinate(coordinate_t, int factor);
 ```
+
+# Sizeof
+
+As we saw earlier, [sizeof]() can be used to view the size of a type (for once, programmers thought of a name that was actually helpful!) But this isn't just true of builtin types like `int` or `float`, it can also be used to find out the size of `struct`s!
