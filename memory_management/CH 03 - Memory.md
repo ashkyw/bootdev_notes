@@ -57,7 +57,7 @@ Instead, the OS provides a layer of abstraction called **virtual memory**. Virtu
 
   _There are exceptions to this. For example, if you're using C to build embedded firmware that runs without an OS, your code might interact directly with physical memory_.
 
-  [!Alt Text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/Memory%20-%20Virtual.png)
+  ![Alt Text](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/Memory%20-%20Virtual.png)
 
 By only giving processes access to a chunk of virtual memory, the operating system can do some cool things:
   1. **Isolation**: One process can't access the memory of another process.
@@ -68,3 +68,67 @@ By only giving processes access to a chunk of virtual memory, the operating syst
 At the end of the day, your program has direct access to a virtual chunk of memory. Just like physical memory, it can be thought of as a big array of bytes, where each byte has an address.
 
 # Pointers
+
+##### Lesson notes
+
+Put simply: **a pointer is just a variable that stores a memory address**. It's called a pointer because it "points" to the address of a variable, which stores the actual data held in that variable.
+
+## Syntax
+
+A pointer is declared with an asterisk (`*`) after the type. For example, `int *`.
+```C
+int age = 37;
+int *pointer_to_age = &age;
+```
+We use the address-of-operator `&` to get the address of a variable so it can be stored _in_ a pointer variable.
+
+##### [Pointers Video](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/pointers-are-easy-1920x1080.mp4) notes
+
+Ultimately, pointers are just a value that tells you the memory address of another value. 
+
+We start with:
+```C
+int x = 5;
+```
+We create another value:
+```C
+int y = x;
+```
+Setting one value = to another is a copy operation. So whatever `x` was, is now in `y`. In other words, `y = 5`
+
+Now, if we update the value of x:
+```C
+int x = 7;
+```
+`y = 5` stays true. Only now `x = 7`
+
+Using pointer syntax:
+```C
+int *x_ptr = &x;
+```
+This sets the `x_ptr` variable to the value of the actual **address** of `x`, not the _value_ of `x`
+
+So now we dereference the pointer:
+```C
+int z = *x_ptr;
+```
+And instead of copying the value from `x`, we instead copy the value stored in the memory address of `x` and set it to `z`
+
+Now we let's say we want to change what's in the memory location that the pointer points to:
+
+```C
+*x_ptr = 12;
+```
+And we say we need to update the value of `x`. Because the value of `x_ptr` is simply the memory address of `x`,
+we actually end up changing `x` by updating the value of it's current memory address.
+
+See below table for visual:
+
+| Name | Address | Value |
+|:----:|:-------:|:-----:|
+| x | 0x6ABD670 | 5 |
+| y | 0x8DAC344 | 5 |
+| x_ptr | 0x3ABF678 | 0x6ABD670 |
+| z | 0x20BC112 | 7 |
+| x_ptr | 0x3ABF78 | 0x6ABD670|
+| x | 0x6ABD670 | 12 |
