@@ -205,4 +205,33 @@ typedef struct Pastry {
 ```
 Now we can use `pastry_t` wherever we would have used `struct Pastry` before.
 
-> 
+> [!Information]
+> The `_t` at the end is a common convention to indicate a type.
+
+In fact, you can optionally skip giving the struct a name:
+
+```C
+typedef struct{
+    char *name;
+    float weight;
+} pastry_t;
+
+pastry_t muffin = {"Muffin", 0.3};
+```
+In this case you'd only be able te refer to the type as `pastry_t`. In general, give the struct an actual name (e.g. `Pastry`).
+```C
+// End of lesson .c file
+
+
+// End of lesson .h file
+#pragma once
+
+struct Coordinate {
+  int x;
+  int y;
+  int z;
+};
+
+struct Coordinate new_coord(int x, int y, int z);
+struct Coordinate scale_coordinate(struct Coordinate coord, int factor);
+```
