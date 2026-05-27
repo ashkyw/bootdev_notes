@@ -90,11 +90,20 @@ We start with:
 ```C
 int x = 5;
 ```
+| Name | Address | Value |
+|:----:|:-------:|:-----:|
+| x | 0x6ABD670 | 5 |
+
 We create another value:
 ```C
 int y = x;
 ```
 Setting one value = to another is a copy operation. So whatever `x` was, is now in `y`. In other words, `y = 5`
+
+| Name | Address | Value |
+|:----:|:-------:|:-----:|
+| x | 0x6ABD670 | 5 |
+| y | 0x8DAC344 | 5 |
 
 Now, if we update the value of x:
 ```C
@@ -102,11 +111,22 @@ int x = 7;
 ```
 `y = 5` stays true. Only now `x = 7`
 
+| Name | Address | Value |
+|:----:|:-------:|:-----:|
+| x | 0x6ABD670 | 7 |
+| y | 0x8DAC344 | 5 |
+
 Using pointer syntax:
 ```C
 int *x_ptr = &x;
 ```
 This sets the `x_ptr` variable to the value of the actual **address** of `x`, not the _value_ of `x`
+
+| Name | Address | Value |
+|:----:|:-------:|:-----:|
+| x | 0x6ABD670 | 7 |
+| y | 0x8DAC344 | 5 |
+| x_ptr | 0x3ABF678 | 0x6ABD670 |
 
 So now we dereference the pointer:
 ```C
@@ -114,21 +134,33 @@ int z = *x_ptr;
 ```
 And instead of copying the value from `x`, we instead copy the value stored in the memory address of `x` and set it to `z`
 
+| Name | Address | Value |
+|:----:|:-------:|:-----:|
+| x | 0x6ABD670 | 7 |
+| y | 0x8DAC344 | 5 |
+| x_ptr | 0x3ABF678 | 0x6ABD670 |
+| z | 0x20BC112 | 7 |
+
 Now we let's say we want to change what's in the memory location that the pointer points to:
 
 ```C
 *x_ptr = 12;
 ```
-And we say we need to update the value of `x`. Because the value of `x_ptr` is simply the memory address of `x`,
-we actually end up changing `x` by updating the value of it's current memory address.
-
-See below table for visual:
-
 | Name | Address | Value |
 |:----:|:-------:|:-----:|
-| x | 0x6ABD670 | 5 |
+| x | 0x6ABD670 | 7 |
 | y | 0x8DAC344 | 5 |
 | x_ptr | 0x3ABF678 | 0x6ABD670 |
 | z | 0x20BC112 | 7 |
 | x_ptr | 0x3ABF78 | 0x6ABD670|
+
+And we say we need to update the value of `x`. Because the value of `x_ptr` is simply the memory address of `x`,
+we actually end up changing `x` by updating the value of it's current memory address.
+
+| Name | Address | Value |
+|:----:|:-------:|:-----:|
 | x | 0x6ABD670 | 12 |
+| y | 0x8DAC344 | 5 |
+| x_ptr | 0x3ABF678 | 0x6ABD670 |
+| z | 0x20BC112 | 7 |
+| x_ptr | 0x3ABF78 | 0x6ABD670|
