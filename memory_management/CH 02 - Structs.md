@@ -136,3 +136,51 @@ struct Coordinate new_coord(int x, int y, int z) {
   return coord;
 }
 ```
+
+### Scaling Coordinate
+
+Remember how we can **not** return multiple values from a function in C? We can't do this:
+```C
+int, char * become_older(int age, char *name) {
+    return age + 1, name;
+}
+```
+However, we _can_ accomplish effectively the same thing by returning a `struct`:
+
+```C
+struct Human become_older(int age, char *name) {
+    struct Human h = {.age = age, .name = name};
+    h.age++;
+    return h;
+}
+```
+```C
+// End of lesson code .c file
+#include "coord.h"
+
+struct Coordinate new_coord(int x, int y, int z) {
+  struct Coordinate coord = {.x = x, .y = y, .z = z};
+  return coord;
+}
+
+struct Coordinate scale_coordinate(struct Coordinate coord, int factor) {
+  struct Coordinate scaled = coord;
+  scaled.x *= factor;
+  scaled.y *= factor;
+  scaled.z *= factor;
+  return scaled;
+}
+
+// End of lesson code .h file
+#pragma once
+
+struct Coordinate {
+  int x;
+  int y;
+  int z;
+};
+
+struct Coordinate new_coord(int x, int y, int z);
+struct Coordinate scale_coordinate(struct Coordinate coord, int factor);
+
+```
