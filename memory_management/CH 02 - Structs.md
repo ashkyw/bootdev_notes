@@ -82,7 +82,7 @@ struct City {
   int lon;
 };
 ```
-## Zero Initializer
+### Zero Initializer
 ```C
 int main() {
   struct City c = {0};
@@ -90,7 +90,7 @@ int main() {
 ```
 This sets all the fields to `0` values.
 
-## Positional Initializer
+### Positional Initializer
 
 ```C
 int main() {
@@ -116,7 +116,7 @@ int main() {
 
 Remember, it's `.name` not `name`. If this trips you up, just remember it's `.name` and not `name` because that's how you access the field, e.g. `c.name`.
 
- ### Accessing Fields
+## Accessing Fields
 
 Accessing a field in a struct is done using the `.` operator. For example:
 
@@ -184,3 +184,25 @@ struct Coordinate new_coord(int x, int y, int z);
 struct Coordinate scale_coordinate(struct Coordinate coord, int factor);
 
 ```
+# Typedef
+
+By now, you're probably tired of typine `struct Coordinate` over and over again, and wondering, "How can I make my struct types easier to write, like `int`?"
+
+Good news, everyone! C can do this with the [`typedef keyword`](https://en.cppreference.com/w/c/language/typedef).
+
+```C
+struct Pastry {
+    char *name;
+    float weight;
+}
+```
+Can also be written as:
+```C
+typedef struct Pastry {
+    char *name;
+    float weight;
+} pastry_t; 
+```
+Now we can use `pastry_t` wherever we would have used `struct Pastry` before.
+
+> 
