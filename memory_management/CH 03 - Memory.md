@@ -290,7 +290,22 @@ It can be confusing. Remember that the asterisk symbol is used for two different
   2. Dereferencing a pointer value: `int value = *pointer_to_thing;` (retrieving the value) or `*pointer_to_thing = 20;` (modifying the value)
 
 ```C
-// End of lesson code
+// End of lesson code .c file
+#include "exercise.h"
 
+codefile_t change_filetype(codefile_t *f, int new_filetype) {
+  codefile_t new_f = *f;
+  new_f.filetype = new_filetype;
+  return new_f;
+}
 
+// End of lesson code .h file
+typedef struct CodeFile {
+  int lines;
+  int filetype;
+} codefile_t;
+
+codefile_t change_filetype(codefile_t *f, int new_filetype);
 ```
+
+# Pointers to Structs
