@@ -255,3 +255,42 @@ int main() {
 > In C, structs are passed by _value_. That's why updating a field in the struct does _not_ change the original struct from the `main` function.
 > To get the change to "persist", we needed to return the updated struct from the function (a new copy).
 > The memory address of the struct that went _in_ to `coordinate_update_and_retur_x` was not the same as the address of the struct that was returned. Again, because we created a copy.
+
+# Pointer Basics
+
+Remember, pointers are just an address (read: value) that tells the computer where to look for _other_ values. Just like how the address to your house is not actually your house, but points you to where your house is.
+
+## Syntax Review
+
+Declare a pointer to an integer:
+
+```C
+// declares `pointer_to_something` as a pointer to an int
+int *pointer_to_something;
+```
+Get the address of a variable:
+```C
+int meaning_of_life = 42;
+int *pointer_to_mol = &meaning_of_life;
+// pointer_to_mol now holds the address of meaning_of_life
+```
+### Derefencing pointers
+
+Oftentimes we have a pointer, but we want to get access to the data that it points to. Not the address itself, but the value stored at _that_ address. 
+
+We can use an asterisk `*` to do it. The `*` operator dereferences a pointer.
+```C
+int meaning_of_life = 42;
+int *pointer_to_mol = &meaning_of_life;
+int value_at_pointer = *pointer_to_mol;
+// value_at_pointer = 42
+```
+It can be confusing. Remember that the asterisk symbol is used for two different things:
+  1. Declaring a pointer type: `int *pointer_to_thing;`
+  2. Dereferencing a pointer value: `int value = *pointer_to_thing;` (retrieving the value) or `*pointer_to_thing = 20;` (modifying the value)
+
+```C
+// End of lesson code
+
+
+```
