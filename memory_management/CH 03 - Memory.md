@@ -164,3 +164,31 @@ we actually end up changing `x` by updating the value of it's current memory add
 | x_ptr | 0x3ABF678 | 0x6ABD670 |
 | z | 0x20BC112 | 7 |
 | x_ptr | 0x3ABF78 | 0x6ABD670|
+
+# Why Pointers?
+
+To illustrate the usefulness of pointers, let's pretend we want to pass a collection of data into a function. Within that function, we want to modify the data. In Python we could use a class to store the data, and pass an instance of that class into the function:
+
+```py
+class Coordinate:
+  def __init__(self, x, y, z):
+    self.x = x
+    self.y = y
+    self.z = z
+
+  def update_coordinate_x(coord, new_x):
+    coord.x = new_x
+
+c = Coordinate(1, 2, 3)
+print(c.x) # 1
+c = Coordinate(c, 4)
+print(c.x) # 4
+```
+
+Now, let's do the same thing, but using structs in C.
+
+```C
+// End of lesson .c file
+
+
+```
