@@ -309,3 +309,90 @@ codefile_t change_filetype(codefile_t *f, int new_filetype);
 ```
 
 # Pointers to Structs
+
+ When working with a pointer to a struct, you need to use the arrow `->` operator to access a struct's field:
+
+ ```C
+coordinate_t point = {10, 20, 30};
+coordinate_t *ptrToPoint = &point;
+printf("X: %d\n", ptrToPoint->x); // X: 10
+```
+
+It effectively dereferences the pointer and accesses the field in one step. To be fair, you can use the dereference and dot operator (`*` and `.`) to achieve the same result (it's just ugly, more verbose, and less common):
+
+```C
+coordinate_t point = {10, 20, 30};
+coordinate_t *ptrToPoint = &point;
+printf("X: %d\n", (*ptrToPoint).x); // X: 10
+```
+
+## Order of Operations
+
+The `.` operator has a higher precedence than the `*` operator, so parentheses are _**necessary**_ when using `*` to dereference a pointer before accessing a member... which is another reason why the arrow operator is so much more common.
+
+# C Arrays
+
+If you're used to lists in Python, [Arrays in C](https://en.cppreference.com/w/c/language/array) are _similar_, but a bit lower level.
+
+An array is a _fixed-size_, ordered collection of elements. Like Python lists, they are indexed by integers, starting at zero. Unlike Python lists, they can only hold elements of the same type. They are stored in contiguous memory, like structs.
+
+## Integer Array
+
+```C
+int numbers[5] = {1, 2, 3, 4, 5};
+```
+
+##### Iterating Over an Array
+
+In C, there is no `x for list:`  syntax. Instead, you must iterate over them using a `for` loop with an index (or some conditional loop)
+
+```C
+#include <stdio.h>
+
+int main() {
+  int numbers[5] = {1, 2, 3, 4, 5};
+
+  // iterate and print each element
+  for (int i = 0; i < 5; i++) {
+    printf("%d", numbers[i]);
+  }
+  printf("\n");
+  return 0;
+}
+
+// Output
+1 2 3 4 5
+```
+
+##### Updating Values in an Array
+
+The syntax for updating values in an array is the same as how you access them:
+
+`arr[index] = value`
+
+Using our `numbers` example:
+
+```C
+#include <stdio.h>
+
+int main() {
+    int numbers[5] = {1, 2, 3, 4, 5};
+
+    // Update some values
+    numbers[1] = 20;
+    numbers[3] = 40;
+
+    // Print updated array
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", numbers[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+
+// Output
+
+1 20 3 40 5
+```
+
