@@ -529,7 +529,7 @@ printf("ptr[1].x = %d, ptr[1].y = %d, ptr[1].z = %d\n",
 // ptr[1].x = 4, ptr[1].y = 5, ptr[1].z = 6
 ```
 
-## Memory Layout
+### Memory Layout
 
 Assuming each `int` is 4 bytes, the `Coordinate` structure will be 12 bytes (`3 * 4` bytes). Let's assume the `points` array starts at memory address `0x2000`
 
@@ -538,10 +538,72 @@ Assuming each `int` is 4 bytes, the `Coordinate` structure will be 12 bytes (`3 
 |:----:|:-------:|:-----:|:-----:|
 | `0x2000` | `points[0].x` | 1 | 0 |
 | `0x2004` | `points[0].y` | 2 | 4 |
-| 0x2008 | numbers[2] | 3 | 8 |
-| 0x200C | numbers[3] | 4 | 12 |
-| 0x2010 | numbers[4] | 5 | 16 |
-| 0x2014 | numbers[1] | 2 | 20 |
-| 0x2018 | numbers[2] | 3 | 24 |
-| 0x201C | numbers[3] | 4 | 28 |
-| 0x2020 | numbers[4] | 5 | 32 |
+| `0x2008` | `points[0].z` | 3 | 8 |
+| `0x200C` | `points[1].x` | 4 | 12 |
+| `0x2010` | `points[1].y` | 5 | 16 |
+| `0x2014` | `points[1].z` | 6 | 20 |
+| `0x2018` | `points[2].x` | 7 | 24 |
+| `0x201C` | `points[2].y` | 8 | 28 |
+| `0x2020` | `points[2].z` | 9 | 32 |
+
+### Accessing Elements Using Pointers
+
+  * `points + 0` or `&points[0]` points to `0x2000`
+  * `points + 1` or `&points[1]` points to `0x200C` (next structure, offset by 12 bytes)
+  * `points + 2` or `&points[2]` points to `0x2018`
+
+# Array Casting
+
+Let's explore a special kind of psychopathy that's possible in C. Let's assume we have this array of 3 structs where each struct holds 3 integers:
+```C
+coordinate_t points[3] = {
+  {1, 2, 3},
+  {4, 5, 6},
+  {7, 8, 9}
+};
+```
+Because arrays are basically just pointers (in most cases; more on that later), and we know that structs are contiguous memory, we can cast the array of structs to an array of integers:
+```C
+int *points_start = (int *)points;
+```
+Then we can iterate over the known numbers of integers in the array of structs:
+```C
+for (int i = 0; i < 9; i++) {
+  printf("points_start[%d] = %d\n", i , points_start[i]);
+}
+```
+```C
+// End of lesson .c file
+#include "exercise.h"
+#include <stdio.h>
+
+void dump_graphics(graphics_t gsettings[10]) {
+  int *ptr = (int *)gsettings;
+  for (int i = 0; i < 30; i++) {
+    printf("settings[%d] = %d\n", i, ptr[i]);
+  }
+}
+
+// End of lesson .h file
+typedef struct Graphics {
+  int fps;
+  int height;
+  int width;
+} graphics_t;
+
+void dump_graphics(graphics_t gsettings[10]);
+
+// End of lesson main.c file
+#include "exercise.h"
+#include "munit.h"
+
+int main() {
+  graphics_t graphics_array[10] = {
+      {60, 1080, 1920},  {30, 720, 1280},  {144, 1440, 2560}, {75, 900, 1600},
+      {120, 1080, 1920}, {60, 2160, 3840}, {240, 1080, 1920}, {60, 768, 1366},
+      {165, 1440, 2560}, {90, 1200, 1920},
+  };
+  dump_graphics(graphics_array);
+  return 0;
+}
+```
