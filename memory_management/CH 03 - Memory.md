@@ -645,4 +645,52 @@ printf("Size of double array: %zu bytes\n", sizeof(doubleArray));
 ```
 Now the sizes are different because the array type keeps track of the size of each element and the number of elements. Although an array is a pointer to the first element, it's not _just_ a pointer: it's a block of memory that holds all the elements.
 >[!NOTE]
-> Boot.dev runs C in the browser using [WASM](), which is typically a 32-bit system. If you run this code on a 64-bit system, the size of the pointers will be 8 bytes.
+> Boot.dev runs C in the browser using [WASM](https://webassembly.org/), which is typically a 32-bit system. If you run this code on a 64-bit system, the size of the pointers will be 8 bytes.
+
+# Arrays Decay to Pointers
+
+So we know that arrays are _like_ pointers, but they're not exactly the same. Arrays allocate memory for all their elements, whereas pointers just hold the address of a memory location. In many contexts, [arrays **decay** to pointers](https://port70.net/~nsz/c/c11/n1570.html#6.3.2.1), meaning the array name _becomes_ "just" a pointer to the first element of the array.
+
+### When Arrays Decay
+
+Arrays decay when used in expressions containing pointers:
+
+```C
+int arr[5];
+
+// 'arr' decays to 'int*' because that's the type of 'ptr'
+int *ptr = arr;
+
+// 'arr' decays to 'int*' to perform pointer arithmetic
+int value = *(arr + 2);
+```
+And also when they're passed to functions... so they actually decay quite often in practice. That's why you can't pass an array to a function by value like you do with a struct; instead, the array name decays to a pointer. 
+
+### When Arrays Don't Decay
+
+  * **`sizeof` Operator**: Returns the size of the entire array (e.g., sizeof(arr)), not just the size of a pointer.
+  * **`&` Operator**: Taking the address of an array with `&arr` gives you a pointer to the whole array, not just the first element. The type of `&arr` is a pointer to the array type, e.g., `int (*)[5]` for an `int` array with 5 elements.
+  * **Initialization**: When an array is declared and initialized, it is fully allocated in memory and does not decay to a pointer.
+
+Take a look at the following. It declares an array of numbers `core_utilization` that represents the CPU utilization of each core on a system running our Sneklang interpreter. The array has 8 elements. It prints the size of an array and the length of an array. The core_utils_func prints the pointer size of the core_utilzation array, not the size of the actual array.
+```C
+// End of lesson code
+
+#include <stdio.h>
+
+void core_utils_func(int core_utilization[]) {
+  printf("sizeof core_utilization in core_utils_func: %zu\n",
+         sizeof(core_utilization));
+}
+
+// don't touch below this line
+
+int main() {
+  int core_utilization[] = {43, 67, 89, 92, 71, 43, 56, 12};
+  int len = sizeof(core_utilization) / sizeof(core_utilization[0]);
+  printf("sizeof core_utilization in main: %zu\n", sizeof(core_utilization));
+  printf("len of core_utilization: %d\n", len);
+  core_utils_func(core_utilization);
+  return 0;
+}
+```
