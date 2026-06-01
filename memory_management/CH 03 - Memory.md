@@ -736,7 +736,7 @@ The [`strcat`](https://en.cppreference.com/w/c/string/byte/strcat) function appe
 
 Here's what `first` might look like in memory:
 
->[WARNING]
+>[!WARNING]
 >The \0 is a `\` followed by the **number zero** . Do not confuse it with the letter O
 
 | 'S' | 'n' | 'e' | 'k' | '\0' | ???? | ... | ???? |
