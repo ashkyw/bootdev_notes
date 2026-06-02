@@ -1,42 +1,21 @@
-Need to accomodate things strung together. This falis:
+#include "exercise.h"
+#include <string.h>
 
-Input: Mix ![a](1.png)[b](2) text ![c](3.jpg)
-
-Expected: [('image', 'a', '1.png'), ('link', 'b', '2'), ('image', 'c', '3.jpg')]
-Actual:   [('image', 'a', '1.png'), ('image', 'c', '3.jpg')]
-Fail
-
-```python
-import re
-
-def extract_inline_segments(text):
-    inline_list = []
-    split_text = text.split()
-    for block in split_text:
-        if block.startswith("!["):
-            image = extract_markdown_images(block)
-            if image is not None:
-                for item in image:
-                    item = ("image", ) + item
-                    inline_list.append(item)            
-        if block.startswith("["):
-            links = extract_markdown_links(block)
-            if links is not None:
-                for link in links:
-                    link = ("link", ) + link
-                    inline_list.append(link)
-
-    return inline_list
-
-
-def extract_markdown_images(text):
-    image_pattern = r"!\[([^\[\]]*)\]\(([^\(\)]*)\)"
-    image_matches = re.findall(image_pattern, text)
-    return image_matches
-
-
-def extract_markdown_links(text):
-    link_pattern = r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)"
-    link_matches = re.findall(link_pattern, text)
-    return link_matches
-```
+int smart_append(TextBuffer *dest, const char *src) {
+  const int max_buffer = 64;
+  TextBuffer new_dest = *dest;
+  if (dest || src == NULL) {
+    return 1;
+  }
+  int src_length = strlen(src);
+  int remaining_buffer = new_dest.buffer - new_dest.length;
+  if (src_length > remaining_buffer) {
+    strncat(src, new_dest, (src_length - remaining_buffer));
+    *dest.length = 64;
+    return 1;
+  } else {
+    strcat(new_dest, src);
+    new_dest.length = new_dest.length - src_length;
+    return 0;
+  }
+}
