@@ -758,3 +758,25 @@ And `first` after `strcat`:
 | 0x3000 | 0x3001 | 0x3002 | 0x3003 | 0x3004 | 0x3005 |  0x3006 | 0x3007 | 0x3008 | 0x3009 | 0x300A | ...| 0x3031 |
 
 The `strcat` function appends the string `"lang!"` to the end of the string `"Snek"`, but smartly uses the null terminator to know where to start appending. It doesn't know the length of the string, but it knows where it ends.
+
+```C
+// End of lesson code:
+
+#include "exercise.h"
+#include <stdio.h>
+
+void concat_strings(char *str1, const char *str2) {
+  char *end = str1;
+  while (*end != '\0') {
+    end++;
+  }
+
+  while (*str2 != '\0') {
+    *end = *str2;
+    end++;
+    str2++;
+  }
+
+  *end = '\0';
+}
+```
