@@ -3,11 +3,11 @@
 #include <string.h>
 
 int smart_append(TextBuffer *dest, const char *src) {
-  const int max_buffer = 64;
-  TextBuffer new_dest = *dest;
   if (dest || src == NULL) {
     return 1;
   }
+  const int max_buffer = 64;
+  TextBuffer new_dest = *dest;
   int src_length = strlen(src);
   int remaining_buffer = new_dest.buffer - new_dest.length;
   if (src_length > remaining_buffer) {
