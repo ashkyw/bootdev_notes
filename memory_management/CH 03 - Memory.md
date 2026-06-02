@@ -493,7 +493,7 @@ int main() {
 
 # Multibyte Arrays
 
-If we create an array of structs it gets cruzy because we can access and manipulate the elements using either indexing _or_ pointer arithmetic. Let's see how multi-byte width structures are managed in memory.
+If we create an array of structs it gets crazy because we can access and manipulate the elements using either indexing _or_ pointer arithmetic. Let's see how multi-byte width structures are managed in memory.
 
 First, let's say we're working with our familiar Coordinate struct:
 
