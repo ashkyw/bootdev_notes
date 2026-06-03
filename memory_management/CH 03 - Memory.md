@@ -708,7 +708,7 @@ You were told not to worry about the weird `char *` syntax. Now that we understa
   * Any number of characters (`char`s) terminated by a null character (`'\0'`).
   * A pointer to the first element of a character array.
 
-It's important to understand that most string manipulation in C is done using pointers to move around the array and the null terminator is critical for deteremining the end of the string. In the example above, the string `"ssh terminal.shop for the best coffee"` is stored in memory as an array of characters, and the null terminator `'\0'` is automatically added at the end.
+It's important to understand that most string manipulation in C is done using pointers to move around the array and the null terminator is critical for determining the end of the string. In the example above, the string `"ssh terminal.shop for the best coffee"` is stored in memory as an array of characters, and the null terminator `'\0'` is automatically added at the end.
 
 ###  C strings are simple
   * Unlike other programming languages, C strings do _not_ store their length.
