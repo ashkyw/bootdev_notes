@@ -42,3 +42,12 @@ typedef struct Event {
 ```
 
 An `enum` is _not_ a collection type like a struct or an array. It's just a list of intgers constrained to a new type, where each is given an explicit name.
+```C
+// End of lesson code
+
+typedef enum Color {
+  RED,
+  GREEN,
+  BLUE,
+} color_t;
+```
