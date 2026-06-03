@@ -863,3 +863,93 @@ int smart_append(TextBuffer *dest, const char *src) {
   return 0;
 }
 ```
+
+# Forward Declaration
+
+Sometimes you have a struct that may need to reference itself, or be used recurisvely.
+
+For example, consider a `Node` struct that can contain other `Node` s. This might be useful for building a linked list or a tree:
+```C
+typedef struct Node {
+  int value;
+  node_t *next;
+} node_t;
+```
+The problem here is that the `node_t` is not yet defined, so the compiler will complain. To fix this, we can add a forward declaration. A forward declaration lets the compiler know about the existence of a struct type before it's fully defined:
+```C
+typedef struct Node node_t;
+
+typedef struct Node {
+  int value;
+  node_t *next;
+} node_t;
+```
+Note that the forward declaration must match the eventual definition, so you can't do the following:
+```C
+typedef struct Node node_t;
+
+typedef BadName {
+  int value;
+  node_t *next;
+} node_t;
+```
+```C
+// End of lesson code
+
+typedef struct SnekObject snekobject_t;
+
+typedef struct SnekObject {
+  char *name;
+  snekobject_t *child;
+} snekobject_t;
+
+snekobject_t new_node(char *name);
+```
+# Mutual Structs
+
+Forward declarations can also be used when two structs reference each other (a circular reference). For example, a `Person` has a `Computer` and a `Computer` has a `Person`:
+```C
+typedef struct Computer computer_t;
+typedef struct Person person_t;
+
+struct Person {
+  char *name;
+  computer_t *computer;
+};
+
+struct Computer {
+  char *brand;
+  computer_t *owner;
+};
+```
+Notice that the struct definitions end with just `};` rather than `} person_t`. Since we already created the typedef aliases in the forward declarations, we don't need te repeat them, though both styles are valid in C.
+
+Note that when you use forward declarations, you must use pointers to incomplete types (`Computer *computer`), not full values (`Computer computer`). This is due to the size of the struct being unknown.
+```C
+// End of lesson code
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct Employee employee_t;
+typedef struct Department department_t;
+
+struct Employee {
+  int id;
+  char *name;
+  department_t *department;
+};
+
+struct Department {
+  char *name;
+  employee_t *manager;
+};
+
+employee_t create_employee(int id, char *name);
+department_t create_department(char *name);
+
+void assign_employee(employee_t *emp, department_t *department);
+void assign_manager(department_t *dept, employee_t *manager);
+
+```
