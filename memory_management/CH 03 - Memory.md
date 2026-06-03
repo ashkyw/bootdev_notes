@@ -780,3 +780,86 @@ void concat_strings(char *str1, const char *str2) {
   *end = '\0';
 }
 ```
+# C strings
+
+C String Library
+
+The C standard library provides a comprehensive set of functions to manipulate strings in the <string.h> header file. Here are some of the most commonly used functions:
+
+  * `strcpy`: Copies a string to another.
+    ```C
+    char src[] = "Hello";
+    char dest[6];
+    strcpy(dest, src);
+    // dest now contains "Hello"
+    ```
+  * `strncpy`: Copies a specified number of characters from one string to another.
+    ```C
+    char src[] = "Hello";
+    char dest[6];
+    strncpy(dest, src, 3);
+    // dest now contains "Hel"
+    dest[3] = '\0';
+    // ensure null termination
+    ```
+  * `strcat`: Concatenates (appends) one string to another.
+    ```C
+    char dest[12] = "Hello";
+    char src[] = " World";
+    strcat(dest, src);
+    // dest now contains "Hello World"
+    ```
+  * `strncat`: Concatenates a specified number of characters from one string to another.
+    ```C
+    char dest[12] = "Hello";
+    char src[] = " World";
+    strncat(dest, src, 3);
+    // dest now contains "Hello Wo"
+    ```
+  * `strlen`: Returns the length of a string (excluding the null terminator).
+    ```C
+    char str[] = "Hello";
+    size_t len = strlen(str);
+    // len is 5
+    ```
+  * `strcmp`: Compares two strings lexicographically.
+    ```C
+    char str1[] = "Hello";
+    char str2[] = "World";
+    int result = strcmp(str1, str2);
+    // result is negative since "Hello" < "World"
+    ```
+  * `strchr`: Finds the first occurrence of a character in a string.
+    ```C
+    char str[] = "Hello";
+    char *pos = strchr(str, 'l');
+    // pos points to the first 'l' in "Hello"
+    ```
+  * `strstr`: Finds the first occurrence of a substring in a string.
+    ```C
+    char str[] = "Hello World";
+    char *pos = strstr(str, "World");
+    // pos points to "World" in "Hello World"
+    ```
+```C
+// End of lesson code:
+#include "exercise.h"
+#include <string.h>
+
+int smart_append(TextBuffer *dest, const char *src) {
+  if (!dest || !src) {
+    return 1;
+  }
+  const int max_buffer_size = 64;
+  size_t src_len = strlen(src);
+  size_t available_space = max_buffer_size - dest->length - 1;
+  if (src_len > available_space) {
+    strncat(dest->buffer, src, available_space);
+    dest->length = max_buffer_size - 1;
+    return 1;
+  }
+  strcat(dest->buffer, src);
+  dest->length += src_len;
+  return 0;
+}
+```
