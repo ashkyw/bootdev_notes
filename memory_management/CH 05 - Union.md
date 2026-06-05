@@ -25,3 +25,58 @@ We get...nothing? To be more specific, we get undefined behavior. A `union` only
 0000 0000 0000 0000 0000 0000 0001 1101
 ```
 Then we try to access `.name`, we read from the **same block of memory** but try to interpret the bytes as `char *`, which is why we get garbage (which is interpreted as nothing in this case). Put simply, setting the value of `.age` overwrites the value of `.name` and vice versa, and you should only access the field that you set.
+```C
+// End of lesson .c file
+#include "exercise.h"
+#include <stdio.h>
+
+void format_object(snek_object_t obj, char *buffer) {
+  switch (obj.kind) {
+  case INTEGER:
+    sprintf(buffer, "int:%d", obj.data.v_int);
+    break;
+  case STRING:
+    sprintf(buffer, "string:%s", obj.data.v_string);
+    break;
+  }
+}
+
+// don't touch below this line
+
+snek_object_t new_integer(int i) {
+  return (snek_object_t){
+      .kind = INTEGER,
+      .data = {.v_int = i},
+  };
+}
+
+snek_object_t new_string(char *str) {
+  // NOTE: We will learn how to copy this data later.
+  return (snek_object_t){
+      .kind = STRING,
+      .data = {.v_string = str},
+  };
+}
+
+// End of lesson .h file
+typedef enum SnekObjectKind {
+  INTEGER,
+  STRING,
+} snek_object_kind_t;
+
+// don't touch below this line
+
+typedef union SnekObjectData {
+  int v_int;
+  char *v_string;
+} snek_object_data_t;
+
+typedef struct SnekObject {
+  snek_object_kind_t kind;
+  snek_object_data_t data;
+} snek_object_t;
+
+snek_object_t new_integer(int);
+snek_object_t new_string(char *str);
+void format_object(snek_object_t obj, char *buffer);
+```
