@@ -80,3 +80,6 @@ snek_object_t new_integer(int);
 snek_object_t new_string(char *str);
 void format_object(snek_object_t obj, char *buffer);
 ```
+# Memory Layout
+
+Unions store their value in the same memory location, no matter which field or type is actively being used. That means accessing any field apart from the one you set is generally a **bad idea**.
