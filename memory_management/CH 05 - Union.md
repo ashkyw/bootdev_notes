@@ -112,4 +112,11 @@ typedef union Color {
 } color_t;
 ```
 It results in a memory layout like this: 
-[!Struct nested in Union memory layout]()
+[!Struct nested in Union memory layout](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/Struct%20nested%20in%20a%20union.png)
+Only 4 bytes are used. And, unlike in 99% of scenarios, it makes sense to both set _and_ get values from this union through both the `components` and `rgba` fields! Both fields in the union are exactly 32 bits in size, which means that we can "safely" (?) access the entire set of colors through the `.rgba` field, or get a single color component through the `.components` field.
+
+The convenience of additional fields, with the efficiency of a single memory location!
+```C
+// End of lesson code
+
+```
