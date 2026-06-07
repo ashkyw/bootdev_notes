@@ -118,5 +118,14 @@ Only 4 bytes are used. And, unlike in 99% of scenarios, it makes sense to both s
 The convenience of additional fields, with the efficiency of a single memory location!
 ```C
 // End of lesson code
+#include <stdint.h>
 
+typedef union PacketHeader {
+  struct {
+    uint16_t src_port;
+    uint16_t dest_port;
+    uint32_t seq_num;
+  } tcp_header;
+  uint8_t raw[8];
+} packet_header_t;
 ```
