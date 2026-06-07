@@ -83,3 +83,33 @@ void format_object(snek_object_t obj, char *buffer);
 # Memory Layout
 
 Unions store their value in the same memory location, no matter which field or type is actively being used. That means accessing any field apart from the one you set is generally a **bad idea**.
+
+# Union Size
+
+A downside of unions is that the size of the union is the size of the _largest_ field in the union. Take this example:
+```C
+typedef union IntOrErrMessaga {
+  int data;
+  char err[256];
+} int_or_err_meassage_t;
+```
+This `IntOrErrMessage` union is designed to hold an `int` 99% of the time. However, when the program encounters an error, instead of storing an integer here, it will store an error message. The trouble is that it's incredibly inefficient because it allocates 256 bytes for every `int` it stores!
+
+Imagine an array of 1000 `int_or_err_message_t` objects. Even if none of them make use of the `.err` field, the array will take up `256 * 1000 = 256,000` bytes of memory! An array of `int`s would have only taken `4,000` bytes (assuming 32-bit integers).
+
+# Helper Fields
+
+One interesting (albeit not commonly used) trick is to use unions to create "helpers" for accessing different parts of a piece of memory. Consider the following:
+```C
+typedef union Color {
+  struct {
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
+    uint8_t a;
+  } components;
+  unit32_t rgba;
+} color_t;
+```
+It results in a memory layout like this: 
+[!Struct nested in Union memory layout]()
