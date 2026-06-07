@@ -108,7 +108,7 @@ typedef union Color {
     uint8_t b;
     uint8_t a;
   } components;
-  unit32_t rgba;
+  uint32_t rgba;
 } color_t;
 ```
 It results in a memory layout like this: 
