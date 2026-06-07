@@ -205,7 +205,7 @@ typedef struct Pastry {
 ```
 Now we can use `pastry_t` wherever we would have used `struct Pastry` before.
 
-> [!Information]
+> ![Information]
 > The `_t` at the end is a common convention to indicate a type.
 
 In fact, you can optionally skip giving the struct a name:
