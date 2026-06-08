@@ -82,3 +82,34 @@ void printStackPointerDiff(void) {
 }
 
 ```
+# Why a Stack?
+
+Allocating memory on the stack is preferred when possible because the stack is faster and simpler than the heap.
+
+  * **Efficient Pointer Management**: Stack "allocation" is just a quick increment or decrement of the stack pointer, which is extremely fast. Heap allocations require more complex bookkeeping.
+  * **Cache-Friendly Memory Access**: Stack memory is stored in a contiguous block, enhancing cache performance due to spatial locality. Related values live next to each other in memory, so the CPU can load and access them more quickly.
+  * **Automatic Memory Management**: Stack memory is managed automatically as functions are called and as they return.
+  * **Inherent Thread Safety**: Each thread has its own stack. Heap allocations require synchronization mechanisms when used concurrently, potentially introducing overhead.
+
+# Stack Overflow
+
+So the stack is great and all, but one of the downsides is that it has a limited size. If you keep pushing frames onto the stack without popping them off, you'll eventually run out of memory and get a [stack overflow](https://en.wikipedia.org/wiki/Stack_overflow).
+
+That's one of the reasons recursion without [tail-call optimization](https://en.wikipedia.org/wiki/Tail_call) can be dangerous. Each recursive call pushes a new frame onto the stack, and if you have too many recursive calls, you'll run out of stack space.
+```C
+#include <stdio.h>
+
+int main() {
+  const int pool_size = 1024 * 10;
+  char snek_pool[pool_size];
+  snek_pool[0] = 's';
+  snek_pool[1] = 'n';
+  snek_pool[2] = 'e';
+  snek_pool[3] = 'k';
+  snek_pool[4] = '\0';
+
+  printf("Size of pool: %d\n", pool_size);
+  printf("Initial string: %s\n", snek_pool);
+  return 0;
+}
+```
