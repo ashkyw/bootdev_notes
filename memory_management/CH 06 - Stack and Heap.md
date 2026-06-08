@@ -113,3 +113,14 @@ int main() {
   return 0;
 }
 ```
+
+# Pointers to the Stack
+
+So we know that stack frames are always getting pushed and popped, and as a result, memory addresses on the stack are always changing and getting refused.
+
+_Remeber: the stack is only safe to use within the context of the current function!_
+```C
+// End of lesson code
+
+
+```
