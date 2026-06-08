@@ -150,3 +150,68 @@ int main() {
   printf("c3: %d, %d\n", c3.x, c3.y);
 }
 ```
+# The Heap
+
+## ![Video notes](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/best-place-to-store-in-memory-data-1920x1080.mp4)
+
+The stack is _simpler_ and _faster_, but is a bit **more limited**.
+
+The heap is _slower_ and a bit **more complex** to work with, but it allows us to create more sophisticated and complicated data structures.
+
+## Stack Frames
+
+You get a new stack frame every time you call a function. Each stack frame has a stack pointer, showing us where we are in case another function requires a new frame. The first address in the frame is reserved for the return address. The next address is reserved to **copy** any arguments required for the function. Next is the int type within that function. Then each char of a string. Each time the stack pointer increments along the frame, pointing out where it currently is in memory. After the function executes, the stack pointer moves back to the return address, effectively freeing the memory used in the function. 
+
+## The Heap
+ 
+Much slower because we need to dynamically allocate this memory, and grab new resources from the operating system. It's more complex because it is possible to forget to free that memory, causing memory leaks, and possible running out of memory entirely.
+
+Why do we use the heap if all this can happen? Well, we don't always know how much memory we'll need ahead of time. 
+
+### Rule of thumb
+
+  * **Stack** - Used when the size is _known_ ahead of time and can exist within _one_ function.
+  * **Heap** - Used when the size is ***unknown*** ahead of time, or a return value is _not_ limited to one function.
+
+## Lesson notes
+
+["The heap"](https://en.wikipedia.org/wiki/Memory_management#Dynamic_memory_allocation), as opposed to "the stack", is a pool of long-lived memory shared across the entire program. Stack memory is automatically allocated and deallocated as functions are called and returned, but heap memory is allocated and deallocated as needed, independent of the burdensome shackles of function calls.
+
+When you need to store data that outlives the function that created it, you'll send it to the heap. The heap is called "dynamic memory" because it's allocated and deallocated as needed. Take a look at `new_int_array`:
+```C
+int *new_int_array(int size) {
+  int *new_arr = malloc(size * sizeof(int)); // Allocate memory
+  if (new_arr == NULL) {
+    fprintf(stderr, "Memory allocation failed\n");
+    exit(1); // Exit if allocation fails
+  }
+  return new_arr;
+}
+```
+Because the size of the array isn't known at compile time, we can't put it on the stack. Instead, we allocate memory using the `<stdlib.h>`'s `[malloc](https://en.cppreference.com/w/c/memory/malloc)` function. It takes a number of bytes to allocate as an argument (`size * sizeof(int)`) and returns a pointer to the allocated memory (a `void *` that is automatically converted to an `int *` when assigned). Here's a diagram of what happened in memory:
+![The Heap 1](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/The%20Heap%201.png)
+The `new_int_array` function's `size` argument is just an integer, it's pushed onto the stack. Assuming `size` is `6`, when `malloc` is called we're given enough memory to store 6 integers on the heap, and we're given the address of the start of that newly allocated memory. We store it in a new local variable called `new_arr`. The address is stored on the stack, but the data it points to is in the heap.
+
+Let's look at some code that uses `new_int_array`:
+```C
+int* arr_of_6[0] = 69;
+int* arr_of_6[1] = 42;
+int* arr_of_6[2] = 420;
+int* arr_of_6[3] = 1337;
+int* arr_of_6[4] = 7;
+int* arr_of_6[5] = 0;
+```
+The data is stored in the heap:
+![The Heap 2](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/The%20Heap%202.png)
+When we're done with the memory, we need to manually deallocate it using the `<stdlib.h>`'s [`free`](https://en.cppreference.com/w/c/memory/free) function:
+```C
+free(arr_of_6);
+```
+![The Heap 3](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/The%20Heap%203.png)
+
+The `free` function returns (deallocates) that memory for use elsewhere. It's important to note that the pointer (`arr_of_6`) still exists, but shouldn't be used. It's a "dangling pointer", pointing to deallocated memory.
+```C
+// End of lesson code
+
+
+```
