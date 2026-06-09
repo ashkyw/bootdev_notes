@@ -280,3 +280,62 @@ int *allocate_scalar_array(int size, int multiplier) {
   return lst;
 }
 ```
+# Free
+The [`free`](https://en.cppreference.com/w/c/memory/free) function deallocates memory that was previously allocated by [`malloc`](https://en.cppreference.com/w/c/memory/malloc), [`calloc`](https://en.cppreference.com/w/c/memory/calloc), or [`realloc`](https://en.cppreference.com/w/c/memory/realloc).
+
+**Important**: `free` does not change the **value** stored in the memory, and it doesn't even change the address stored in the pointer. Instead, it simply informs the Operating System that the memory can be used again.
+
+### Forgetting to free
+
+Forgetting to call `free` leads to a memory leak. This means that the allocated memory remains occupied and cannot be reused, even though the program no longer needs it. Over time, if a program continues to allocate memory without freeing it, the program may run out of memory and crash.
+
+Memory leaks are one of the most common bugs in C programs, and they can be difficult to track down because the memory is still allocated and accessible, even though it is no longer needed.
+
+```C
+// End of lesson code
+#include "exercise.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+  const int num_lists = 500;
+  for (int i = 0; i < num_lists; i++) {
+    int *lst = allocate_scalar_list(50000, 2);
+    if (lst == NULL) {
+      printf("Failed to allocate list\n");
+      return 1;
+    } else {
+      printf("Allocated list %d\n", i);
+    }
+    free(lst);
+  }
+  return 0;
+}
+```
+# Big Endian and Little Endian
+
+While we are on the topic of memory, it's worth knowing about "endianness". Endianness is the order in which bytes are stored in memory. The two most common formats are big endian and little endian.
+
+### Big Endian
+
+In a big-endian system, the most significant byte is stored first, at the lowest memory address. The "most significant byte" is just a fancy way of saying "the biggest part of the number". 
+
+Let's say you have the hexadecimal number `0x12345678`. Here's how it would be stored in big-endian format:
+
+![Big Endian](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/Big%20endian.png)
+
+The most signifcant byte (`0x12`) is stored at the lowest memory address.
+
+### Little Endian
+
+In a little-endian system, the least significant byte (the "smallest" part of the number) is stored first, at the lowest memory address. This is the format used by most modern computers.
+
+Using the same number `0x12345678`, here's how it would be stored in little-endian format:
+
+![Little Endian](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/Little%20endian.png)
+
+Here, the least significant byte (`0x78`) is stored first.
+
+For the most part, you won't have to worry about endianness when writing programs. The way data is read from memory automatically handles this, so we can spend our valuable time building e-commerce shops for the terminal instead. Endianness becomes important in certain scenarios, like networking and working with binary files.
+
+For now, just know that most modern systems use little-endian, and the compiler takes care of how data is stored and accessed.
