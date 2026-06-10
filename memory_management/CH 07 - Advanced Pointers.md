@@ -134,3 +134,8 @@ int **pointer_pointer;
 Pointers to pointers (or pointers to pointers to pointers) are like a treasure map or a scavenger hunt. You start at one pointer and keep following the chain of addresses until you get to the final value. It's just a chain of dereferences.
 
 ![Pointers to pointers to pointers](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/Pointer%20to%20pointer%20to%20pointer.png)
+```C
+// End of lesson code
+
+
+```
