@@ -157,7 +157,9 @@ void allocate_int(int **pointer_pointer, int value) {
 ### Fun facts about pointers
 
 When we use `malloc`, the address of that memory is stored inside the variable used to create it.
-
+```C
+int *single_int = malloc(sizeof(int));
+```
 Both of these variables hold addresses of integers (int *):
 ```C
 *pointer_pointer is an int *.
@@ -167,4 +169,4 @@ Because they are exactly the same type, you can assign one directly to the other
 ```C
 *pointer_pointer = single_int;
 ```
-This takes the heap address stored inside single_int and copies it into the caller's pointer (*pointer_pointer). No & required!
+This takes the heap address stored inside `single_int` and copies it into the caller's pointer (`*pointer_pointer`). No `&` required!
