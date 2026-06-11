@@ -137,5 +137,34 @@ Pointers to pointers (or pointers to pointers to pointers) are like a treasure m
 ```C
 // End of lesson code
 
+#include "exercise.h"
+#include "stdlib.h"
+
+void allocate_int(int **pointer_pointer, int value) {
+  // Allocating memory and updating the original pointer
+  int *pointer = malloc(sizeof(int));
+  *pointer_pointer = pointer;
+
+  if (*pointer_pointer == NULL) {
+    return;
+  }
+
+  // Assigning a value to the allocated memory
+  **pointer_pointer = value;
+}
 
 ```
+### Fun facts about pointers
+
+When we use `malloc`, the address of that memory is stored inside the variable used to create it.
+
+Both of these variables hold addresses of integers (int *):
+```C
+*pointer_pointer is an int *.
+single_int is an int *.
+```
+Because they are exactly the same type, you can assign one directly to the other, just like assigning one integer to another (x = y):
+```C
+*pointer_pointer = single_int;
+```
+This takes the heap address stored inside single_int and copies it into the caller's pointer (*pointer_pointer). No & required!
