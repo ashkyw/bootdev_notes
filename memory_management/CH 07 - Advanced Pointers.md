@@ -222,3 +222,12 @@ typedef struct Token {
 
 token_t **create_token_pointer_array(token_t *tokens, size_t count);
 ```
+# Void Pointers
+
+We've already discussed `void`, which essetially means "nothing" in C. It's used in a few different contexts:
+  * `void update_soldier(soldier_t *s)` means the fuction returns nothing
+  * `soldier_t new_soldier(void)` means the function takes no arguments
+
+And because C likes re-using ideas but with slightly different meanings (the genius design can't be understood by mere mortals) `void` also has another use!
+
+A `void *`
