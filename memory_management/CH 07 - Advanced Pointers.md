@@ -290,3 +290,11 @@ void snek_zero_out(void *ptr, snek_object_kind_t kind) {
   }
 }
 ```
+Using pointers to swap variables
+```C
+void swap_ints(int *a, int *b) {
+  int tmp = *a;
+  *a = *b;
+  *b = tmp;
+}
+```
