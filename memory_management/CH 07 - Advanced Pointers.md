@@ -267,10 +267,19 @@ float decimal = 3.14;
 printValue(&decimal, FLOAT);
 ```
 
-###### Pointers note
+###### Pointers notes
 When working with pointers and dereferencing them, parentheses usage is essential. Consider the following examples:
   * `((some_struct_t*)ptr)->field` means casting is applied to `ptr` and then the field is obtained.
   * `(some_struct_t*)ptr->field` means casting is applied to `ptr->field`
+
+Think of each * as a level. If you have ** you're two levels away from the core value.
+
+```C
+int x = 42;
+int *p = &x;      // one level:   *p  == 42
+int **pp = &p;    // two levels:  *pp == p,  **pp == 42
+int ***ppp = &pp; // three levels: *ppp == pp, **ppp == p, ***ppp == 42
+```
 ```C
 // End of lesson code
 
@@ -294,6 +303,14 @@ Using pointers to swap variables
 ```C
 void swap_ints(int *a, int *b) {
   int tmp = *a;
+  *a = *b;
+  *b = tmp;
+}
+```
+
+```C
+void swap_strings(char **a, char **b) {
+  char *tmp = *a;
   *a = *b;
   *b = tmp;
 }
