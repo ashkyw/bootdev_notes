@@ -27,7 +27,7 @@ stack_t *stack_new(size_t capacity) {
 }
 ```
 
-##### Notes from the boots AI
+## Notes from the boots AI
 `void *` is the universal pointer
 
 Any pointer type can be implicitly cast to and from `void *` in C. That's how `malloc` works--it returns `void *` when you assign it to whatever typed pointer you need. No explicit cast is required in C, unlike C++.
@@ -135,7 +135,7 @@ typedef struct Stack {
 stack_t *stack_new(size_t capacity);
 void stack_push(stack_t *stack, void *obj);
 ```
-##### Notes from the boots AI
+## Notes from the boots AI
 **1. Separate capacity from count**
 
   A stack (and many dynamic data structures) tracks two different things: how much memory is allocated (`capacity`) and how many elements are actually stored    (`count`).
@@ -163,3 +163,25 @@ stack->data = temp;
 
    `data` being `void **` means each slot holds a `void *` -- a pointer to anything. This is how C implements generic containers without templates or generics.
 
+# Stack Pop
+
+Items go on and off the stack from the same end. (last in, first out).
+
+The pop method is much simpler than the push method in this case, because we aren't worrying about resizing the stack.
+```C
+// End of lesson .c file
+
+// End of lesson .h file
+#include <stddef.h>
+
+typedef struct Stack {
+  size_t count;
+  size_t capacity;
+  void **data;
+} stack_t;
+
+stack_t *stack_new(size_t capacity);
+void stack_push(stack_t *stack, void *obj);
+void *stack_pop(stack_t *stack);
+
+```
