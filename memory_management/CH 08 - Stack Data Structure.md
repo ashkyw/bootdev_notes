@@ -170,6 +170,52 @@ Items go on and off the stack from the same end. (last in, first out).
 The pop method is much simpler than the push method in this case, because we aren't worrying about resizing the stack.
 ```C
 // End of lesson .c file
+#include "snekstack.h"
+#include <assert.h>
+#include <stddef.h>
+#include <stdlib.h>
+
+void *stack_pop(stack_t *stack) {
+  if (stack->count == 0) {
+    return NULL;
+  }
+  stack->count--;
+  return stack->data[stack->count];
+}
+
+// don't touch below this line'
+
+void stack_push(stack_t *stack, void *obj) {
+  if (stack->count == stack->capacity) {
+    stack->capacity *= 2;
+    void **temp = realloc(stack->data, stack->capacity * sizeof(void *));
+    if (temp == NULL) {
+      stack->capacity /= 2;
+      exit(1);
+    }
+    stack->data = temp;
+  }
+  stack->data[stack->count] = obj;
+  stack->count++;
+  return;
+}
+
+stack_t *stack_new(size_t capacity) {
+  stack_t *stack = malloc(sizeof(stack_t));
+  if (stack == NULL) {
+    return NULL;
+  }
+
+  stack->count = 0;
+  stack->capacity = capacity;
+  stack->data = malloc(stack->capacity * sizeof(void *));
+  if (stack->data == NULL) {
+    free(stack);
+    return NULL;
+  }
+
+  return stack;
+}
 
 // End of lesson .h file
 #include <stddef.h>
@@ -185,3 +231,184 @@ void stack_push(stack_t *stack, void *obj);
 void *stack_pop(stack_t *stack);
 
 ```
+## Notes from the boots AI
+
+**LIFO (Last In, First Out)**
+
+The stack's `count` acts as a "top of stack" pointer. The last pushed element lives at `data[count - 1]`, so decrementing `count` before returning gives you the correct element
+
+**Why decrement _before_ indexing?**
+
+After `stack->count--`, `count` now holds the index of the element you just "removed". This is a common C idiom -- the count doubles as the next-available index, so `count - 1` (post-decrement `count`) is always the top.
+
+**No memory freeing needed**
+
+Popping doesn't `free` the element -- the stack doesn't own the data, it just holds pointers to it. The caller is responsible for the liftime of the actual objects. 
+
+**Empty Stack Guard**
+
+ Always check `count == 0` before accessing the `data`. Accessing `data[-1]` (i.e., `data[count - 1]` when `count` is 0 and `count` is a `size_t`) would be undefined behavior -- and with unsigned types, `0 - 1` wraps around to a huge number.
+
+**`void *` flexibility**
+The stack works with any pointer type because it stores `void *`. The caller casts back to the appropriate type when popping. 
+
+# Stack free
+
+In C, we don't have a lot of abstractions at our disposal. There are no classes, destructors, functors, monads, made-up-category-theory-words, etc.
+
+We've got _data_. And we've got _functions_.
+
+So, to make it easier to work with our `Stack`, we're going to build our own little `free` function that will clean up all the memory that we've allocated for our stack.
+
+### Assignment
+Complete the `stack_free` function
+  * If the stack is `NULL`, return immediately.
+  * If the stack data is not `NULL`, free the stack data
+  * Free the stack itself
+  You can assume all the elements inside the stack are already freed. That's not _our_ problem.
+
+```C
+// End of lesson .c file
+#include "snekstack.h"
+#include <assert.h>
+#include <stddef.h>
+#include <stdlib.h>
+
+void stack_free(stack_t *stack) {
+  if (stack == NULL) {
+    return;
+  }
+
+  if (stack->data != NULL) {
+    free(stack->data);
+  }
+
+  free(stack);
+}
+
+// don't touch below this line
+
+void *stack_pop(stack_t *stack) {
+  if (stack->count == 0) {
+    return NULL;
+  }
+
+  stack->count--;
+  return stack->data[stack->count];
+}
+
+void stack_push(stack_t *stack, void *obj) {
+  if (stack->count == stack->capacity) {
+    stack->capacity *= 2;
+    void **temp = realloc(stack->data, stack->capacity * sizeof(void *));
+    if (temp == NULL) {
+      stack->capacity /= 2;
+      exit(1);
+    }
+    stack->data = temp;
+  }
+  stack->data[stack->count] = obj;
+  stack->count++;
+  return;
+}
+
+stack_t *stack_new(size_t capacity) {
+  stack_t *stack = malloc(sizeof(stack_t));
+  if (stack == NULL) {
+    return NULL;
+  }
+
+  stack->count = 0;
+  stack->capacity = capacity;
+  stack->data = malloc(stack->capacity * sizeof(void *));
+  if (stack->data == NULL) {
+    free(stack);
+    return NULL;
+  }
+
+  return stack;
+}
+
+// End of lesson .h file
+#include <stddef.h>
+
+typedef struct Stack {
+  size_t count;
+  size_t capacity;
+  void **data;
+} stack_t;
+
+stack_t *stack_new(size_t capacity);
+void stack_push(stack_t *stack, void *obj);
+void *stack_pop(stack_t *stack);
+void stack_free(stack_t *stack);
+
+```
+## Notes from the boots AI
+**Order of freeing matters**
+
+Always free inner allocations before outer ones. Here, `stack->data` is freed before `stack` itself. If you did it in reverse, you'd lose the pointer to `data` and leak memory.
+
+**NULL guard before dereferencing**
+
+Checking `stack == NULL` before accessing `stack->data` prevents a segfault. Dereferencing a NULL pointer is undefined behavior in C -- it's one of the most common crash causes.
+
+**NULL guard before freeing**
+
+Technically,`free(NULL)` is safe in C (it's a no-op), so the `if(stack->data != NULL)` check isn't strictly required. But it's a good defensive habit, and it signals intent clearly to future readers.
+
+**Ownership and responsibility**
+
+The function assumes elemnts inside the stack are already freed by the caller. This is a deliberate design decision -- `stack_free` owns the container, not the contents. Documenting this kind of ownership contract is important in C since there's no runtime safety net to catch mistakes.
+
+**Symmetry with allocation**
+`stack_new` calls `malloc` twice (once for the struct, once for `data`). `stack_free` calls `free` twice in reverse order. This symmetry is a useful mental model: every allocation needs a corresponding free, and cleanup mirrors construction.
+
+# Dangerous Push
+
+Up until now, even though we made our stack with `void *`, you'll notice that we've only stored plain old `int` pointers. You can actually store _anything_ in the stack, but this is usually a bad idea. 
+
+Now we're going to push an `int *` and a regular `int` directly onto the stack (_bad_ idea). This is just to show you can store _anything_ in `void *`, even values that aren't pointers.
+
+### Assignment
+  * Push the value `1337` directly onto the stack using `stack_push`. You'll need to cast the value to a `void *`
+  * Allocate memory for a new `int` on the heap
+  * Set the value to which the address points to `1024`
+  * Push the int pointer onto the stack using the `stack_push` function
+
+```C
+// End of lesson code
+#include "snekstack.h"
+#include "stdlib.h"
+
+void scary_double_push(stack_t *s) {
+  stack_push(s, (void *)1337);
+
+  int *i = malloc(sizeof(int));
+  *i = 1024;
+  stack_push(s, i);
+}
+```
+## Notes from the boots AI
+#### Casting an integer to `void *`
+```C
+stack_push(s, (void *)1337);
+```
+This stores the _value_ `1337` directly in the pointer slot, not at a memory address. It works because on most modern platforms, `sizeof(void *) >= sizeof(int)`, so the bits fit. But it is technically implementation-defined behavior in C -- the standard doesn't guarantee it round-trips cleanly. 
+
+**Why this is dangerous**
+
+When you later retrieve the value:
+```C
+int value = (int) s->data[0]; // cast pointer back to int
+int *pointer = s->data[1]; // treat as actual pointer, dereference it
+```
+The caller must _already know_ which slots hold raw integer values vs. actual heap pointers. There's no type information stored alongside the data. If you call `free()` on `s->data[0]` thinking it's a heap pointer, you'll corrupt memory or crash -- because `1337` is not a valid heap address.
+
+#### The real-world lesson
+
+This is exactly why typed generics (C++ templates, Rust generics, Go generics) exist. A `void *` stack is powerful but puts the entire burden of type safety on the programmer. In production C you'd typically:
+  * Store only pointers to heap-allocated data (uniform ownership)
+  * Or use a tagged union to track the type of each element alongside its value
+
+The heterogeneous `void *` approach is mostly useful for understanding _why_ higher-level abstractions were invented.
