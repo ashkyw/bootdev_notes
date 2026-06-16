@@ -82,6 +82,80 @@ int *large_boi = realloc(smol_boi, 20 * sizeof(int));
 
 Now we'll store some data in the stack. If the count reaches the capacity, we'll double the heap size for the new data.
 ```C
-// End of lesson code
+// End of lesson .c file
 
+#include "snekstack.h"
+#include <assert.h>
+#include <stddef.h>
+#include <stdlib.h>
+
+void stack_push(stack_t *stack, void *obj) {
+  if (stack->count == stack->capacity) {
+    stack->capacity *= 2;
+    void **temp = realloc(stack->data, stack->capacity * sizeof(void *));
+    if (temp == NULL) {
+      stack->capacity /= 2;
+      return;
+    }
+    stack->data = temp;
+  }
+  stack->data[stack->count] = obj;
+  stack->count++;
+  return;
+}
+
+// don't touch below this line
+
+stack_t *stack_new(size_t capacity) {
+  stack_t *stack = malloc(sizeof(stack_t));
+  if (stack == NULL) {
+    return NULL;
+  }
+
+  stack->count = 0;
+  stack->capacity = capacity;
+  stack->data = malloc(stack->capacity * sizeof(void *));
+  if (stack->data == NULL) {
+    free(stack);
+    return NULL;
+  }
+
+  return stack;
+}
+
+// End of lesson .h file
+#include <stddef.h>
+
+typedef struct Stack {
+  size_t count;
+  size_t capacity;
+  void **data;
+} stack_t;
+
+stack_t *stack_new(size_t capacity);
+void stack_push(stack_t *stack, void *obj);
 ```
+##### Notes from the boots AI
+**1. Separate capacity from count**
+  A stack (and many dynamic data structures) tracks two different things: how much memory is allocated (`capacity`) and how many elements are actually stored    (`count`).
+
+**2. Doubling capacity is a classic amortized strategy**
+  Doubling an overflow means reallocations happen rarely -- O(log n) times for n pushes. The total cost of all reallocations is O(n), so each push is O(1)       amortized. This is the same strategy used by C++ `std::vector` and many other dynamic arrays.
+  
+**3. Always use temp pointrs with `realloc`**
+```C
+void **temp = realloc(stack->data, new_size);
+if (temp == NULL) {
+  // recover gracefully
+  return;
+}
+stack->data = temp;
+```
+  If you assign directly back to `stack->data` and `realloc` fails, you've just leaked the original memory -- `stack->data` becomes NULL and you've lost the     pointer to the old allocation
+
+**4. Restore state on failure**
+  When `realloc` fails, you rolled back `stack->capacity` to its previous value. This is the "leave things as you found them" principle -- the caller can        still use the stack safely after a failed push
+  
+**5. `void **` is an array of pointers**
+   `data` being `void **` means each slot holds a `void *` -- a pointer to anything. This is how C implements generic containers without templates or generics.
+
