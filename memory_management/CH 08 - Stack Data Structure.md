@@ -137,9 +137,11 @@ void stack_push(stack_t *stack, void *obj);
 ```
 ##### Notes from the boots AI
 **1. Separate capacity from count**
+
   A stack (and many dynamic data structures) tracks two different things: how much memory is allocated (`capacity`) and how many elements are actually stored    (`count`).
 
 **2. Doubling capacity is a classic amortized strategy**
+
   Doubling an overflow means reallocations happen rarely -- O(log n) times for n pushes. The total cost of all reallocations is O(n), so each push is O(1)       amortized. This is the same strategy used by C++ `std::vector` and many other dynamic arrays.
   
 **3. Always use temp pointrs with `realloc`**
@@ -154,8 +156,10 @@ stack->data = temp;
   If you assign directly back to `stack->data` and `realloc` fails, you've just leaked the original memory -- `stack->data` becomes NULL and you've lost the     pointer to the old allocation
 
 **4. Restore state on failure**
+
   When `realloc` fails, you rolled back `stack->capacity` to its previous value. This is the "leave things as you found them" principle -- the caller can        still use the stack safely after a failed push
   
 **5. `void **` is an array of pointers**
+
    `data` being `void **` means each slot holds a `void *` -- a pointer to anything. This is how C implements generic containers without templates or generics.
 
