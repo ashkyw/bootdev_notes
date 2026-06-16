@@ -1,6 +1,8 @@
 # Low level stack
 
-Making a stack data structure with generics in C. Step One:
+Making a stack data structure with generics in C. 
+
+Step One:
 
 ```C
 // End of lesson code
@@ -66,3 +68,20 @@ sizeof(stack_t *) // size of the pointer itself (8 bytes on 64-bit)
 sizeof(stack_t)   // size of the whole struct
 ```
 These fundamentals will come up constantly as we build the garbage collector
+
+# Stack Push
+
+The `realloc` function is used to resize memory that was previously allocate with `malloc` or `calloc`. It takes a **pointer to the old memory** and the new size, and returns a pointer to the new memory:
+```C
+void *realloc (void *ptr, size_t size);
+```
+```C
+int *smol_boi = malloc(10 * sizeof(int));
+int *large_boi = realloc(smol_boi, 20 * sizeof(int));
+```
+
+Now we'll store some data in the stack. If the count reaches the capacity, we'll double the heap size for the new data.
+```C
+// End of lesson code
+
+```
