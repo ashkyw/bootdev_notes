@@ -412,3 +412,34 @@ This is exactly why typed generics (C++ templates, Rust generics, Go generics) e
   * Or use a tagged union to track the type of each element alongside its value
 
 The heterogeneous `void *` approach is mostly useful for understanding _why_ higher-level abstractions were invented.
+
+# Multiple Types
+
+So we saw that we _can_ push both `int` and `int *` types into the same stack (remember: **bad idea**).
+
+In this example, we'll see that not only can you push values and pointers into the same stack, but you can also push different types of values into the same stack.
+
+Once again, **bad idea**. The point of all this is:
+
+##### _**C doesn't care what you put in memory, it's bytes all the way down**_
+
+Fortunately, C doesn't let you do these conversions automatically, but it still lets you do them. When you're working with `void *`, you're working with raw memory addresses, and you can cast them to whatever you want.
+
+### Assignment
+Complete the `stack_push_multiple_types` function.
+* Allocate memory on the heap for a `float` and set the value to which it's pointed to `3.14`.
+* Push the `float` onto the stack using `stack_push`.
+* Create a `char *` constant that points to the value: `sneklang is blazingly slow!`
+* Get the length of the string for memory allocation (Remember to leave room for `\0`)
+* Allocate memory for a `char *`
+* Copy the value to the memory
+* Push the pointer to the memory onto the stack using `stack_push`
+
+#### Tip:
+
+Don't forget to use the `string.h` library when working with `char *` types
+```C
+// End of lesson .c file
+```
+  
+## Notes from the boots AI
