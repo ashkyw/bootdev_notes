@@ -31,4 +31,23 @@ typedef struct SnekObject {
   snek_object_data_t data;
 } snek_object_t;
 ```
-## Notes 
+## Notes from the boots AI
+
+A `union` lets multiple possible fields share the same memory space. Right now it only has one field, `v_int`, but later it could hold other types like floats, strings, etc.
+
+Important distinction:
+* A `struct` stores all its fields at once.
+* A `union` stores one active field at a time.
+
+##### `struct`
+```C
+typedef struct SnekObject {
+ snek_object_kind_t kind;
+ snek_object_kind_t data;
+}
+```
+This creates a Sneklang object with: 
+* `kind` tells you what type of object it is.
+* `data` stores the actual value
+
+This is a common C pattern for building dynamic language runtimes: use a `kind` field to describe what is inside a generic data field.
