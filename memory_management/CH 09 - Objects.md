@@ -11,4 +11,13 @@ For example:
 
 That last item it critical. Sneklang is a garbage-collected language, we need to know how many references to an object exist so we can free it when it's no longer needed.
 
-## Assi
+### Assignment
+Complete the missing definitions in `snekobject.h`
+* An enum called snek_object_kind_t with a single value `INTEGER`
+* A union called snek_object_data_t with a single member, an integer named `v_int`
+* A struct declaration called `snek_object_t` with two members:
+  1. A member of type `snek_object_kind_t` named `kind`
+  2. A member of type `snek_object_data_t` named `data`
+```C
+// End of lesson code
+```
