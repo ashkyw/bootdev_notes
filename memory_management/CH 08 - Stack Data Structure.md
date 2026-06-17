@@ -440,6 +440,31 @@ Complete the `stack_push_multiple_types` function.
 Don't forget to use the `string.h` library when working with `char *` types
 ```C
 // End of lesson .c file
+
+#include "snekstack.h"
+#include "stdlib.h"
+#include <string.h>
+
+void stack_push_multiple_types(stack_t *s) {
+  float *f = malloc(sizeof(float));
+  *f = 3.14;
+  stack_push(s, f);
+
+  const char *string = "Sneklang is blazingly slow!";
+  size_t len = strlen(string) + 1;
+
+  char *c = malloc(sizeof(char) * len);
+  strcpy(c, string);
+  stack_push(s, c);
+}
 ```
-  
+
 ## Notes from the boots AI
+* A `void *` can hold a pointer to any type, but it does **not** remember the original type. You must know what type to cast/use it as later
+* Assigning / dereferencing a string pointer like `*dest = *src` copies only the first character. (pointer decay)
+* Consider what types something returns and match accordingly. Example: `strlen()` return `size_t`
+  ```C
+  size_t len = strlen(str);
+  ```
+* If one allocation can fail, clean up earlier heap allocationns to avoid memory leaks.
+* General Rule: `ptr` is the address, `*ptr` is the value at that address.
