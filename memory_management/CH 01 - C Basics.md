@@ -212,7 +212,7 @@ printf("Hello, %s. You're %d years old. \n", name, age);
 
 ### Newline Character
 
-The `print()` function in Python automatically adds a !(newline character)[https://en.wikipedia.org/wiki/Newline] (`\n`) at the end of the string. In C, we have to do this manually.
+The `print()` function in Python automatically adds a ![newline character](https://en.wikipedia.org/wiki/Newline) (`\n`) at the end of the string. In C, we have to do this manually.
 
 ```C
 printf("Hello, world!\n")
