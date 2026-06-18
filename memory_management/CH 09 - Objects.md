@@ -298,8 +298,8 @@ Arrays, lists, dictionaries, and sets are all examples of collection types. We w
     * Create a new `struct` called `snek_vector_t` that has three fields. Name the fields `x`, `y`, and `z`. Each field should be a Sneklang Object pointer (`snek_object_t *`)
     * Add a new enum value to the `snek_object_kind_t` enum called `VECTOR3`
     * Declare the `new_snek_vector3` function
-     >! [NOTE]
-     > The `v_vector3` field is not a pointer to a `vector3`; it's directly allocated inside the struct. We can do this because we know the size of the vector(it's only 3 pointers wide) in advance.
+>![NOTE]
+> The `v_vector3` field is not a pointer to a `vector3`; it's directly allocated inside the struct. We can do this because we know the size of the vector(it's only 3 pointers wide) in advance.
 2. `snekobject.c`
     * If any of the inputs are `NULL` return `NULL`.
     * Allocate memory for a new pointer to a `snek_object_t` and if the allocation fails return `NULL`
