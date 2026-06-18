@@ -104,7 +104,7 @@ You will need to edit 2 files in this lesson
     * Declare the `new_snek_float` function
 2. `snekobject.c`
     * Allocate memory for a new pointer to a `snek_object_t`
-    * If it falis, return `NULL`
+    * If it fails, return `NULL`
     * Set the `kind` field to the appropriate enum
     * Store the float value in the object
     * Return the pointer
@@ -163,3 +163,36 @@ snek_object_t *new_snek_float(float value);
 **`unions` grow to accomdate**. On most platforms `sizeof(int) == sizeof(float) == 4`, so the union size won't change here. But, as we add more types (string, boolean, etc.), the union will grow to accomodate the largest member
 
 **Enum ordering matters slightly**. `INTEGER` gets value `0` and `FLOAT` gets the value `1` by default. Zero-initialized memory would defalut to `INTEGER` kind -- something to be mindful of when debuggipg uninitialized objects.
+
+# String
+Now we're going to do our first object that has something... _additional_ allocated. When we allocate memory for a "snek object", that reserves memory for the object itself. Small data types like integers and floats are stored directly in the object, so there's no need for additional memory allocation.
+
+Strings, however, are a different story. Strings in C are just arrays of characters, and because they can be any length, we need to dynamically allocate memory for the string data for the object itself.
+```C
+char *my_string = "hello world";
+```
+In the example above, `my_string` is a pointer to a character array. The character array contains
+```C
+h e l l o w o r l d \0
+```
+The extra spot at the end with the `\0` is the null terminator.
+
+### Assignment
+1. `snekobject.h`
+    * Add a new enum value to the `snek_object_kind_t` enum called `STRING`
+    * Add a new string (`char *`) field to `snek_object_data_t`
+    * Declare the `new_snek_string` function
+2. `snekobject.c`
+    * Allocate memory for a new pointer to a `snek_object_t`
+    * If it fails, return `NULL`
+    * Calculate the length of the string (`strlen`)
+    * Allocate memory in a `char *` equal to the length + 1 for `\0`
+    * If allocation fails, free the memory allocated for the object
+    * Copy the data from the input value into the new string field (`strcpy`)
+    * Set the `kind` field
+    * Return the pointer
+```C
+// End of lesson .c file
+
+// End of lesson .h file
+```
