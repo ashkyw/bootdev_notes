@@ -51,3 +51,23 @@ This creates a Sneklang object with:
 * `data` stores the actual value
 
 This is a common C pattern for building dynamic language runtimes: use a `kind` field to describe what is inside a generic data field.
+
+#  Integer
+
+Let's start with a single integer object. The difference between a "snek integer" and a regular C integer is that the Snek integer:
+1. Is allocated on the heap
+2. Can store additional metadata about itself (for now, just its type)
+
+### Assignment
+Complete the `new_snek_integer` function.
+* Use `malloc` to allocate heap memory for a new pointer to a `snek_object_`
+* If it fails, return NULL
+* Set the `kind` field of the new snek object to the `INTEGER` enum value
+* Set the `v_int` field of the new snek object to the integer value passed in.
+* Return the pointer to the new snek object
+```C
+// End of lesson code
+
+```
+
+## Notes from the boots AI
