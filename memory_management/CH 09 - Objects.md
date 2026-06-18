@@ -193,6 +193,123 @@ The extra spot at the end with the `\0` is the null terminator.
     * Return the pointer
 ```C
 // End of lesson .c file
+#include "snekobject.h"
+#include <stdlib.h>
+#include <string.h>
+
+snek_object_t *new_snek_string(char *value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  size_t len = strlen(value);
+  char *dst = malloc(len + 1);
+  if (dst == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  strcpy(dst, value);
+
+  obj->kind = STRING;
+  obj->data.v_string = dst;
+  return obj;
+}
+
+// don't touch below this line
+
+snek_object_t *new_snek_integer(int value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = INTEGER;
+  obj->data.v_int = value;
+  return obj;
+}
+
+snek_object_t *new_snek_float(float value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = FLOAT;
+  obj->data.v_float = value;
+  return obj;
+}
+
+// End of lesson .h file
+typedef enum SnekObjectKind {
+  INTEGER,
+  FLOAT,
+  STRING,
+} snek_object_kind_t;
+
+typedef union SnekObjectData {
+  int v_int;
+  float v_float;
+  char *v_string;
+} snek_object_data_t;
+
+typedef struct SnekObject {
+  snek_object_kind_t kind;
+  snek_object_data_t data;
+} snek_object_t;
+
+snek_object_t *new_snek_integer(int value);
+snek_object_t *new_snek_float(float value);
+snek_object_t *new_snek_string(char *value);
+```
+## Notes from boots AI
+**Why `strlen(value)+1`?**
+`strlen` returns the number of characters _excluding_ the `\0`. You need to `+1` to allocate space for it, otherwise `strcpy` writes one byte past the end of you buffer -- classic undefined behavior
+
+**Why copy at all?**
+The caller owns the original `char *value`. If they later `free` or modify it, your object's string would become a dangling pointer or silently corrupt. By copying, the object owns its own memory and controls its own lifeline.
+
+**`sizeof(char)` is always 1**
+`sizeof(char)` is guaranteed to be `1` by the C standard. Writing `malloc(len)` is idiomatic and equally correct. The pattern `sizeof(T) * count` matters more for types like `int` or `struct`.
+
+**The two-stage `malloc` pattern**
+Notice the structure:
+1. Allocate the object
+2. Allocate the string
+3. If step 2 fails, free step 1 before returning `NULL`
+
+This is the foundation of manual memory management. Every allocation you make must have a corresponding `free` somewhere, and every failure path must clean up everything allocated so _far_ -- no more, no less.
+
+**`strcpy` vs `memcpy`**
+`strcpy` is fine here because you're dealing with a null-terminated string. If you were copying arbitrary binary data (which might contain embedded `\0` bytes), you'd use `memcpy` with an explicit byte count instead.
+
+# Vector3
+
+`Vector3` is going to be the first Snek Object that can hold a reference to another Snek Object. It's a collection type: a type that holds other types.
+
+Arrays, lists, dictionaries, and sets are all examples of collection types. We won't implement all of those types in this course, but they each follow the same pattern we're establishing here.
+
+`Vector3` is similar to a Python tuple that contains _exactly_ 3 "SnekObject" elements.
+
+### Assignment
+1. `snekobject.h`
+    * Forward declare the `snek_object_t` at the top of the file. It will need to be used in a circular dependency between `snek_object_t -> snek_object_data_t -> snek_vector_t`.
+    * Create a new `struct` called `snek_vector_t` that has three fields. Name the fields `x`, `y`, and `z`. Each field should be a Sneklang Object pointer (`snek_object_t *`)
+    * Add a new enum value to the `snek_object_kind_t` enum called `VECTOR3`
+    * Declare the `new_snek_vector3` function
+     >! NOTE
+     > The `v_vector3` field is not a pointer to a `vector3`; it's directly allocated inside the struct. We can do this because we know the size of the vector(it's only 3 pointers wide) in advance.
+2. `snekobject.c`
+    * If any of the inputs are `NULL` return `NULL`.
+    * Allocate memory for a new pointer to a `snek_object_t` and if the allocation fails return `NULL`
+    * Set the `kind` field to the appropriate enum
+    * Initialize the `v_vector3` field of the new snek object so that its `x`, `y`, and `z` members point to the input objects (for example, by creating a `snek_vector_t` with those fields and assigning it to `v_vector3`)
+    * Return the pointer
+
+```C
+// End of lesson .c file
 
 // End of lesson .h file
 ```
+## Notes from boots AI
