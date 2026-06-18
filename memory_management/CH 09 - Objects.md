@@ -86,7 +86,7 @@ snek_object_t *new_snek_integer(int value) {
 ## Notes from the boots AI
 1. **`malloc` returns raw, unintialized memory.** It provides a chunk of memory large enough for whatever type you're working with, but the bytes are garbage values until we set them. That's why we specify both `kind` and `data.v_init`.
 
-2. **The `union` is the clever part.** A union lets one field store _one_ of  several types in the same memory slot. The `kind` field is the tag that tells us which member is currently valid. The pairing of an enum tag plus a union is called a **tagged union**, and is a common way to build dynamic-type systems.
+2. **The `union` is the clever part.** A union lets one field store _one_ of  several types in the same memory slot. The `kind` field is the tag that tells us which member is currently valid. The pairing of an enum tag plus a union is called a **tagged union**, or , **discriminated union** and is a common way to build dynamic-type systems.
 
 #Float
 
@@ -111,7 +111,55 @@ You will need to edit 2 files in this lesson
 
 ```C
 // End of lesson .c file
+#include "snekobject.h"
+#include <stdlib.h>
+
+snek_object_t *new_snek_float(float value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+  obj->kind = FLOAT;
+  obj->data.v_float = value;
+  return obj;
+}
+
+// don't touch below this line
+
+snek_object_t *new_snek_integer(int value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = INTEGER;
+  obj->data.v_int = value;
+  return obj;
+}
 
 // End of lesson .h file
+typedef enum SnekObjectKind { 
+  INTEGER,
+  FLOAT,
+} snek_object_kind_t;
+
+typedef union SnekObjectData {
+  int v_int;
+  float v_float;
+} snek_object_data_t;
+
+typedef struct SnekObject {
+  snek_object_kind_t kind;
+  snek_object_data_t data;
+} snek_object_t;
+
+snek_object_t *new_snek_integer(int value);
+snek_object_t *new_snek_float(float value);
 ```
 ## Notes from the boots AI
+
+**Why a `union` instead of a `struct`?** A `struct` would allocate memory for _all_ fields simultaneously. A `union` allocates only enough memory for it _largest_ member, and all fields share that same memory. This is a deliberate space optimization -- a snek object is either an int _or_ a float, never both at once.
+
+**`unions` grow to accomdate**. On most platforms `sizeof(int) == sizeof(float) == 4`, so the union size won't change here. But, as we add more types (string, boolean, etc.), the union will grow to accomodate the largest member
+
+**Enum ordering matters slightly**. `INTEGER` gets value `0` and `FLOAT` gets the value `1` by default. Zero-initialized memory would defalut to `INTEGER` kind -- something to be mindful of when debuggipg uninitialized objects.
