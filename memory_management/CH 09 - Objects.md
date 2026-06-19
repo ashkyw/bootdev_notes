@@ -496,7 +496,136 @@ Let's add a dynamically sized arrry to Sneklang. We'll do it in multiple parts. 
 ```C
 // End of lesson .c file
 
+#include "snekobject.h"
+#include <stdlib.h>
+#include <string.h>
+
+snek_object_t *new_snek_array(size_t size) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  snek_object_t **elements = calloc(size, sizeof(snek_object_t *));
+  if (elements == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  obj->kind = ARRAY;
+// Create new snek_array_t from new pointers
+  obj->data.v_array = (snek_array_t){.size = size, .elements = elements};
+  return obj;
+}
+
+// don't touch below this line
+
+snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
+                                snek_object_t *z) {
+  if (x == NULL || y == NULL || z == NULL) {
+    return NULL;
+  }
+
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = VECTOR3;
+  obj->data.v_vector3 = (snek_vector_t){.x = x, .y = y, .z = z};
+
+  return obj;
+}
+
+snek_object_t *new_snek_integer(int value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = INTEGER;
+  obj->data.v_int = value;
+  return obj;
+}
+
+snek_object_t *new_snek_float(float value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = FLOAT;
+  obj->data.v_float = value;
+  return obj;
+}
+
+snek_object_t *new_snek_string(char *value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  int len = strlen(value);
+  char *dst = malloc(len + 1);
+  if (dst == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  strcpy(dst, value);
+
+  obj->kind = STRING;
+  obj->data.v_string = dst;
+  return obj;
+}
+
 // End of lesson .h file
+
+#include <stddef.h>
+
+typedef struct SnekObject snek_object_t;
+
+typedef struct {
+  size_t size;
+  snek_object_t **elements;
+} snek_array_t;
+
+typedef struct {
+  snek_object_t *x;
+  snek_object_t *y;
+  snek_object_t *z;
+} snek_vector_t;
+
+typedef enum SnekObjectKind {
+  INTEGER,
+  FLOAT,
+  STRING,
+  VECTOR3,
+  ARRAY,
+} snek_object_kind_t;
+
+typedef union SnekObjectData {
+  int v_int;
+  float v_float;
+  char *v_string;
+  snek_vector_t v_vector3;
+  snek_array_t v_array;
+} snek_object_data_t;
+
+typedef struct SnekObject {
+  snek_object_kind_t kind;
+  snek_object_data_t data;
+} snek_object_t;
+
+snek_object_t *new_snek_integer(int value);
+snek_object_t *new_snek_float(float value);
+snek_object_t *new_snek_string(char *value);
+snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
+                                snek_object_t *z);
+snek_object_t *new_snek_array(size_t size);
 ```
 
 ## Notes from boots AI
+`calloc` vs `malloc`
+
+`calloc(n, size)` is equivalent to `malloc(n * size)` followed by `memset(..., 0, ...)`. The zero-initialization is what guarantees your array slots start as `NULL` pointers rather than garbage values. For pointer arrays especially, this matters — dereferencing an uninitialized pointer is undefined behavior.
