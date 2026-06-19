@@ -309,7 +309,162 @@ Arrays, lists, dictionaries, and sets are all examples of collection types. We w
 
 ```C
 // End of lesson .c file
+#include "snekobject.h"
+#include <stdlib.h>
+#include <string.h>
+
+snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
+                                snek_object_t *z) {
+  if (x == NULL || y == NULL || z == NULL) {
+    return NULL;
+  }
+
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = VECTOR3;
+  obj->data.v_vector3 = (snek_vector_t){.x = x, .y = y, .z = z};
+  return obj;
+}
+
+// don't touch below this line
+
+snek_object_t *new_snek_integer(int value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = INTEGER;
+  obj->data.v_int = value;
+  return obj;
+}
+
+snek_object_t *new_snek_float(float value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = FLOAT;
+  obj->data.v_float = value;
+  return obj;
+}
+
+snek_object_t *new_snek_string(char *value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  int len = strlen(value);
+  char *dst = malloc(len + 1);
+  if (dst == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  strcpy(dst, value);
+
+  obj->kind = STRING;
+  obj->data.v_string = dst;
+  return obj;
+}
 
 // End of lesson .h file
+typedef struct SnekObject snek_object_t;
+
+typedef struct {
+  snek_object_t *x;
+  snek_object_t *y;
+  snek_object_t *z;
+} snek_vector_t;
+
+typedef enum SnekObjectKind {
+  INTEGER,
+  FLOAT,
+  STRING,
+  VECTOR3
+} snek_object_kind_t;
+
+typedef union SnekObjectData {
+  int v_int;
+  float v_float;
+  char *v_string;
+  snek_vector_t v_vector3;
+} snek_object_data_t;
+
+typedef struct SnekObject {
+  snek_object_kind_t kind;
+  snek_object_data_t data;
+} snek_object_t;
+
+snek_object_t *new_snek_integer(int value);
+snek_object_t *new_snek_float(float value);
+snek_object_t *new_snek_string(char *value);
+snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
+                                snek_object_t *z);
+
 ```
 ## Notes from boots AI
+**Tagged vs Untagged**
+In C a struct can have two names:
+1. A tag (e.g., `SnekVector` in struct SnekVector {})
+2. A typedef alias (e.g, `snek_vector_t`)
+
+The tag is only necessary if you need to refer to the struct _before_ the typedef is complete, or recursively within itself. For example, `snek_object_t` needs a tag (`SnekObject`) because it's forward-declared at the top of the file:
+```C
+typedef struct SnekObject snek_object_t;
+```
+That forward declaration is needed to break the circular dependency: `snek_object_t` contains `snek_object_data_t`, which contains `snek_vector_t`, which contains pointers to `snek_object_t`. The compiler needs to know `snek_object_t` exists before it finishes defining it.
+
+`snek_vector_t`, on the other hand, has no such circular dependency. Nothing needs to reference it before its definition is complete, so there's no need for a tag. An anonymous struct with just a typedef alias is sufficient:
+```C
+typedef struct {
+  snek_object_t *x;
+  snek_object_t *y;
+  snek_object_t *z;
+} snek_vector_t;
+```
+**Compound Literals**
+
+`obj->data.v_vector3 = (snek_vector_t){.x = x, .y = y, .z = z};` is a compound literal. It's a C feature that creates a temporary unnamed value of a given type inline.
+
+The two parts:
+* `(snek_vector_t)` -- the **type cast**, telling the compiler "create a value of this type"
+* `{.x = x, .y = y, .z = z}` -- a **designated initializer**, setting named fields of that struct
+
+So the full line:
+```C
+`obj->data.v_vector3 = (snek_vector_t){.x = x, .y = y, .z = z};`
+```
+Is equivalent to:
+```C
+snek_vector_t temp = {.x = x, .y = y, .z = z};
+obj-> data.v_vector3 = temp;
+```
+Just without the named temp variable. The `{}` is an initializer list, much like an array
+
+**Forward declarations exist to break circular dependencies**
+
+When type A contains type B which contains a pointer back to type A, the compiler needs a heads-up that type A exists before it finishes defining it. The pattern:
+```C
+typedef struct SnekObject snek_object_t; // forward declare
+```
+...placed _before_ the other type definitions is the standard C solution to this.
+
+**Unions share memory**
+
+`snek_object_data_t` is a `union`, not a `struct`. That means all its fields (`v_int`, `v_float`, `v_string`, `v_vector3`) occupy the _same_ memory. The union is only as large as its largest member. Setting obj->kind is what tells the rest of the program which field is actually valid at any given time.
+
+**Vectors store references, not copies**
+
+`snek_vector_t` holds _pointers_ to `snek_object_t`, not copies of them. This is why the `same_object` test works — when you mutate `i->data.v_int`, all three of `vec->data.v_vector3.x/y/z` reflect the change, because they all point to the same object in memory.
+
+**No deep free needed here**
+
+Because the vector only holds references (not ownership), freeing the vector doesn't require freeing `x`, `y`, or `z`. Each object is freed independently. Ownership semantics like this become critical in more complex memory management scenarios.
+
+That last point about ownership is a theme that will keep coming up as the course progresses.
