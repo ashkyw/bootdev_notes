@@ -629,3 +629,26 @@ snek_object_t *new_snek_array(size_t size);
 `calloc` vs `malloc`
 
 `calloc(n, size)` is equivalent to `malloc(n * size)` followed by `memset(..., 0, ...)`. The zero-initialization is what guarantees your array slots start as `NULL` pointers rather than garbage values. For pointer arrays especially, this matters — dereferencing an uninitialized pointer is undefined behavior.
+
+# Set
+
+We can make empty arrays! Which is kinda pointless, but the bones are there. Let's make the array useful by allowing us to store values in them.
+
+`snek_array_set` sets a value at a specific index in the array. The equivalent in Python would be 
+```C
+array[3] = new_value
+```
+
+### Assignment
+
+* If the object or the new value is `NULL` return `false`
+* If the object's `kind` is not `ARRAY`, return `false`
+* If the index is out of bounds, return `false`. Rememeber `v_array` has a `size` field
+* Return `true`
+```C
+// End of lesson .c file
+
+// End of lesson .h file
+```
+
+## Notes from boots AI
