@@ -1,18 +1,43 @@
-.c
+
 ```C
 #include "snekobject.h"
 #include <stdlib.h>
 #include <string.h>
+
+bool snek_array_set(snek_object_t *snek_obj, size_t index,
+                    snek_object_t *value) {
+  if (
+    snek_obj == NULL || 
+    value == NULL || 
+    snek_obj->kind != ARRAY ||
+    index > snek_obj->data.v_array.size) {
+    return false;
+    } else {
+    snek_obj->data.v_array.elements[index] = value;
+    return true;
+  }
+  
+  return false;
+}
+
+// don't touch below this line
 
 snek_object_t *new_snek_array(size_t size) {
   snek_object_t *obj = malloc(sizeof(snek_object_t));
   if (obj == NULL) {
     return NULL;
   }
-  snek_object_t **new_obj = calloc(size)
-}
 
-// don't touch below this line
+  snek_object_t **elements = calloc(size, sizeof(snek_object_t *));
+  if (elements == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  obj->kind = ARRAY;
+  obj->data.v_array = (snek_array_t){.size = size, .elements = elements};
+  return obj;
+}
 
 snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
                                 snek_object_t *z) {
@@ -72,50 +97,4 @@ snek_object_t *new_snek_string(char *value) {
   obj->data.v_string = dst;
   return obj;
 }
-
-```
-.h
-```C
-#include <stddef.h>
-
-typedef struct SnekObject snek_object_t;
-
-typedef struct {
-  snek_object_t *x;
-  snek_object_t *y;
-  snek_object_t *z;
-} snek_vector_t;
-
-typedef struct {
-  size_t size;
-  snek_object_t **elements;
-} snek_array_t;
-
-typedef enum SnekObjectKind {
-  INTEGER,
-  FLOAT,
-  STRING,
-  VECTOR3,
-  ARRAY,
-} snek_object_kind_t;
-
-typedef union SnekObjectData {
-  int v_int;
-  float v_float;
-  char *v_string;
-  snek_vector_t v_vector3;
-  snek_array_t v_array;
-} snek_object_data_t;
-
-typedef struct SnekObject {
-  snek_object_kind_t kind;
-  snek_object_data_t data;
-} snek_object_t;
-
-snek_object_t *new_snek_integer(int value);
-snek_object_t *new_snek_float(float value);
-snek_object_t *new_snek_string(char *value);
-snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
-                                snek_object_t *z);
-snek_object_t *new_snek_array(size_t size);
 ```
