@@ -468,3 +468,35 @@ typedef struct SnekObject snek_object_t; // forward declare
 Because the vector only holds references (not ownership), freeing the vector doesn't require freeing `x`, `y`, or `z`. Each object is freed independently. Ownership semantics like this become critical in more complex memory management scenarios.
 
 That last point about ownership is a theme that will keep coming up as the course progresses.
+
+# Array
+
+Let's add a dynamically sized arrry to Sneklang. We'll do it in multiple parts. First, we'll create an empty array.
+
+### Assignment
+
+1. `snekobject.h`
+    * Add a new enum value to the `snek_object_kind_t` enum called `ARRAY`
+    * Create a new struct called `snek_array_t` that has two fields
+       1. `size`  -- the numebre of elements in the array, a `size_t`
+       2. `elements` -- a pointer to an array of snek object pointers , `snek_object_t**`
+    * Add a new `snek_array_t` field (the struct type just created) to `snek_object_data_t` called `v_array`
+    * Declare the `new_snek_array` function
+2. `snekobject.c`
+    * Accept a `size` parameter
+    * Allocate memory for a new pointer to a `snek_object_t`, if it fails return NULL
+    * Allocate memory for a new pointer to an array of snek objects (`snek_object_t **`).
+       1. How much memory should we allocate? Think about it: probably the `sizeof` a pointer for each element in the array. We're not storing the actual snek objects in the array, just pointers to them.
+       2. If the allocation fails, `free` the first snek object allocation and return `NULL`
+       3. Use [`calloc`](https://en.cppreference.com/w/c/memory/calloc) instead of `malloc` so there is no "junk" in our array to start. `calloc` takes two arguments, # of objects, size of each object
+    * Set the `kind` field
+    * Create a new `snek_array_t` struct, set `size` and `elements` fields
+    * Set the `v_array` field of the new snek object to the newly created `snek_array_t`
+    * Return the pointer
+```C
+// End of lesson .c file
+
+// End of lesson .h file
+```
+
+## Notes from boots AI
