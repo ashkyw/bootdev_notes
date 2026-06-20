@@ -88,7 +88,7 @@ snek_object_t *new_snek_integer(int value) {
 
 2. **The `union` is the clever part.** A union lets one field store _one_ of  several types in the same memory slot. The `kind` field is the tag that tells us which member is currently valid. The pairing of an enum tag plus a union is called a **tagged union**, or , **discriminated union** and is a common way to build dynamic-type systems.
 
-#Float
+# Float
 
 Sneklang needs floats (naturally). How else will all the crypto bros write weird floating-point bugs into their smart contracts?
 
