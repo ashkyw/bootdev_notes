@@ -647,8 +647,160 @@ array[3] = new_value
 * Return `true`
 ```C
 // End of lesson .c file
+#include "snekobject.h"
+#include <stdlib.h>
+#include <string.h>
+
+bool snek_array_set(snek_object_t *snek_obj, size_t index,
+                    snek_object_t *value) {
+  if (snek_obj == NULL || value == NULL) {
+    return false;
+  }
+
+  if (snek_obj->kind != ARRAY) {
+    return false;
+  }
+
+  if (index >= snek_obj->data.v_array.size) {
+    return false;
+  }
+
+  snek_obj->data.v_array.elements[index] = value;
+  return true;
+}
+
+// don't touch below this line
+
+snek_object_t *new_snek_array(size_t size) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  snek_object_t **elements = calloc(size, sizeof(snek_object_t *));
+  if (elements == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  obj->kind = ARRAY;
+  obj->data.v_array = (snek_array_t){.size = size, .elements = elements};
+  return obj;
+}
+
+snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
+                                snek_object_t *z) {
+  if (x == NULL || y == NULL || z == NULL) {
+    return NULL;
+  }
+
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = VECTOR3;
+  obj->data.v_vector3 = (snek_vector_t){.x = x, .y = y, .z = z};
+
+  return obj;
+}
+
+snek_object_t *new_snek_integer(int value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = INTEGER;
+  obj->data.v_int = value;
+  return obj;
+}
+
+snek_object_t *new_snek_float(float value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = FLOAT;
+  obj->data.v_float = value;
+  return obj;
+}
+
+snek_object_t *new_snek_string(char *value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  int len = strlen(value);
+  char *dst = malloc(len + 1);
+  if (dst == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  strcpy(dst, value);
+
+  obj->kind = STRING;
+  obj->data.v_string = dst;
+  return obj;
+}
 
 // End of lesson .h file
+#include <stdbool.h>
+#include <stddef.h>
+
+typedef struct SnekObject snek_object_t;
+
+typedef struct {
+  size_t size;
+  snek_object_t **elements;
+} snek_array_t;
+
+typedef struct {
+  snek_object_t *x;
+  snek_object_t *y;
+  snek_object_t *z;
+} snek_vector_t;
+
+typedef enum SnekObjectKind {
+  INTEGER,
+  FLOAT,
+  STRING,
+  VECTOR3,
+  ARRAY,
+} snek_object_kind_t;
+
+typedef union SnekObjectData {
+  int v_int;
+  float v_float;
+  char *v_string;
+  snek_vector_t v_vector3;
+  snek_array_t v_array;
+} snek_object_data_t;
+
+typedef struct SnekObject {
+  snek_object_kind_t kind;
+  snek_object_data_t data;
+} snek_object_t;
+
+snek_object_t *new_snek_integer(int value);
+snek_object_t *new_snek_float(float value);
+snek_object_t *new_snek_string(char *value);
+snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
+                                snek_object_t *z);
+snek_object_t *new_snek_array(size_t size);
+bool snek_array_set(snek_object_t *array, size_t index, snek_object_t *value);
+
 ```
 
 ## Notes from boots AI
+
+**`size_t` is unsigned**
+
+The `index` parameter is `size_t`, which is an unsigned integer type. This means it can never be negative -- but it also means you can't check `index < 0` as a guard, (it's always false and some compilers will warn you). The `>= size` check handles the upper bound; the type itself handles the lower.
+
+**The `elements` field is a pointer-to-pointer (`snek_object_t **`)**
+
+The array doesn't store the objects directly -- it stores _pointers_ to them. So assigning `elements[index] = value` stores the adderss of the `snek_object_t`, not a copy of it. This is important for memory management: the array doesn't own those objects, it just references them.
