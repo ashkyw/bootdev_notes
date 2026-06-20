@@ -635,7 +635,7 @@ snek_object_t *new_snek_array(size_t size);
 We can make empty arrays! Which is kinda pointless, but the bones are there. Let's make the array useful by allowing us to store values in them.
 
 `snek_array_set` sets a value at a specific index in the array. The equivalent in Python would be 
-```C
+```py
 array[3] = new_value
 ```
 
@@ -816,3 +816,182 @@ Rust's rise makes sense as a natural evolution. It keeps that same low-level con
 The tradeoff is that Rust has a steeper learning curve because you're essentially negotiating with the compiler about who owns what memory and for how long. But once it compiles, you have strong guarantees that C can't give you without external tooling.
 
 The through-line is that understanding memory management in C -- which you're doing right now -- is one of the best foundations you can have before tackling Rust. The ownership model makes a lot more intuitive sense when you already know _why_ it exists.
+
+# Get
+Now that we can store values in arrays, we need a way to _retrieve_ them. `snek_array_get` returns the value at a specific index in the array. The python equivalent would be:
+```py
+print(array[7])
+```
+
+### Assignment
+`snek_array_get`
+* If the object is `NULL`, return `NULL`
+* If the object's `kind` is not an `ARRAY`, return `NULL`
+* If the index is out of bounds, return `NULL`
+* Return the value in the `elements` array at the specified index.
+```C
+// End of lesson .c file
+#include "snekobject.h"
+#include <stdlib.h>
+#include <string.h>
+
+snek_object_t *snek_array_get(snek_object_t *snek_obj, size_t index) {
+  if (snek_obj == NULL) {
+    return NULL;
+  }
+
+  if (snek_obj->kind != ARRAY) {
+    return NULL;
+  }
+
+  if (index >= snek_obj->data.v_array.size) {
+    return NULL;
+  }
+
+  return snek_obj->data.v_array.elements[index];
+}
+
+// don't touch below this line
+
+bool snek_array_set(snek_object_t *snek_obj, size_t index,
+                    snek_object_t *value) {
+  if (snek_obj == NULL || value == NULL) {
+    return false;
+  }
+
+  if (snek_obj->kind != ARRAY) {
+    return false;
+  }
+
+  if (index >= snek_obj->data.v_array.size) {
+    return false;
+  }
+
+  snek_obj->data.v_array.elements[index] = value;
+  return true;
+}
+
+snek_object_t *new_snek_array(size_t size) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  snek_object_t **elements = calloc(size, sizeof(snek_object_t *));
+  if (elements == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  obj->kind = ARRAY;
+  obj->data.v_array = (snek_array_t){.size = size, .elements = elements};
+  return obj;
+}
+
+snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
+                                snek_object_t *z) {
+  if (x == NULL || y == NULL || z == NULL) {
+    return NULL;
+  }
+
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = VECTOR3;
+  obj->data.v_vector3 = (snek_vector_t){.x = x, .y = y, .z = z};
+
+  return obj;
+}
+
+snek_object_t *new_snek_integer(int value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = INTEGER;
+  obj->data.v_int = value;
+  return obj;
+}
+
+snek_object_t *new_snek_float(float value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = FLOAT;
+  obj->data.v_float = value;
+  return obj;
+}
+
+snek_object_t *new_snek_string(char *value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  int len = strlen(value);
+  char *dst = malloc(len + 1);
+  if (dst == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  strcpy(dst, value);
+
+  obj->kind = STRING;
+  obj->data.v_string = dst;
+  return obj;
+}
+
+// End of lesson .h file
+// See previous lesson
+```
+## Notes from boots AI
+This lesson follows a classic C pattern: validate first, dereference second.
+
+**Mental model**
+Think of `snek_array_get` like a guarded lookup:
+1. Is there an object at all?
+  * `snek_obj == NULL` protects against dereferencing a null pointer. Without it, `snek_obj->kind` could crash the program
+2. Is it the right kind of object?
+  * `snek_obj->kind != ARRAY` checks if the object is an array before using `data.v_array`. Since `data` is a `union`, only the field matching the current `kind`  should be used
+3. Is the requested index valid?
+  * `index >= snek_obj->data.v_array.size` prevents out-of-bounds access. In C, array bounds are _not_ checked automatically. Accessing past the end of an array is undefined behavior.
+4. If all checks pass, return the object pointer stored at that position
+  * `return snek_obj->data.v_array.elements[index];` returns the stored pointer in that slot. It does _not_ copy the object. It returns the same `snek_object_t *` that was previously stored with `snek_array_set`.
+
+**Empty slots will return `NULL`**
+The array is created with:
+```C
+calloc(size, sizeof(snek_object_t *))
+```
+calloc zero-initializes the allocated memory. For pointer arrays, that means each slot starts as `NULL`
+If nothing is stored at `elements[index]`, then `snek_array_get` naturally returns `NULL`.
+
+# Length
+Now that we have all sorts of Snek Objects (int, float, str, array) we need a convenient way to get the `length` of _any_ snek object. In Python it's as easy as:
+```py
+print(len(x))
+```
+As a python dev, you don't have to know the value of `x` ahead of time because Python keeps track of it under-the-hood for you. We want the same capability in Sneklang.
+
+### Assignment
+`snek_length`
+* If input is `NULL`, return `-1` (failure code)
+* `int`, size is always `1`
+* `float` size is always `1`
+* `string` size is the length of the string in bytes `strlen()`
+* `VECTOR3` size is always `3`
+* `ARRAY` size is stored in `v_array.size`
+* If input is none of the above, return `-1`
+```C
+// End of lesson .c file
+
+// End of lesson .h file
+// No changes from two lessons previous.
+```
+## Notes from boots AI
