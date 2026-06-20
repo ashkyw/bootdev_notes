@@ -1186,6 +1186,11 @@ But with an array, we probably want it to work like this:
     3. Use `strcat()` to append the data from a and then b to the temp string
     4. Create a `new_snek_string` from the temp string
     5. Free the memory for the temporary string and return the new string object
-
+* If "a" is a vector3:
+  1. If "b" is not a `VECTOR3`, invalid operation, return `NULL`
+  2. Otherwise:
+    1. Create a `new_snek_vector3`
+    2. Recursively call `snek_add` for each of the `x`, `y`, and `z` fields. `[1,2,3]` + `[4,5,6]` should = `[5,7,9]`
+    3. Return the vector
   
 ## Notes from boots AI
