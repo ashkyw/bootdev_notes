@@ -86,7 +86,7 @@ snek_object_t *new_snek_integer(int value) {
 ## Notes from the boots AI
 1. **`malloc` returns raw, unintialized memory.** It provides a chunk of memory large enough for whatever type you're working with, but the bytes are garbage values until we set them. That's why we specify both `kind` and `data.v_init`.
 
-2. **The `union` is the clever part.** A union lets one field store _one_ of  several types in the same memory slot. The `kind` field is the tag that tells us which member is currently valid. The pairing of an enum tag plus a union is called a **tagged union**, or , **discriminated union** and is a common way to build dynamic-type systems.
+2. **The `union` is the clever part.** A union lets one field store _one_ of  several types in the same memory slot. The `kind` field is the tag that tells us which member is currently valid. The pairing of an enum tag plus a union is called a **tagged union**, or **discriminated union**, and is a common way to build dynamic-type systems.
 
 # Float
 
