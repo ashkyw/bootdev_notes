@@ -803,4 +803,16 @@ The `index` parameter is `size_t`, which is an unsigned integer type. This means
 
 **The `elements` field is a pointer-to-pointer (`snek_object_t **`)**
 
-The array doesn't store the objects directly -- it stores _pointers_ to them. So assigning `elements[index] = value` stores the adderss of the `snek_object_t`, not a copy of it. This is important for memory management: the array doesn't own those objects, it just references them.
+The array doesn't store the objects directly -- it stores _pointers_ to them. So assigning `elements[index] = value` stores the address of the `snek_object_t`, not a copy of it. This is important for memory management: the array doesn't own those objects, it just references them.
+
+## **This just kinda goes here**
+
+Fun thought:
+
+C gave programmers direct, predictable control over memory with almost no overhead -- which is exactly what you want when you're writing operating systems, databases, or embedded firmware where every byte and cycle matters. That control is also why C is still dominant in those domains today, decades later.
+
+Rust's rise makes sense as a natural evolution. It keeps that same low-level control and performance profile, but the compiler enforces memory safety at compile time through its ownership and borrow checker system. So you get C-like speed without the class of bugs that AddressSanitizer was catching in your code just now -- use-after-free, buffer overflows, data races. The compiler simply refuses to compile code that would cause them.
+
+The tradeoff is that Rust has a steeper learning curve because you're essentially negotiating with the compiler about who owns what memory and for how long. But once it compiles, you have strong guarantees that C can't give you without external tooling.
+
+The through-line is that understanding memory management in C -- which you're doing right now -- is one of the best foundations you can have before tackling Rust. The ownership model makes a lot more intuitive sense when you already know _why_ it exists.
