@@ -1,26 +1,57 @@
-
 ```C
 #include "snekobject.h"
 #include <stdlib.h>
 #include <string.h>
 
-bool snek_array_set(snek_object_t *snek_obj, size_t index,
-                    snek_object_t *value) {
-  if (
-    snek_obj == NULL || 
-    value == NULL || 
-    snek_obj->kind != ARRAY ||
-    index > snek_obj->data.v_array.size) {
-    return false;
-    } else {
-    snek_obj->data.v_array.elements[index] = value;
-    return true;
+snek_object_t *snek_add(snek_object_t *a, snek_object_t *b) {
+  if (a == NULL || b == NULL) {
+    return NULL;
   }
-  
-  return false;
+  switch (a->kind) {
+    case INTEGER:
+      if (b->kind == INTEGER) {
+        int sum = a->data.v_int + b->data.v_int;
+        return new_snek_integer(sum);
+      } else if (b->kind == FLOAT) {
+        float sum = a->data.v_int + b->data.v_int;
+        return new_snek_float(sum);
+      } else {
+        return NULL;
+      }
+    case FLOAT:
+      if (b->kind == INTEGER || b->kind == FLOAT) {
+        int sum = a->data.v_int + b->data.v_int;
+        return new_snek_integer(sum);
+      } else {
+        return NULL;
+      }
+    case STRING:
+    
+  }
 }
 
 // don't touch below this line
+
+int snek_length(snek_object_t *obj) {
+  if (obj == NULL) {
+    return -1;
+  }
+
+  switch (obj->kind) {
+  case INTEGER:
+    return 1;
+  case FLOAT:
+    return 1;
+  case STRING:
+    return strlen(obj->data.v_string);
+  case VECTOR3:
+    return 3;
+  case ARRAY:
+    return obj->data.v_array.size;
+  default:
+    return -1;
+  }
+}
 
 snek_object_t *new_snek_array(size_t size) {
   snek_object_t *obj = malloc(sizeof(snek_object_t));
@@ -37,6 +68,39 @@ snek_object_t *new_snek_array(size_t size) {
   obj->kind = ARRAY;
   obj->data.v_array = (snek_array_t){.size = size, .elements = elements};
   return obj;
+}
+
+bool snek_array_set(snek_object_t *array, size_t index, snek_object_t *value) {
+  if (array == NULL || value == NULL) {
+    return false;
+  }
+
+  if (array->kind != ARRAY) {
+    return false;
+  }
+
+  if (index >= array->data.v_array.size) {
+    return false;
+  }
+
+  array->data.v_array.elements[index] = value;
+  return true;
+}
+
+snek_object_t *snek_array_get(snek_object_t *array, size_t index) {
+  if (array == NULL) {
+    return NULL;
+  }
+
+  if (array->kind != ARRAY) {
+    return NULL;
+  }
+
+  if (index >= array->data.v_array.size) {
+    return NULL;
+  }
+
+  return array->data.v_array.elements[index];
 }
 
 snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
@@ -97,4 +161,5 @@ snek_object_t *new_snek_string(char *value) {
   obj->data.v_string = dst;
   return obj;
 }
+
 ```
