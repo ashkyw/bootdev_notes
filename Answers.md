@@ -19,14 +19,49 @@ snek_object_t *snek_add(snek_object_t *a, snek_object_t *b) {
         return NULL;
       }
     case FLOAT:
-      if (b->kind == INTEGER || b->kind == FLOAT) {
-        int sum = a->data.v_int + b->data.v_int;
-        return new_snek_integer(sum);
+      if (b->kind == INTEGER) {
+        float sum = a->data.v_float + b->data.v_int;
+        return new_snek_float(sum);
+      } else if (b->kind == FLOAT) {
+        float sum = a->data.v_float + b->data.v_float;
+        return new_snek_float(sum);
       } else {
         return NULL;
       }
     case STRING:
-    
+      if (b->kind != STRING) {
+        return NULL;
+      } else {
+        int a_len = strlen(a->data.v_string) + 1;
+        int b_len = strlen(b->data.v_string) + 1;
+        int total_len = (a_len + b_len);
+        char *new_str = calloc(2, total_len);
+        if (new_str == NULL) {
+          return NULL;
+        } 
+        new_str = strcat(new_str, a->data.v_string);
+        new_str = strcat(new_str, b->data.v_string);
+        snek_object_t *temp_str = new_snek_string(new_str);
+        free(new_str);
+        return temp_str;
+      }
+    case VECTOR3:
+      if (b->kind != VECTOR3) {
+        return NULL;
+      } else {
+        return "TODO";
+        // snek_object_t *sum_vector = new_snek_vector3(b->data.v_vector3.x, b->data.v_vector3.y, b->data.v_vector3.z);
+        // for (int i = 0; i++ i < (snek_length(b) + 1)) {
+          // snek_add(a->data.v_vector3) 
+        }
+      }
+    case ARRAY:
+      if (b->kind != ARRAY){
+        return NULL;
+      }
+      return "TODO";
+    default:
+      return NULL;
   }
 }
 
@@ -161,5 +196,4 @@ snek_object_t *new_snek_string(char *value) {
   obj->data.v_string = dst;
   return obj;
 }
-
 ```
