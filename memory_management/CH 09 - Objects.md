@@ -1154,3 +1154,38 @@ switch (alert_level) {
 Here, level 3 triggers all three actions, level 2 triggers two, and level 1 triggers one.
 
 The `default` case is worth adding as a habit — it's your safety net for unexpected values and silences compiler warnings about missing returns.
+
+# Add
+
+If you're familiar with Python, you'll be familiar with how Python objects can have an `__add__` method. It allows devs to specify custom logic for different types of objects. For example, adding two integers we want to behave like this:
+```py
+3 + 5
+# 8
+```
+But with an array, we probably want it to work like this:
+```py
+[3] + [5]
+# [3, 5]
+```
+### Assignment
+`snek_add`. It accepts two pointers to `snek_object_t` objects ("a" and "b") and returns a pointer to a new `snek_object_t` object (the result of the sum):
+* If either input is `NULL` return `NULL`
+* If "a" is an integer
+  1. If "b" is an integer, return a `new_snek_integer` with the sum of the two integers
+  2. If "b" is a float, return a `new_snek_float` with the sum of the float and integer
+  3. Anything else, invalid operation, return `NULL`
+* If "a" is a float
+  1. If "b" is an integer, return a `new_snek_float` with the sum of the float and integer
+  2. If "b" is a float, return a `new_snek_float`  with the sum of the two floats
+  3. Anything else, invalid operation, return `NULL`
+* If "a" is a string:
+  1. If "b" is not a string, invalid operation, return `NULL`
+  2. Otherwise:
+    1. Calculate the length of the new string by combining the length of the two strings (handling the null terminator)
+    2. Allocate memory for a new temporary string using `calloc()`
+    3. Use `strcat()` to append the data from a and then b to the temp string
+    4. Create a `new_snek_string` from the temp string
+    5. Free the memory for the temporary string and return the new string object
+
+  
+## Notes from boots AI
