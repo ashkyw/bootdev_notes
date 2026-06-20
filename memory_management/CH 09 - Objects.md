@@ -990,8 +990,167 @@ As a python dev, you don't have to know the value of `x` ahead of time because P
 * If input is none of the above, return `-1`
 ```C
 // End of lesson .c file
+#include "snekobject.h"
+#include <stdlib.h>
+#include <string.h>
+
+int snek_length(snek_object_t *obj) {
+  if (obj == NULL) {
+    return -1;
+  }
+
+  switch (obj->kind) {
+  case INTEGER:
+  case FLOAT:
+    return 1;
+  case STRING:
+    return strlen(obj->data.v_string);
+  case VECTOR3:
+    return 3;
+  case ARRAY:
+    return obj->data.v_array.size;
+  default:
+    return -1;
+  }
+}
+
+// don't touch below this line
+
+snek_object_t *new_snek_array(size_t size) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  snek_object_t **elements = calloc(size, sizeof(snek_object_t *));
+  if (elements == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  obj->kind = ARRAY;
+  obj->data.v_array = (snek_array_t){.size = size, .elements = elements};
+  return obj;
+}
+
+bool snek_array_set(snek_object_t *array, size_t index, snek_object_t *value) {
+  if (array == NULL || value == NULL) {
+    return false;
+  }
+
+  if (array->kind != ARRAY) {
+    return false;
+  }
+
+  if (index >= array->data.v_array.size) {
+    return false;
+  }
+
+  array->data.v_array.elements[index] = value;
+  return true;
+}
+
+snek_object_t *snek_array_get(snek_object_t *array, size_t index) {
+  if (array == NULL) {
+    return NULL;
+  }
+
+  if (array->kind != ARRAY) {
+    return NULL;
+  }
+
+  if (index >= array->data.v_array.size) {
+    return NULL;
+  }
+
+  return array->data.v_array.elements[index];
+}
+
+snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
+                                snek_object_t *z) {
+  if (x == NULL || y == NULL || z == NULL) {
+    return NULL;
+  }
+
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = VECTOR3;
+  obj->data.v_vector3 = (snek_vector_t){.x = x, .y = y, .z = z};
+
+  return obj;
+}
+
+snek_object_t *new_snek_integer(int value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = INTEGER;
+  obj->data.v_int = value;
+  return obj;
+}
+
+snek_object_t *new_snek_float(float value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = FLOAT;
+  obj->data.v_float = value;
+  return obj;
+}
+
+snek_object_t *new_snek_string(char *value) {
+  snek_object_t *obj = malloc(sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  int len = strlen(value);
+  char *dst = malloc(len + 1);
+  if (dst == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  strcpy(dst, value);
+
+  obj->kind = STRING;
+  obj->data.v_string = dst;
+  return obj;
+}
 
 // End of lesson .h file
 // No changes from two lessons previous.
 ```
 ## Notes from boots AI
+**Switch statements**
+
+When a `case` has no `break` (or `return`) before the next `case`, execution falls through to the next one. So stacking cases like this:
+```C
+case INTEGER:
+case FLOAT:
+  return 1;
+```
+...means: "if the kind is `INTEGER` _or_ `FLOAT`, `return 1`." The `INTEGER` case has nothing to execute and no break, so it falls straight through to `FLOAT`'s code.
+
+A more explicit way to see fall-through in action is when you actually _want_ to accumulate behavior:
+```C
+switch (alert_level) {
+  case 3:
+    sound_alarm();   // falls through
+  case 2:
+    lock_doors();    // falls through
+  case 1:
+    log_event();
+    break;
+}
+```
+Here, level 3 triggers all three actions, level 2 triggers two, and level 1 triggers one.
+
+The `default` case is worth adding as a habit — it's your safety net for unexpected values and silences compiler warnings about missing returns.
