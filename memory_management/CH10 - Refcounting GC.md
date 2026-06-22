@@ -47,6 +47,17 @@ One of the simplest ways to implement a garbage collecot is to use a [reference 
   * When any object's reference count reaches zero, the object is garbage collected.
 
 ### Assignment
+1. `snekobject.h` add new integer field`refcount` to `snek_object_t`
+2. `snekobject.c` complete the `_new_snek_object` functon
+  * Allocate a `snek_object_t` on the heap using `calloc` so its memory is zero-initialized
+  * if allocation fails return `NULL`
+  * Set `refcount` to `1`
+  * Return pointer
 
+```C
+// End of lesson .c file
+
+// End of lesson .h file
+```
 
 ## Notes from boots AI
