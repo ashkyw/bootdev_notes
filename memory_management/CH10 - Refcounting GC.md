@@ -39,7 +39,7 @@ Ultimately, there is a cost with memory, the question is where do you want to pa
 
 # Refcounting
 
-One of the simplest ways to implement a garbage collecot is to use a [reference counting]() algorithm. It goes something like this:
+One of the simplest ways to implement a garbage collector is to use a [reference counting](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)#Reference_counting) algorithm. It goes something like this:
   
   * All objects keep track of a `reference_count` integer.
   * When that object is referenced, its reference count is incremented.
@@ -49,10 +49,10 @@ One of the simplest ways to implement a garbage collecot is to use a [reference 
 ### Assignment
 1. `snekobject.h` add new integer field`refcount` to `snek_object_t`
 2. `snekobject.c` complete the `_new_snek_object` functon
-  * Allocate a `snek_object_t` on the heap using `calloc` so its memory is zero-initialized
-  * if allocation fails return `NULL`
-  * Set `refcount` to `1`
-  * Return pointer
+    * Allocate a `snek_object_t` on the heap using `calloc` so its memory is zero-initialized
+    * if allocation fails return `NULL`
+    * Set `refcount` to `1`
+    * Return pointer
 
 ```C
 // End of lesson .c file
