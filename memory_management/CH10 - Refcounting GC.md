@@ -36,3 +36,17 @@ It's "automatic memory management." Automatic memory management can be a huge pr
 It's not coincedence that C, C++, Rust and Zig are all great choices when you need to squeeze every last drop of performance.
 
 Ultimately, there is a cost with memory, the question is where do you want to pay it? In dev time, or runtime?
+
+# Refcounting
+
+One of the simplest ways to implement a garbage collecot is to use a [reference counting]() algorithm. It goes something like this:
+  
+  * All objects keep track of a `reference_count` integer.
+  * When that object is referenced, its reference count is incremented.
+  * When an object is garbage collected, the reference count of any object it references is decremented.
+  * When any object's reference count reaches zero, the object is garbage collected.
+
+### Assignment
+
+
+## Notes from boots AI
