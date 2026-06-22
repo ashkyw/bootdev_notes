@@ -333,13 +333,184 @@ For our first pass, we'll only handel ints, floats and strings. It will get hard
 
 ```C
 // End of lesson .c file
+#include "snekobject.h"
+#include "assert.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void refcount_dec(snek_object_t *obj) {
+  if (obj == NULL) {
+    return;
+  }
+  obj->refcount--;
+  if (obj->refcount == 0) {
+    refcount_free(obj);
+  }
+  return;
+}
+
+void refcount_free(snek_object_t *obj) {
+  switch (obj->kind) {
+  case INTEGER:
+  case FLOAT:
+    break;
+  case STRING:
+    free(obj->data.v_string);
+    break;
+  default:
+    exit(1);
+  }
+
+  free(obj);
+}
+
+// don't touch below this line
+
+void refcount_inc(snek_object_t *obj) {
+  if (obj == NULL) {
+    return;
+  }
+
+  obj->refcount++;
+  return;
+}
+
+snek_object_t *_new_snek_object() {
+  snek_object_t *obj = calloc(1, sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->refcount = 1;
+
+  return obj;
+}
+
+snek_object_t *new_snek_array(size_t size) {
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  snek_object_t **elements = calloc(size, sizeof(snek_object_t *));
+  if (elements == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  obj->kind = ARRAY;
+  obj->data.v_array = (snek_array_t){.size = size, .elements = elements};
+
+  return obj;
+}
+
+snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
+                                snek_object_t *z) {
+  if (x == NULL || y == NULL || z == NULL) {
+    return NULL;
+  }
+
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = VECTOR3;
+  obj->data.v_vector3 = (snek_vector_t){.x = x, .y = y, .z = z};
+
+  return obj;
+}
+
+snek_object_t *new_snek_integer(int value) {
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = INTEGER;
+  obj->data.v_int = value;
+  return obj;
+}
+
+snek_object_t *new_snek_float(float value) {
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = FLOAT;
+  obj->data.v_float = value;
+  return obj;
+}
+
+snek_object_t *new_snek_string(char *value) {
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  int len = strlen(value);
+  char *dst = malloc(len + 1);
+  if (dst == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  strcpy(dst, value);
+
+  obj->kind = STRING;
+  obj->data.v_string = dst;
+  return obj;
+}
 
 // End of lesson .h file
 // No changes
 ```
 
 ## Notes from boots AI
+**Free children before parents** 
+When a struct owns heap-allocated members, best practice is to free the children memory first, then the parent.
+
+Examples:
+
+If you freed `obj` first:
+```C
+free(obj); // struct is gone
+free(obj->data.v_string); // undefined behavior, reading freed memory to get to the pointer
+```
+After `free(obj)`, dereferencing `obj` to reach `obj->data.v_string` is undefined behavior. The memoyr could be overwritten by anything. You'd be chasing a ghost.
+
+By freeing the inner data first:
+
+```C
+free(obj->data.v_string); // pointer is still valid, string is freed
+free(obj); // now the struct itself is freed
+```
+The pointer `obj` is still valid when you access `obj->data.v_string`, so you safely retrieve and free the string before destroying the struct that held the reference to it.
+
+**Why free the child at all?**
+Each call to `new_snek_string` does a `malloc` for the `char *` data
+
+```C
+char *dst = malloc(len + 1);
+```
+
+If you free the `snek_object_t` without freeing `dst` first, that heap allocation becomes unreachable -- no pointer to it exists anymore, so it can never be freed. Do that in a loop or across many functions and you're leaking a chunk of memory every single time.
+
+# Vectors
+
+We have arrived at our first container type. What makes `VECTOR3` not like the other types is that it _holds other snek objects_. That is, it "references" them. They are contained in its `x`, `y`, and `z` fields.
+
+When we create a vector and place objects in those fields, we need to `increment` the refcount of each of those objects! Otherwise, we might accdentally free its contents and be left with a vector holding garbage memory.
 
 ### Assignment
+* Update the `new_snek_vector3` function. It should `refcount_inc` _each of its 3 objects._
+* Update the `refcount_free` function to hanlde vectors. It should `refcount_dec` each of its 3 objects (which will automatically free them if they hit 0)
+```C
+// End of lesson .c file 
 
-##
+// End of lesson .h file
+// No changes
+  ```
+## Notes for boots AI
