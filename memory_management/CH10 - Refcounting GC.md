@@ -196,3 +196,150 @@ snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
                                 snek_object_t *z);
 snek_object_t *new_snek_array(size_t size);
 ```
+
+# Increment
+
+We need to be able to increment the reference count of a `SnekObject` any time a reference to it is created
+
+### Assignment
+
+Complete the `refcount_inc` function. It should increment the `refcount` of a `SnekObject`. If the object is `NULL`, it should safely do nothing.
+
+```C
+// End of lesson .c file
+#include "snekobject.h"
+#include "assert.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void refcount_inc(snek_object_t *obj) {
+  if (obj == NULL) {
+    return;
+  }
+  obj->refcount++;
+}
+
+// don't touch below this line
+
+snek_object_t *_new_snek_object() {
+  snek_object_t *obj = calloc(1, sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->refcount = 1;
+
+  return obj;
+}
+
+snek_object_t *new_snek_array(size_t size) {
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  snek_object_t **elements = calloc(size, sizeof(snek_object_t *));
+  if (elements == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  obj->kind = ARRAY;
+  obj->data.v_array = (snek_array_t){.size = size, .elements = elements};
+
+  return obj;
+}
+
+snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
+                                snek_object_t *z) {
+  if (x == NULL || y == NULL || z == NULL) {
+    return NULL;
+  }
+
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = VECTOR3;
+  obj->data.v_vector3 = (snek_vector_t){.x = x, .y = y, .z = z};
+
+  return obj;
+}
+
+snek_object_t *new_snek_integer(int value) {
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = INTEGER;
+  obj->data.v_int = value;
+  return obj;
+}
+
+snek_object_t *new_snek_float(float value) {
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = FLOAT;
+  obj->data.v_float = value;
+  return obj;
+}
+
+snek_object_t *new_snek_string(char *value) {
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  int len = strlen(value);
+  char *dst = malloc(len + 1);
+  if (dst == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  strcpy(dst, value);
+
+  obj->kind = STRING;
+  obj->data.v_string = dst;
+  return obj;
+}
+
+// End of lesson .h file
+// No changes from previous lesson
+```
+
+# Decrement and free
+Now things are going to get a touch more complicated. In a refcounting GC, the interesting stuff happens when the refcount equals `0`. That's when the garbage gets collected.
+
+When the refcount reaches zero there are no references to this object anymore. So we need to `free` the memory.
+
+For our first pass, we'll only handel ints, floats and strings. It will get harder.
+
+### Assignment
+1. `refcount_dec`
+    * Handle `NULL` objects
+    * Decrement `refcount`
+    * `if refcount == 0` call `refcount_free` on object
+3. `refcount_free`
+    * If `INTEGER` or `FLOAT`, free the object itself, we don't need to worry about the data inside the object because it's stored directly in the object
+    * If the object is `STRING`, free the `char *` inside the object, then free the object itself.
+    * If any other type, do nothing.
+
+```C
+// End of lesson .c file
+
+// End of lesson .h file
+// No changes
+```
+
+## Notes from boots AI
+
+### Assignment
+
+##
