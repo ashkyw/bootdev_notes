@@ -508,9 +508,166 @@ When we create a vector and place objects in those fields, we need to `increment
 * Update the `new_snek_vector3` function. It should `refcount_inc` _each of its 3 objects._
 * Update the `refcount_free` function to hanlde vectors. It should `refcount_dec` each of its 3 objects (which will automatically free them if they hit 0)
 ```C
-// End of lesson .c file 
+// End of lesson .c file #include "snekobject.h"#include "snekobject.h"
+#include "assert.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+snek_object_t *_new_snek_object();
+
+snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
+                                snek_object_t *z) {
+  if (x == NULL || y == NULL || z == NULL) {
+    return NULL;
+  }
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+  obj->kind = VECTOR3;
+  obj->data.v_vector3 = (snek_vector_t){.x = x, .y = y, .z = z};
+  refcount_inc(x);
+  refcount_inc(y);
+  refcount_inc(z);
+  return obj;
+}
+
+void refcount_free(snek_object_t *obj) {
+  switch (obj->kind) {
+  case INTEGER:
+  case FLOAT:
+    break;
+  case STRING:
+    free(obj->data.v_string);
+    break;
+  case VECTOR3: {
+    refcount_dec(obj->data.v_vector3.x);
+    refcount_dec(obj->data.v_vector3.y);
+    refcount_dec(obj->data.v_vector3.z);
+    break;
+  }
+  default:
+    assert(false);
+  }
+
+  free(obj);
+}
+
+// don't touch below this line
+
+void refcount_inc(snek_object_t *obj) {
+  if (obj == NULL) {
+    return;
+  }
+
+  obj->refcount++;
+  return;
+}
+
+void refcount_dec(snek_object_t *obj) {
+  if (obj == NULL) {
+    return;
+  }
+  obj->refcount--;
+  if (obj->refcount == 0) {
+    return refcount_free(obj);
+  }
+  return;
+}
+
+snek_object_t *_new_snek_object() {
+  snek_object_t *obj = calloc(1, sizeof(snek_object_t));
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->refcount = 1;
+
+  return obj;
+}
+
+snek_object_t *new_snek_array(size_t size) {
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  snek_object_t **elements = calloc(size, sizeof(snek_object_t *));
+  if (elements == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  obj->kind = ARRAY;
+  obj->data.v_array = (snek_array_t){.size = size, .elements = elements};
+
+  return obj;
+}
+
+snek_object_t *new_snek_integer(int value) {
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = INTEGER;
+  obj->data.v_int = value;
+  return obj;
+}
+
+snek_object_t *new_snek_float(float value) {
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  obj->kind = FLOAT;
+  obj->data.v_float = value;
+  return obj;
+}
+
+snek_object_t *new_snek_string(char *value) {
+  snek_object_t *obj = _new_snek_object();
+  if (obj == NULL) {
+    return NULL;
+  }
+
+  int len = strlen(value);
+  char *dst = malloc(len + 1);
+  if (dst == NULL) {
+    free(obj);
+    return NULL;
+  }
+
+  strcpy(dst, value);
+
+  obj->kind = STRING;
+  obj->data.v_string = dst;
+  return obj;
+}
+
+
 
 // End of lesson .h file
 // No changes
   ```
-## Notes for boots AI
+# Arrays
+
+Refcounting for an array is similar to the `VECTOR3` kind. However, an `ARRAY` has a dynamic size, which will add complexity.
+
+### Assignment
+1. `snek_array_set`
+    * Increment the refcount of the object being assigned to the index
+    * If there was already an object stored at that index, decrement the refcount of that object
+2. `refcount_free`
+    * Iterate over each element (from `0` to `size - 1`) and decrement the refcount of each object
+    * Free the array itself (the `elements` field)
+```C
+// End of lesson .c file
+
+// End of lesson .h file
+// No changes
+```
+
+## Notes from boots AI
