@@ -127,21 +127,62 @@ At each of the `scope` entrances (in this case function calls), a new stack fram
 #include "vm.h"
 
 vm_t *vm_new() {
-  vm_t *vm_obj = malloc(sizeof(vm_t));
-  if (vm_obj == NULL) {
+  vm_t *vm = malloc(sizeof(vm_t));
+  if (vm == NULL) {
     return NULL;
   }
-  vm_obj->frames = stack_new(8);
-  vm_obj->objects = stack_new(8); 
-  return vm_obj;
+
+  vm->frames = stack_new(8);
+  if (vm->frames == NULL) {
+    free(vm);
+    return NULL;
+  }
+
+  vm->objects = stack_new(8);
+  if (vm->objects == NULL) {
+    stack_free(vm->frames);
+    free(vm);
+    return NULL;
+  }
+
+  return vm;
 }
 
 void vm_free(vm_t *vm) {
+  if (vm == NULL) {
+    return;
+  }
+
   stack_free(vm->frames);
   stack_free(vm->objects);
+
   free(vm);
 }
 
 // See CH 11 - Mark and Sweep GC Codebase.md for additional files
 ```
-## Notes from boots AI
+# Stack Frames
+
+Think back to the warnings about working with `void *` data types. It's easy to push the wrong kinds of data onto our `stack_t` because it will let _anything_ in.
+
+To prevent us from footgunning, we will create some functions that are more type safe and make it much more difficult to do the wrong thing when interacting with our `vm_t`. Wrong things like:
+
+```C
+// The C compiler won't stop us
+stack_push(vm->frames, (void *)7);
+stack_push(vm->frames, (void *)"uh oh");
+```
+But we want to make it easier on ourselves to only push `frame_t *` types onto `vm->frames`, so we'll write some wrapper functions to help us out
+
+### Assignment
+
+Look at the `frame_t` type in `vm.h`. It's a simple struct that holds a `stack_t` of `snek_object_t *` pointers that represent the object references in the frame.
+1. Complete the `vm_frame_push` function in `vm.c`. It should `stack_push` a `frame_t *` onto the `vm->frames` stack
+2. Complete the `vm_new_frame` function in `vm.c`. It should:
+  * Allocate a new `frame_t` on the heap
+  * Initialize the frame's references with a `stack_new` capacity of `8`
+  * Push the newly allocated frame onto the `vm->frames` stack
+  * Return the new frame
+3. Complete `frame_free` in `vm.c`
+  * Free the `frame_t`'s `references` stack (we have a function for this)
+  * Free the `frame_t` struct
