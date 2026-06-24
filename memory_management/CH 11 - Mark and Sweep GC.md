@@ -123,6 +123,25 @@ At each of the `scope` entrances (in this case function calls), a new stack fram
   * Free the `vm_t` struct
 
 ```C
-// End of lesson .c file
+// End of lesson vm.c file
+#include "vm.h"
+
+vm_t *vm_new() {
+  vm_t *vm_obj = malloc(sizeof(vm_t));
+  if (vm_obj == NULL) {
+    return NULL;
+  }
+  vm_obj->frames = stack_new(8);
+  vm_obj->objects = stack_new(8); 
+  return vm_obj;
+}
+
+void vm_free(vm_t *vm) {
+  stack_free(vm->frames);
+  stack_free(vm->objects);
+  free(vm);
+}
+
+// See CH 11 - Mark and Sweep GC Codebase.md for additional files
 ```
 ## Notes from boots AI
