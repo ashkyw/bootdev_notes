@@ -103,7 +103,7 @@ To solve our cyclic reference issue (and to force us to implement another GC alg
 We'll be using a `vm_t` struct which stands for `Virtual Machine Type`. This `vm_t` simulates what would normally be tracked if Sneklang were a fully functional interpreted language. This virtual machine is much simpler than a real one because all we care about is demonstrating the garbage collection aspects.
 
 Open `vm.h` and take a look at the `vm_t` struct. The `frames` field holds a stack of frames, which are pushed and popped as we enter and exit new scopes. For example:
-```C
+```py
 msg1 = "This is in scope 1"
 def outer_func():
     msg2 = "This is in scope 2"
