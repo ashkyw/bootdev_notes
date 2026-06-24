@@ -43,6 +43,8 @@ void refcount_dec(snek_object_t *obj) {
 And because `second` still has `2` refcounts, it also only drops to `1`, which fails to trigger a "free" of the first array. In other words, we have a cycle, and our simple reference counting garbage collector can't handle it.
  **NOTE:** This assignment we just updated the unit tests to force the current implementation to work.
 ```C
+// End of lesson .c file
+
 #include "bootlib.h"
 #include "munit.h"
 #include "snekobject.h"
@@ -82,5 +84,45 @@ int main() {
 }
 
 ```
+# Pros and Cons
 
+To solve our cyclic reference issue (and to force us to implement another GC algorithm) we're going to implement a [mark and sweep](https://en.wikipedia.org/wiki/Tracing_garbage_collection#Na%C3%AFve_mark-and-sweep) garbage collector. 
+
+### Pros of MaS
+* Can detect cycles, and prevent memory leaks in certain cases.
+* Less on-demand bookkeeping
+* Reduces potential performance degradation in highly multithreaded programs (refcounting requires atomic updates for thread safety)
+
+### Cons of MaS
+* More complex to implement (we're fixin' to find out)
+* Can cause "stop-the-world" pauses when lots of objects exist and must be freed (resulting in poor performance)
+* Reduces potential performance degradation in highly multithreaded programs (refcounting requires atomic updates for thread safety)
+* Less predictable performance
+
+### Assignment
+We'll be using a `vm_t` struct which stands for `Virtual Machine Type`. This `vm_t` simulates what would normally be tracked if Sneklang were a fully functional interpreted language. This virtual machine is much simpler than a real one because all we care about is demonstrating the garbage collection aspects.
+
+Open `vm.h` and take a look at the `vm_t` struct. The `frames` field holds a stack of frames, which are pushed and popped as we enter and exit new scopes. For example:
+```C
+msg1 = "This is in scope 1"
+def outer_func():
+    msg2 = "This is in scope 2"
+    def inner_func():
+        msg3 = "This is in scope 3"
+        return
+    return
+```
+At each of the `scope` entrances (in this case function calls), a new stack frame is pushed onto the `frames` stack. When we exit a scope (a function returns), we pop the stack frame off the `frames` stack. Because we use `void *` to work with generics in C, you can't actually tell what the data type held by the `stack_t` is for each field. We'll write some wrapper functions later to help us make sure that we don't accidentally push the wrong kinds of data into our stacks.
+
+1. `objects` field is also a stack, but it holds `snek_object_t` pointers.
+  * Allocate space for a `vm_t` struct on the heap
+  * Initialize the `frames` stack with a capacity of `8` and the `objects` stack with a capcity of `8` using the `stack_new` function
+  * Return a pointer to the new `vm_t` struct
+2. Complete the `vm_free` function
+  * Free the `frames` and `objects` stacks (remember, we wrote a special `stack_free` function)
+  * Free the `vm_t` struct
+
+```C
+// End of lesson .c file
+```
 ## Notes from boots AI
