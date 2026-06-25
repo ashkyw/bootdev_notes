@@ -229,3 +229,19 @@ void vm_free(vm_t *vm) {
 }
 // See CH 11 - Mark and Sweep GC Codebase.md for additional files
 ```
+ # Tracking Objects
+
+ Our virtual machine needs to track every _Snek object_ that gets created.
+
+ We are no longer going to track how many times an object is referenced, but instead check _at garbage collection_ time if each object is still referenced at all. If it is, keep it. If it's not, free it.
+
+ ### Assignment
+* In `vm.c` compelete the `vm_track_object`, which adds an object to our `vm->objects` stack in a more type-safe way.
+* In `sneknew.c` update the `_new_snek_object` function. Before returning the newly allocated object it should ensure it's tracked by the VM.
+```C
+// End of lesson sneknew.c
+
+// End of lesson vm.c
+
+// See CH 11 - Mark and Sweep GC Codebase.md for additional files.
+```
