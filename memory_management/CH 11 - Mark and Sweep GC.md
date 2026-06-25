@@ -186,3 +186,46 @@ Look at the `frame_t` type in `vm.h`. It's a simple struct that holds a `stack_t
 3. Complete `frame_free` in `vm.c`
   * Free the `frame_t`'s `references` stack (we have a function for this)
   * Free the `frame_t` struct
+
+```C
+// End of lesson vm.c file
+#include "vm.h"
+
+void vm_frame_push(vm_t *vm, frame_t *frame) { stack_push(vm->frames, frame); }
+
+frame_t *vm_new_frame(vm_t *vm) {
+  frame_t *frame = malloc(sizeof(frame_t));
+  frame->references = stack_new(8);
+
+  vm_frame_push(vm, frame);
+  return frame;
+}
+
+void frame_free(frame_t *frame) {
+  stack_free(frame->references);
+  free(frame);
+}
+
+// don't touch below this line
+
+vm_t *vm_new() {
+  vm_t *vm = malloc(sizeof(vm_t));
+  if (vm == NULL) {
+    return NULL;
+  }
+
+  vm->frames = stack_new(8);
+  vm->objects = stack_new(8);
+  return vm;
+}
+
+void vm_free(vm_t *vm) {
+  for (int i = 0; i < vm->frames->count; i++) {
+    frame_free(vm->frames->data[i]);
+  }
+  stack_free(vm->frames);
+  stack_free(vm->objects);
+  free(vm);
+}
+// See CH 11 - Mark and Sweep GC Codebase.md for additional files
+```
