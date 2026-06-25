@@ -1,29 +1,8 @@
+```C
+// snekobject.c
 #include "snekobject.h"
-#include "assert.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-bool snek_array_set(snek_object_t *snek_obj, size_t index,
-                    snek_object_t *value) {
-  if (snek_obj == NULL || value == NULL) {
-    return false;
-  }
-  if (snek_obj->kind != ARRAY) {
-    return false;
-  }
-  if (index >= snek_obj->data.v_array.size) {
-    return false;
-  }
-  snek_obj->data.v_array.elements[index] = value;
-  if (snek_obj->data.v_array.elements[index] != NULL) {
-    refcount_dec(snek_obj->data.v_array.elements[index]);
-  }
-  refcount_inc(snek_obj->data.v_array.elements[index]);
-  return true;
-}
-
-void refcount_free(snek_object_t *obj) {
+void snek_object_free(snek_object_t *obj) {
   switch (obj->kind) {
   case INTEGER:
   case FLOAT:
@@ -31,147 +10,60 @@ void refcount_free(snek_object_t *obj) {
   case STRING:
     free(obj->data.v_string);
     break;
-  case VECTOR3: {
-    snek_vector_t vec = obj->data.v_vector3;
-    refcount_dec(vec.x);
-    refcount_dec(vec.y);
-    refcount_dec(vec.z);
+  case VECTOR3:
     break;
-  }
-  case ARRAY:
-    snek_array_t arr = obj->data.v_array;
-    for (size_t i = 0; i <= arr.size - 1; i++) {
-      refcount_dec(arr.elements[i]);
-      free(arr.elements[i])
-    }
-  default:
-    assert(false);
+  case ARRAY: 
+    free(obj->data.v_array.elements);
+    break;
   }
   free(obj);
 }
 
+// vm.c
+#include "vm.h"
+#include "stack.h"
+
+void vm_free(vm_t *vm) {
+  for (int i = 0; i < vm->frames->capacity; i++) {
+    stack_free(vm->frames);
+    for (int j = 0; j < vm->objects->capacity; j++) {
+      snek_object_free(vm->objects);
+      stack_free(vm->objects);
+      free(vm);
+    }
+  }
+}
+
 // don't touch below this line
 
-snek_object_t *snek_array_get(snek_object_t *snek_obj, size_t index) {
-  if (snek_obj == NULL) {
+vm_t *vm_new() {
+  vm_t *vm = malloc(sizeof(vm_t));
+  if (vm == NULL) {
     return NULL;
   }
 
-  if (snek_obj->kind != ARRAY) {
-    return NULL;
-  }
-
-  if (index >= snek_obj->data.v_array.size) {
-    return NULL;
-  }
-
-  return snek_obj->data.v_array.elements[index];
+  vm->frames = stack_new(8);
+  vm->objects = stack_new(8);
+  return vm;
 }
 
-void refcount_inc(snek_object_t *obj) {
-  if (obj == NULL) {
-    return;
-  }
-
-  obj->refcount++;
-  return;
+void vm_track_object(vm_t *vm, snek_object_t *obj) {
+  stack_push(vm->objects, obj);
 }
 
-void refcount_dec(snek_object_t *obj) {
-  if (obj == NULL) {
-    return;
-  }
-  obj->refcount--;
-  if (obj->refcount == 0) {
-    return refcount_free(obj);
-  }
-  return;
+void vm_frame_push(vm_t *vm, frame_t *frame) { stack_push(vm->frames, frame); }
+
+frame_t *vm_new_frame(vm_t *vm) {
+  frame_t *frame = malloc(sizeof(frame_t));
+  frame->references = stack_new(8);
+
+  vm_frame_push(vm, frame);
+  return frame;
 }
 
-snek_object_t *_new_snek_object() {
-  snek_object_t *obj = calloc(1, sizeof(snek_object_t));
-  if (obj == NULL) {
-    return NULL;
-  }
-
-  obj->refcount = 1;
-
-  return obj;
+void frame_free(frame_t *frame) {
+  stack_free(frame->references);
+  free(frame);
 }
 
-snek_object_t *new_snek_array(size_t size) {
-  snek_object_t *obj = _new_snek_object();
-  if (obj == NULL) {
-    return NULL;
-  }
-
-  snek_object_t **elements = calloc(size, sizeof(snek_object_t *));
-  if (elements == NULL) {
-    free(obj);
-    return NULL;
-  }
-
-  obj->kind = ARRAY;
-  obj->data.v_array = (snek_array_t){.size = size, .elements = elements};
-
-  return obj;
-}
-
-snek_object_t *new_snek_integer(int value) {
-  snek_object_t *obj = _new_snek_object();
-  if (obj == NULL) {
-    return NULL;
-  }
-
-  obj->kind = INTEGER;
-  obj->data.v_int = value;
-  return obj;
-}
-
-snek_object_t *new_snek_float(float value) {
-  snek_object_t *obj = _new_snek_object();
-  if (obj == NULL) {
-    return NULL;
-  }
-
-  obj->kind = FLOAT;
-  obj->data.v_float = value;
-  return obj;
-}
-
-snek_object_t *new_snek_string(char *value) {
-  snek_object_t *obj = _new_snek_object();
-  if (obj == NULL) {
-    return NULL;
-  }
-
-  int len = strlen(value);
-  char *dst = malloc(len + 1);
-  if (dst == NULL) {
-    free(obj);
-    return NULL;
-  }
-
-  strcpy(dst, value);
-
-  obj->kind = STRING;
-  obj->data.v_string = dst;
-  return obj;
-}
-
-snek_object_t *new_snek_vector3(snek_object_t *x, snek_object_t *y,
-                                snek_object_t *z) {
-  if (x == NULL || y == NULL || z == NULL) {
-    return NULL;
-  }
-  snek_object_t *obj = _new_snek_object();
-  if (obj == NULL) {
-    return NULL;
-  }
-  obj->kind = VECTOR3;
-  obj->data.v_vector3 = (snek_vector_t){.x = x, .y = y, .z = z};
-  refcount_inc(x);
-  refcount_inc(y);
-  refcount_inc(z);
-  return obj;
-}
+```
