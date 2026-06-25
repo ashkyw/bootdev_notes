@@ -383,3 +383,48 @@ void frame_free(frame_t *frame) {
 
 // See CH 11 - Mark and Sweep GC Codebase.md for additional files.
 ```
+# Free
+
+Recall the `refcount_free` function that you wrote in the previous chapter. It should have looked something like this:
+```C
+void refcount_free(snek_object_t *obj) {
+  switch (obj->kind) {
+    case INTEGER:
+    case FLOAT:
+      break;
+    case STRING:
+      free(obj->data.v_string);
+      break;
+    case VECTOR3: {
+      snek_vector_t vec = obj->data.v_vector3;
+      refcount_dec(vec.x);
+      refcount_dec(vec.y);
+      refcount_dec(vec.z);
+      break;
+    }
+    case ARRAY: {
+      snek_array_t *array = &obj->data.v_array;
+      for (size_t i = 0; i < array->size; i++) {
+        refcount_dec(array->elements[i]);
+      }
+      free(array->elements);
+      break;
+    }
+  }
+  free(obj);
+}
+```
+### Assignment
+
+Let's rewrite our free-ing logic for mark-and-sweep. Because the virtual machine is the one tracking objects, all of the `refcount_dec` work can be removed! There's some very cool tricks coming up for mark-and-sweep to manage this, but for now you can just trust that we'll correctly free any of the contained elements if they are no longer alive.
+
+1. `snekobject.c` - complete `snek_object_free`
+  * `INTEGER`, `FLOAT`, and `STRING` objects should all work the same as the refcount version (non-container types)
+  * `VECTOR3` doesn't need to do _anything_ before freeing the object, because the mark-and-sweep will handle the contained objects
+  * `ARRAY` should free the `elements` array, but not the objects themselves because the mark-and-sweep will handle that
+2. `vm.c` - complete `vm_free`
+  * Iterate over all the VM's frames and free them using `frame_free`
+  * Free the `frames` stack itself using `stack_free`
+  * Iterate over all the VM's objects and free them using `snek_object_free`
+  * Free the VM the struct itself.
+
