@@ -501,3 +501,21 @@ void snek_object_free(snek_object_t *obj) {
 }
 // See CH 11 - Mark and Sweep GC Codebase.md for additional files.
 ```
+# Frame References
+
+Consider this example of Sneklang scopes and stack frames:
+```py
+msg1 = "This is in scope 1"
+def outer_func():
+    msg2 = "This is in scope 2"
+    def inner_func():
+        msg2 = "This is in scope 3"
+        return
+    return
+```
+In scope 2, we add `msg` to its referenced objects. Once again, this is a bit simplified from what you would do in a real, production-grade language, but the idea is the same.
+
+Each stack needs to know about all of the objects that it references.
+
+### Assignment
+Complete the `frame_reference_object` function. It should push the object onto the stack of references for the current frame.
