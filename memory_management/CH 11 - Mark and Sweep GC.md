@@ -782,3 +782,37 @@ Both do the same thing here. The point is: once it's typed as `snek_object_t *`,
 Here's the catch worth burning in: **the compiler doesn't verify your cast is correct.** If you'd written `frame_t *obj = frame->references->data[j];` it would _also_ compile — but you'd be lying about what's in there, and you'd get garbage or a crash at runtime. With `void *`, you are responsible for knowing what type actually lives in that slot. The stack just trusts you.
 
 So the discipline is: the moment you pull something out of a `void *` container, immediately assign it to the correct typed variable.
+
+# Trace
+
+[Video](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/tracing-in-mark-and-sweep-1920x1080.mp4)
+
+## Lesson Notes
+
+Now that we've done the first (and simplest) part: **marking**, we can trace through all of our objects and determine which ones are connected to the roots. For example
+```py
+def get_list():
+  a = 5
+  return [a]
+
+print(get_list())
+```
+If we run this code it will return a list with the integer `a` inside of it. Our current `mark` function will mark the list, but it won't mark the integer `a`. Which means that when we go to sweep the memory, we will mark the list, but not the integer `a`. We'd then `free` `a` while it's still being used, and the operating system could then fill that memory with something else... which would be very bad! So, we need to prevent this.
+
+But we also have another problem:
+```py
+def get_list():
+  a = []
+  a.append(a)
+  return [5]
+
+print(get_list())
+```
+In the above (very dumb) example, we create a list that references itself and then return a completely unrelated list. If our `trace` function looks for any object that is referenced by _any other object_ it will consider `a` alive because it has a reference (albeit, to itself in this case). In fact, `a` is unreachable because when `get_list` returns, `a` is no longer used anywhere.
+
+_Tracing solves these problems_. To be clear, tracing is _part_ of the "mark" phase of mark and sweep. It's where we mark all the objects referenced by our root objects.
+
+### Assignment
+1. Complete `trace_mark_object` in `vm.c`
+  * If the object is `NULL`, or already marked, return immediately without doing anything.
+  * Otherwise, mark the object and push it onto the `gray_objects` stack.
