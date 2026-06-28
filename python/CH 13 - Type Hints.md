@@ -50,3 +50,41 @@ character_level: int = 80
 character_health: float = 99.5
 has_magic: bool = True
 ```
+#  Function Parameters
+
+Function parameters can have type hints too! The syntax is the same as variable type hints: put a colon after the parameter name, then the type.
+``` py
+def greet_player(name: str):
+ print(f"Welcome, {name}!")
+```
+When a function has multiple parameters, each one can have its own type hint:
+``` py
+def add_gold(current_gold: int, found_gold: int):
+ return current_gold + found_gold
+```
+While adding a type to a variable declaration like:
+``` py
+character_health: float = 72.5
+```
+is considered a bit redundant due to type inference, adding type hints to function parameters is _not_ redundant. If you don't add them, your tooling won't know what types the function expects, which makes autocomplete and error checking less effective.
+
+### Assignment
+* Add a `str` type hint to `name`
+* Add an `int` type hint to `level`
+* Add a `float` type hint to `health`
+* Add a `bool` type hint to `has_magic`
+
+``` py
+# End of lesson code
+def get_character_status(name: str, level: int, health: float, has_magic: bool):
+    status = f"{name} is level {level} with {health} HP"
+
+    if has_magic:
+        status += ", and can cast spells"
+    else:
+        status += ", and cannot cast spells"
+
+    return status
+```
+
+#
