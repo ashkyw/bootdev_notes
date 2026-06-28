@@ -820,3 +820,6 @@ _Tracing solves these problems_. To be clear, tracing is _part_ of the "mark" ph
   * If the object is an `INTEGER`, `FLOAT` or `STRING` do nothing. These don't contain references to other objects.
   * If it's a `VECTOR3`, call `trace_mark_object` on the `x`, `y`, and `z` fields
   * If it's an `ARRAY`, call `trace_mark_object` on each element.
+3. Complete `trace` in `vm.c`
+  * Create a `stack_new` with a capacity of `8` called `gray_objects`. If it fails, `return`
+  * Iterate over each of the objects in the VM: If the object is marked, push it onto the `gray_objects` stack
