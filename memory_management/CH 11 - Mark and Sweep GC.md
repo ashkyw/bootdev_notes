@@ -676,3 +676,109 @@ Each stack needs to know about all of the objects that it references.
 
 ### Assignment
 Complete the `frame_reference_object` function. It should push the object onto the stack of references for the current frame.
+```C
+// End of lesson vm.c
+#include "vm.h"
+#include "snekobject.h"
+#include "stack.h"
+
+void mark(vm_t *vm) {
+  for (size_t i = 0; i < vm->frames->count; i++) {
+    frame_t *frame = vm->frames->data[i];
+    for (size_t j = 0; j < frame->references->count; j++) {
+      snek_object_t *obj = frame->references->data[j];
+      obj->is_marked = true;
+    }
+  }
+}
+
+// don't touch below this line
+
+void frame_reference_object(frame_t *frame, snek_object_t *obj) {
+  stack_push(frame->references, obj);
+}
+
+vm_t *vm_new() {
+  vm_t *vm = malloc(sizeof(vm_t));
+  if (vm == NULL) {
+    return NULL;
+  }
+
+  vm->frames = stack_new(8);
+  vm->objects = stack_new(8);
+  return vm;
+}
+
+void vm_free(vm_t *vm) {
+  // Free the stack frames, and then their container
+  for (size_t i = 0; i < vm->frames->count; i++) {
+    frame_free(vm->frames->data[i]);
+  }
+  stack_free(vm->frames);
+
+  // Free the objects, and then their container
+  for (size_t i = 0; i < vm->objects->count; i++) {
+    snek_object_free(vm->objects->data[i]);
+  }
+  stack_free(vm->objects);
+
+  free(vm);
+}
+
+void vm_frame_push(vm_t *vm, frame_t *frame) { stack_push(vm->frames, frame); }
+
+frame_t *vm_new_frame(vm_t *vm) {
+  frame_t *frame = malloc(sizeof(frame_t));
+  frame->references = stack_new(8);
+
+  vm_frame_push(vm, frame);
+  return frame;
+}
+
+void frame_free(frame_t *frame) {
+  stack_free(frame->references);
+  free(frame);
+}
+
+void vm_track_object(vm_t *vm, snek_object_t *obj) {
+  stack_push(vm->objects, obj);
+}
+```
+## Notes from boots AI
+
+When you write a long chain like:
+```C
+vm->frames->data[i]->objects[j]->references->is_marked = true;
+```
+At each `->`, the compiler asks: "What _type_ is the thing on the left, and does that type have this member?" The chain only works if every single hop lands on a real member of the real type at that point. You were guessing at the hops instead of checking them.
+
+Walk it the way the compiler does:
+
+* `vm` → `vm_t *`. Has `frames`. ✓
+* `vm->frames` → `stack_t *`. Has data. ✓
+* `vm->frames->data[i]` → `void *`. Stop. A `void *` has _no_ members at all. You then wrote `->objects`, but `void` isn't a struct, so that's already invalid. And even if it were a `frame_t`, `frame_t` has no member called `objects` — you invented it. Same with `references` and `is_marked` further down the chain.
+
+So the one-liner wasn't "a valid trace written compactly." It was a trace that _skipped steps and assumed members existed_ without ever confirming the type at each hop.
+
+The reason the named-variable version worked is that it forced two things:
+
+1. **A cast/assignment that gives the `void *` a real type**. `snek_object_t *obj = frame->references->data[j];` tells the compiler "treat this `void *` as a `snek_object_t *`." Now `obj->is_marked` is checkable.
+2. **One hop at a time.** You can't accidentally chain past a `void *` or invent a member, because each line is short enough to verify against the actual struct.
+
+The takeaway: chaining isn't _wrong_ in C — `frame->references->count` is a perfectly good chain. The danger is chaining through a `void *` (which loses all type info) or chaining so far that you lose track of what type you're standing on. When either happens, break it into named, typed steps.
+
+A `void *` is a "pointer to _something_, but I won't tell you what." It's deliberately type-less. That's _why_ the stack can hold anything — frames, objects, whatever — in the same `data` array. The flexibility comes at a cost: the compiler has thrown away the type info, so it won't let you do `->` on it. There's no struct to look members up in.
+
+To use it, you re-attach a type:
+```C
+snek_object_t *obj = frame->references->data[j];
+```
+That assignment is the cast. In C, a `void *` converts to any object pointer type automatically, no explicit syntax needed. You could also write it explicitly:
+```C
+snek_object_t *obj = (snek_object_t *)frame->references->data[j];
+```
+Both do the same thing here. The point is: once it's typed as `snek_object_t *`, the compiler knows the layout, so `obj->is_marked becomes legal.
+
+Here's the catch worth burning in: **the compiler doesn't verify your cast is correct.** If you'd written `frame_t *obj = frame->references->data[j];` it would _also_ compile — but you'd be lying about what's in there, and you'd get garbage or a crash at runtime. With `void *`, you are responsible for knowing what type actually lives in that slot. The stack just trusts you.
+
+So the discipline is: the moment you pull something out of a `void *` container, immediately assign it to the correct typed variable.
