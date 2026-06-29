@@ -952,8 +952,8 @@ void vm_track_object(vm_t *vm, snek_object_t *obj) {
 Sweep is easy! Trace was probably the hardest part of the garbage collector.
 
 Every object now has an `is_marked` field that we can use to determine if an object is reachable or not. All we need to do is iterate over all the objects in the VM and free any object that is not marked. Once it's freed, we can also remove it from our VM.
-
-_**Note: One thing that's not obvious about**_ `sweep()`: _**Any object that is marked (we don't want to free it right now) needs to be reset to**_ `is_marked = false`_**. That way the next time the mark phase runs, if it's_ not marked again _ it will be freed in the next cycle.**_
+> [!NOTE]
+> _**One thing that's not obvious about**_ `sweep()`: _**Any object that is marked (we don't want to free it right now) needs to be reset to**_ `is_marked = false`**. _That way the next time the mark phase runs, if it's_ not marked again _it will be freed in the next cycle._**
 
 ### Assignment
 
