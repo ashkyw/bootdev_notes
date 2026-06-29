@@ -95,7 +95,7 @@ def add_gold(current_gold: int, found_gold: int) -> int:
     return current_gold + found_gold
 ```
 The `-> int` means this function expects to return an integer
->[IMPORTANT]
+> [!TIP]
 > **The syntax is a bit different** from type hints on variables and parameters: we use `->` instead of `:`, and there's no variable name before the type hint. This is because it doesn't really matter what name (if any) the function uses internally for the return value; we just care about the type.
 
 Here's another example:
@@ -178,7 +178,7 @@ So `dict[str, int]` means:
 * The keys are strings
 * The values are ints
 
->[IMPORTANT]
+> [!TIP]
 > Not all types can be used as dictionary keys. The key types that you'll see most often are strings and integers. Dictionary valuse, on the other hand, can be any type.
 
 ### Assignment
