@@ -7,7 +7,7 @@ When a program is small, you can _usually_ remember the types of your variables.
   * Does `get_item()` always return an item name (`str`) or sometimes `None` if it can't find one?
   * Is `inventory` a list of strings, or a dictionary of item counts?
 
-[Type hints](https://docs.python.org/3/library/typing.html) let us wirte those expectations directly in our code:
+[Type hints](https://docs.python.org/3/library/typing.html) let us write those expectations directly in our code:
 ```py
 def get_damage(weapon: dict, level: int) -> int:
   return weapon["damage"] + (level * 2)
