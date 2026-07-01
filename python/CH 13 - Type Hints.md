@@ -265,3 +265,37 @@ We read `dict[str, list[str]]` from the outside in:
  * Each _value_ is a list of strings (`list[str]`)
 
 In extreme cases, nested types can get _super_ confusing, but honestly it's less confusing than it would be _without_ the typing. For the time being, just know that type hints _can_ describe containers within containers.
+
+ # Optional Values
+
+ Sometimes we work with variables that may or may not have an "actual value." For example, a character _might_ have a damage bonus, or they may not. If they _don't_, we can represent that lack of value with `None`. 
+
+ The `|` operator indicates that a value can be of multple types:
+ ```py
+damage_bonus: int | None 
+```
+That means `damage_bonus` can either be an integer or `None`. For another example, a function might return a prepared spell if one is ready, or `None` if no spell is prepared:
+```py
+def get_prepared_spell(has_spell: bool) -> str | None:
+ if has_spell:
+  return "Fireball"
+
+return None
+```
+
+### Assignment
+* Add a `bool` to the `has_mount` parameter
+* Add `int` to the `distance` parameter
+* Add a `str | None` return type hint
+```py
+# End of lesson code
+def summon_mount(has_mount: bool, distance: int) -> str | None: 
+    if not has_mount:
+        return None
+
+    if distance > 420:
+        return None
+
+    return "Battle Horse"
+
+```
