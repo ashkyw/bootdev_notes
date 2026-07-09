@@ -87,3 +87,30 @@ But it has some things going for it:
 * Can be used for both front-end & back-end development, simplifying an org's tech stack
 * Big companies have invested a lot in making it better and faster over the years
 * Great support for asynchronus programming
+
+# Comments
+JavaScript has two style of comments:
+```js
+// This is a single line comment
+
+/*
+This is a multi-line comment
+*/
+```
+### Assignment
+* Fix the syntax so the comments do not include the code
+```js
+// End of lesson code
+// Attention!
+/*
+  We are increasing the maximum message length from 140 to 280 characters.
+  Very reluctantly, I might add.
+  Users actually want to write more than 140 characters?!? Madness.
+*/
+
+const maxMessageLength = 140;
+const newMaxMessageLength = 280;
+console.log(
+  `Textio is increasing the maximum message length from ${maxMessageLength} to ${newMaxMessageLength} characters.`,
+);
+```
