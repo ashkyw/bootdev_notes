@@ -114,3 +114,43 @@ console.log(
   `Textio is increasing the maximum message length from ${maxMessageLength} to ${newMaxMessageLength} characters.`,
 );
 ```
+# Numbers in JS
+
+In Python, numbers without a decimal point are called integers (`int`) and fractions are (`float`). Contrast this to JavaScript where all numbers are just a [`Number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) type.
+
+You're already familiar with the `number` type. Numbers aren't surrounded by quotes when created, but they can contain decimal parts and negative signs.
+```js
+let x = 2; // this is a number
+x = 5.69; // this is also a number
+x = -5.42; // yup, still a number
+```
+You can do arithmetic as you'd expect:
+```js
+let sum = 2 + 3 + 7; // 12
+let difference = 5.3 - 2.1; // 3.2
+let product = 2 * 3; // 6
+let quotient = 6 / 2; // 3
+```
+
+### Assignment
+Textio tracks the number of messages sent for different types of notifications. Between the comments, create a:
+* `totalMessagesSent` variable that contains the total number of messages sent
+* `averageMessagesSent` variable that contains the average number of messages sent across all types.
+```js
+// End of lesson code
+const promoMessages = 12;
+const reminderMessages = 15;
+const welcomeMessages = 8;
+const supportMessages = 5;
+
+// don't touch above this line
+
+const totalMessagesSent =
+  promoMessages + reminderMessages + welcomeMessages + supportMessages;
+const averageMessagesSent = totalMessagesSent / 4;
+
+// don't touch below this line
+
+console.log("Total messages:", totalMessagesSent);
+console.log("Average messages:", averageMessagesSent);
+```
