@@ -67,3 +67,110 @@ void frame_free(frame_t *frame) {
 }
 
 ```
+
+```py
+
+import customtkinter as ctk
+import tkinter as tk
+from tkinterdnd2 import DND_FILES, TkinterDnD
+
+
+class App(TkinterDnD.Tk):
+    def __init__(self):
+        super().__init__()
+
+        ctk.set_appearance_mode("System")
+        ctk.set_default_color_theme("blue")
+
+        self.files = []  # <-- shared state for left buttons
+
+        # Root layout
+        self.grid_columnconfigure(0, weight=0)
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(0, weight=1)
+
+        # Left frame (buttons)
+        self.left = ctk.CTkFrame(self, corner_radius=10)
+        self.left.grid(row=0, column=0, sticky="ns", padx=10, pady=10)
+
+        ctk.CTkButton(self.left, text="Act on files", command=self.act_on_files).pack(
+            padx=10, pady=10
+        )
+
+        # Right frame (drop area)
+        self.drop_area = ctk.CTkFrame(self, corner_radius=10)
+        self.drop_area.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+        self.drop_label = ctk.CTkLabel(
+            self.drop_area, text="Drag files here", font=ctk.CTkFont(size=16, weight="bold")
+        )
+        self.drop_label.pack(expand=True, fill="both", padx=20, pady=20)
+
+        # Make CTkFrame accept drops
+        self.drop_area.drop_target_register(DND_FILES)
+        self.drop_area.dnd_bind("<<Drop>>", self.on_files_dropped)
+
+    def on_files_dropped(self, event):
+        # event.data is usually a string containing one or more file paths
+        # wrapped in braces if they contain spaces.
+        raw = event.data
+
+        # tkinterdnd2 common parsing approach:
+        paths = self._parse_dnd_files(raw)
+
+        self.files = paths
+        self.drop_label.configure(text=f"Dropped {len(self.files)} file(s)")
+
+        # optional: print for debugging
+        print("Dropped:", self.files)
+
+    def act_on_files(self):
+        if not self.files:
+            self.drop_label.configure(text="Drop files first")
+            return
+
+        # Do something with self.files
+        # e.g., process each file
+        print("Acting on:", self.files)
+
+    def _parse_dnd_files(self, raw):
+        raw = raw.strip()
+
+        # If there's only one file without braces/spaces, this often works:
+        if raw.startswith("{") is False and raw.count(" ") == 0 and raw.count("\n") == 0:
+            return [raw]
+
+        # Parse "{path with spaces} {path2} ..."
+        out = []
+        cur = ""
+        in_braces = False
+
+        for ch in raw:
+            if ch == "{":
+                in_braces = True
+                continue
+            if ch == "}":
+                in_braces = False
+                out.append(cur)
+                cur = ""
+                continue
+
+            if ch == " " and not in_braces:
+                if cur:
+                    out.append(cur)
+                    cur = ""
+                continue
+
+            cur += ch
+
+        if cur:
+            out.append(cur)
+
+        return out
+
+
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()
+
+```
