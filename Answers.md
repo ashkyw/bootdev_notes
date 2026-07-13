@@ -1,71 +1,58 @@
-```C
-// snekobject.c
-#include "snekobject.h"
+```py
+class DragAndDropFrame(ctk.CTkFrame):
+    def __init__(self, master, title):
+        super().__init__(master)
+        self.grid_columnconfigure(0, weight=1)
 
-void snek_object_free(snek_object_t *obj) {
-  switch (obj->kind) {
-  case INTEGER:
-  case FLOAT:
-    break;
-  case STRING:
-    free(obj->data.v_string);
-    break;
-  case VECTOR3:
-    break;
-  case ARRAY: 
-    free(obj->data.v_array.elements);
-    break;
-  }
-  free(obj);
-}
+        self.title_text = title
+        self.files = []
 
-// vm.c
-#include "vm.h"
-#include "stack.h"
+        self.title_label = ctk.CTkLabel(
+            self, text=self.title_text, fg_color="gray30", corner_radius=6
+        )
+        self.title_label.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="ew")
 
-void vm_free(vm_t *vm) {
-  for (int i = 0; i < vm->frames->capacity; i++) {
-    stack_free(vm->frames);
-    for (int j = 0; j < vm->objects->capacity; j++) {
-      snek_object_free(vm->objects);
-      stack_free(vm->objects);
-      free(vm);
-    }
-  }
-}
+        self.drop_target_register(DND_FILES)
+        self.dnd_bind("<<Drop>>", self._on_drop)
 
-// don't touch below this line
+    def _on_drop(self, event):
+        # event.data can contain multiple paths; tkinterdnd2 typically wraps spaced paths in { }
+        raw = event.data.strip()
+        self.files = self._parse_dnd_files(raw)
 
-vm_t *vm_new() {
-  vm_t *vm = malloc(sizeof(vm_t));
-  if (vm == NULL) {
-    return NULL;
-  }
+        # Update UI however you like
+        self.title_label.configure(text=f"{self.title_text} ({len(self.files)})")
 
-  vm->frames = stack_new(8);
-  vm->objects = stack_new(8);
-  return vm;
-}
+        # If you want left-side buttons to react immediately, you can add a callback pattern.
 
-void vm_track_object(vm_t *vm, snek_object_t *obj) {
-  stack_push(vm->objects, obj);
-}
+    @staticmethod
+    def _parse_dnd_files(raw: str):
+        # Parses: {path with spaces} {path2} ...  OR  single_path
+        if not raw:
+            return []
 
-void vm_frame_push(vm_t *vm, frame_t *frame) { stack_push(vm->frames, frame); }
+        if raw.startswith("{"):
+            out, cur, in_braces = [], "", True
+            for ch in raw[1:]:
+                if ch == "}":
+                    out.append(cur)
+                    cur = ""
+                    in_braces = False
+                elif ch == " " and not in_braces:
+                    continue
+                else:
+                    cur += ch
+                    in_braces = True
+            if cur:
+                out.append(cur)
+            return out
 
-frame_t *vm_new_frame(vm_t *vm) {
-  frame_t *frame = malloc(sizeof(frame_t));
-  frame->references = stack_new(8);
+        # no braces: single path (or multiple separated by spaces)
+        # easiest fallback:
+        return self.tk.splitlist(raw)
 
-  vm_frame_push(vm, frame);
-  return frame;
-}
-
-void frame_free(frame_t *frame) {
-  stack_free(frame->references);
-  free(frame);
-}
-
+    def get_files(self):
+        return list(self.files)
 ```
 
 ```py
@@ -174,6 +161,7 @@ if __name__ == "__main__":
     app.mainloop()
 
 ```
+
 ```py
 import customtkinter as ctk
 from tkinterdnd2 import DND_FILES, TkinterDnD
