@@ -207,6 +207,7 @@ const favoriteSandersonCharacter = undefined; // undefined
 ### Assignment
 Create the missing variables used in the `console.log` calls so that they are declared but `undefined`
 ```js
+// End of lesson code
 let sentMessages;
 let deliveredMessages;
 let failedMessages;
@@ -226,3 +227,64 @@ Yes. But also... no. One of JavaScript's most cursed features is that it has two
 * `null`: It (kind of) exists, but it's _empty_. In grug_speak `null` is "kinda nothing"
 
 There are [some practical differences between the two](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null#difference_between_null_and_undefined), the primary one being that `undefined` is the _default_ value of a variable when it hasn't been given a value yet.
+```js
+let myName;
+console.log(myName); // undefined
+```
+To get a `null` value, you have to explicitly assign it:
+```js
+let myName = null;
+console.log(myName); // null
+```
+Confusingly, `typeof` returns `"object"` for `null`:
+```js
+console.log(typeof null); // object
+```
+_To be clear, `null` **is** its own type according to [ECMAScript specification](https://tc39.es/ecma262/#sec-ecmascript-language-types), but the "object" type report is a historical quirk that [can't be easily fixed now](https://web.archive.org/web/20071020084354/http://wiki.ecmascript.org/doku.php?id=proposals%3Atypeof)_
+
+In _most cases_, `null` and `undefined` work the same way, but you'll want to be consistent in _how_ you use them, and know thah there are subtel behavioral differences.
+
+> use `undefined` everywhere you would use `None` in Python. JavaScript is fairly unique in having two options. Use `null` in cases where the behavioral difference matters, or external code forces the use of`null`
+
+### Assignment
+Fix the code so eakh variable holds a `null` value
+```js
+// End of lesson code
+let sentMessages = null;
+let deliveredMessages = null;
+let failedMessages = null;
+
+// don't touch below this line
+
+console.log("Sent is null:", sentMessages === null);
+console.log("Delivered is null:", deliveredMessages === null);
+console.log("Failed is null:", failedMessages === null);
+```
+# Dynamic & Weak
+Like Python, Ruby, and PHP, JavaScript is a dynamically-type (not statically-typed) language. Its variable types are only known at _runtime_
+
+_Unlike_ Python, it's also [weakly typed](https://en.wikipedia.org/wiki/Strong_and_weak_typing) meaning it will automatically convert types when you do things like add a number to a string. This can lead to some unexpected behavior if you're not careful...
+```js
+let answerToLife =  42;
+let answerToTheUniverse = "42";
+// obviously JavaScript think that adding strings
+// and number is totally sane and normal behavior
+const answerToEverything= answerToLife + answerToTheUniverse;
+
+console.log(answerToEverything);
+//"4242"
+```
+### Assignment
+Fix the error by ensuring the value matches the correct type as you'd expect.
+```js
+let totalSentMessages = 100;
+let totalReceivedMessages = 50;
+
+// don't touch below this line
+
+const totalMessages = totalSentMessages + totalReceivedMessages;
+
+console.log("Total sent messages:", totalSentMessages);
+console.log("Total received messages:", totalReceivedMessages);
+console.log("Total messages:", totalMessages);
+```
