@@ -184,3 +184,45 @@ let numFailedMessages = 1336;
 numFailedMessages++;
 console.log(numFailedMessages + " failed messages");
 ```
+# Undefined vs. Undeclared
+
+The primitive [`undefined`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined) value represents the absence of a value... but it's not the same thing as an "undeclared" variable!
+
+We can create an _undefined_ variable by giving it a name, but no value:
+```js
+let favoriteSandersonCharacter; // undefined
+console.log(typeof favoriteSandersonCharacter); // "undefined"
+```
+However if we _never create the name_, it's "undeclared", and undeclared variables actually throw an error (so don't do this):
+```js
+console.log(favoriteRothfussCharacter); // ReferenceError: favoriteRothfussCharacter is not defined
+```
+The worst part is that the undeclared variable error actually says "not defined"... Welcome to JavaScript
+> [!NOTE]
+> As an aside, you can use `const` to declare a variable that is assigned to `undefined`,but you wouldn't be able to set its value later, so why would you want to? 
+```js
+const favoriteSandersonCharacter; // SyntaxError: missing = in const declaration
+const favoriteSandersonCharacter = undefined; // undefined
+```
+### Assignment
+Create the missing variables used in the `console.log` calls so that they are declared but `undefined`
+```js
+let sentMessages;
+let deliveredMessages;
+let failedMessages;
+
+// don't touch below this line
+
+console.log("Sent is:", sentMessages);
+console.log("Delivered is:", deliveredMessages);
+console.log("Failed is:", failedMessages);
+```
+# Null vs. Undefined
+If you're coming from Python, you might be thinking:
+> Ahh, so `undefined` is like `None`! Easy.
+
+Yes. But also... no. One of JavaScript's most cursed features is that it has two values for "nothing":
+* `undefined`: It doesn't exist _at all_. In grug-speak `undefined` is "very nothing"
+* `null`: It (kind of) exists, but it's _empty_. In grug_speak `null` is "kinda nothing"
+
+There are [some practical differences between the two](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null#difference_between_null_and_undefined), the primary one being that `undefined` is the _default_ value of a variable when it hasn't been given a value yet.
