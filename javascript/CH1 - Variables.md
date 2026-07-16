@@ -288,3 +288,30 @@ console.log("Total sent messages:", totalSentMessages);
 console.log("Total received messages:", totalReceivedMessages);
 console.log("Total messages:", totalMessages);
 ```
+# Same line declarations
+
+You can declare multiple variables on the same line:
+```js
+let miles = 80276, org = "Tesla;"
+```
+The above is the same as:
+```js
+let miles = 80276;
+let org = "Tesla";
+```
+### Assignment
+Declare `averageOpenRate` and `displayMessage` in the same `const` declaration.
+Initialize them to values (num and str):
+* `0.23`
+* `is the average open rate of your messages`
+
+```js
+// End of lesson code
+const averageOpenRate = 0.23,
+  displayMessage = "is the average open rate of your messages";
+
+// don't touch below this line
+
+console.log("Average open rate:", averageOpenRate);
+console.log("Display message:", displayMessage);
+```
