@@ -315,3 +315,10 @@ const averageOpenRate = 0.23,
 console.log("Average open rate:", averageOpenRate);
 console.log("Display message:", displayMessage);
 ```
+# JavaScript's Speed
+Comparing the "speed" or "efficiency" of programming languages is far from an exact science. There are a lot of variables and moving parts so benchmarks can be misleading. 
+
+A few high-level things to provide a frame-of-reference:
+* JavaScript is not as fast as C, Rust or Zig. It's almost always going to be outperformed by non-garbage-collected languages
+* Modern JavaScript is typically JIT-compiled into machine code via the [V8 Engine](https://v8.dev/) at runtime. It's usually not as fast as AOT (ahead-of-time) compiled languages like Go or C, put it's usually much faster than interpreted languages like Python or Ruby
+* JavaScript runs on a single threa, but has greater support for asynchronous programming, It's typically not as performant for CPU-bound tasks (like heavy math calculations), but it does well for I/O-bound tasks (like contacting a database or making an API call).
