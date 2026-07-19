@@ -322,3 +322,42 @@ A few high-level things to provide a frame-of-reference:
 * JavaScript is not as fast as C, Rust or Zig. It's almost always going to be outperformed by non-garbage-collected languages
 * Modern JavaScript is typically JIT-compiled into machine code via the [V8 Engine](https://v8.dev/) at runtime. It's usually not as fast as AOT (ahead-of-time) compiled languages like Go or C, put it's usually much faster than interpreted languages like Python or Ruby
 * JavaScript runs on a single threa, but has greater support for asynchronous programming, It's typically not as performant for CPU-bound tasks (like heavy math calculations), but it does well for I/O-bound tasks (like contacting a database or making an API call).
+
+# Strings
+
+In JavaScript, a (non-template) string can be written with either single or double quotes. For example:
+*`'Hello'`
+*`"Hello"`
+
+**Double quotes are preferred**. It's important to have styling conventions so that all the code in a project looks consistent, making it easier to read and contribute to.
+
+## Indexing
+
+Square brackets are used to access individual characters inside a string. The characters are numbered from `0` to `length-1`. It's similar to how strings and lists work in Python & many other languages.
+```js
+const greeting = "Hello";
+console.log(greeting[0]); // 'H'
+console.log(greeting[1]); // 'e'
+console.log(greeting[2]); // 'l'
+console.log(greeting[3]); // 'l'
+console.log(greeting[4]); // '0'
+// you can also get the last char at length-1
+console.log(greeting[greeting.length-1]); // 'o'
+```
+The [`.length`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/length) property is used to get the number of characters in a string.
+
+### Assignment
+Print some characters
+```js
+// End of lesson code
+const email = "stoob@boot.dev";
+
+// print the first character in the string here
+console.log(email[0]);
+
+// print the last character in the string here
+console.log(email[email.length - 1]);
+
+// print the entire string here
+console.log(email);
+```
