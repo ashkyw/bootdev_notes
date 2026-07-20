@@ -361,3 +361,42 @@ console.log(email[email.length - 1]);
 // print the entire string here
 console.log(email);
 ```
+# Template Literals
+
+In JavaScript [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) are a fantastic way to interpolate dynamic values into a string. They're JavaScript's version of Python's f-strings. For example:
+```js
+const shadeOfRed = 101;
+console.log(`The shade is ${shadeOfRed}`);
+// The shade is 101
+```
+Template literals _must start and end with a backtick_, and anything inside of the dollar-sign bracket enclosure is automaticallly _cast_ to a string.
+
+t## Advanced Logic
+You aren't limited to just variable names inside the `${}`. You can actually write valid JavaScript code directly inside them. 
+This means you can do math, change text styles, or run logic checks right inside the string.
+```js
+const price = 2.5;
+const quantity = 3;
+const item = "coffee";
+
+console.log(`Total: $${price * quantity}`);
+// Total: $7.5
+
+console.log(`I need ${item.toUpperCase()}`);
+// I need COFFEE
+```
+### Assignment
+Using template literals and string formatting, create a new variable `msg` and assign it to the string:
+```
+HI NAME, your open rate is OPENRATE percent
+```
+
+```js
+// End of lesson code
+const name = "Saul Goodman";
+const openRate = 30.5;
+
+const msg = `Hi ${name}, your open rate is ${openRate} percent`;
+
+console.log(msg);
+```
