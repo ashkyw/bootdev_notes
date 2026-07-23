@@ -414,3 +414,31 @@ JavaScript is a dynamically and weakly-typed language that runs natively in the 
 
 ## Fun Fact
 [Brendan Eich](https://en.wikipedia.org/wiki/Brendan_Eich), the creator of JavaScript, was given only 10 days to create the language. He was told to make it look like Java, but to make it work in the browser.
+
+# Semi-colon in JS
+
+In languages like C, C++ and Java, a semicolon is used as a statement terminator. For example, in C:
+```c
+int x = 5;
+```
+This allows the compiler to know when a statement ends without relying on whitespace or newlines. For example, this is also valid C:
+```c
+int x = 5; int y = 10;
+```
+In JavaScript, semicolons are _optional_ as a terminating character. They can be inserted by the JavaScript engine automatically during the parsing phase. However, most developers prefer to use semi-colons to avoid any confusion or errors that can arise from automatic insertion
+```js
+// This works
+let x = 5
+let y = 10
+```
+```js
+// But this is preferred
+let x = 5;
+let y = 10;
+```
+### Assignment
+```js
+// End of lesson code
+console.log("contacting cell tower..."); console.log("sending message...");
+// don't go past line 1 with your code
+```
