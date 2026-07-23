@@ -400,3 +400,17 @@ const msg = `Hi ${name}, your open rate is ${openRate} percent`;
 
 console.log(msg);
 ```
+# Java vs. JavaScript
+A _very_ common misconception is that Java and JavaScript are the same, or even just similar.
+> Java is to JavaScript as car is to carpet
+
+Java & JavaScript ore _not_ the same, and they often aren't even used for the same kinds on things.
+
+## Java
+[Java](https://www.java.com/en/) is a statically-typed, object-oriented language that compiles to byte code and runs on the Java Virtual Machine. It's used fore all sorts of things, but most commonly for server-side applications, Android apps, and large entreprise systems.
+
+## JavaScript
+JavaScript is a dynamically and weakly-typed language that runs natively in the browser and out of the browser with dedicated runtimes like Node.js, Deno, or Bun. It originally _only_ ran in the browser and was named "JavaScript" because back when it was created in the 90's, Java was _very_ popular and the creators wanted to get a piece of that marketing.
+
+## Fun Fact
+[Brendan Eich](https://en.wikipedia.org/wiki/Brendan_Eich), the creator of JavaScript, was given only 10 days to create the language. He was told to make it look like Java, but to make it work in the browser.
