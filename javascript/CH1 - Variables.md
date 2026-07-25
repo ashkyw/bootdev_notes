@@ -442,3 +442,10 @@ let y = 10;
 console.log("contacting cell tower..."); console.log("sending message...");
 // don't go past line 1 with your code
 ```
+# String Encoding
+In JavaScript, strings consist of [UTF-16 code units](https://en.wikipedia.org/wiki/UTF-16) -- which basically means that most characters are represented by a 16-bit number (2 bytes). This allows for more than just [128 ASCII Characters](https://www.ascii-code.com/), but also characters from non-English languages & other symbols.
+
+Some characters (like emojis) require more than 16 bits to represent, so JavaScript uses a pair of 16-bit numbers (2 [code units](https://developer.mozilla.org/en-US/docs/Glossary/Code_unit)) to represent them.
+
+## UTF-8 Text
+Type text to see its code points and bytes. Joining adjacent emoji inserts a [zero width joiner]() (U+200D)
