@@ -447,5 +447,8 @@ In JavaScript, strings consist of [UTF-16 code units](https://en.wikipedia.org/w
 
 Some characters (like emojis) require more than 16 bits to represent, so JavaScript uses a pair of 16-bit numbers (2 [code units](https://developer.mozilla.org/en-US/docs/Glossary/Code_unit)) to represent them.
 
+## Who cares?
+You're generally safe to use unicode characters (like emojis) in you strings. Just be aware that some characters will take up more than one "character" in the string.
+
 ## UTF-8 Text
-Type text to see its code points and bytes. Joining adjacent emoji inserts a [zero width joiner]() (U+200D)
+Type text to see its code points and bytes. Joining adjacent emoji inserts a [zero width joiner](https://en.wikipedia.org/wiki/Zero-width_joiner) (U+200D)
