@@ -452,3 +452,6 @@ You're generally safe to use unicode characters (like emojis) in you strings. Ju
 
 ## UTF-8 Text
 Type text to see its code points and bytes. Joining adjacent emoji inserts a [zero width joiner](https://en.wikipedia.org/wiki/Zero-width_joiner) (U+200D)
+
+# Camel case in JS
+By convention in Python, Ruby, & Rust most programmers use `snake_case` to write variable names. In JavaScript, the more popular convention is `camelCase`.
