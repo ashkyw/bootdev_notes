@@ -108,3 +108,61 @@ const isHighEngagement =
 
 console.log(`The campaign is high-engagement: ${isHighEngagement}`);
 ```
+# Switch
+[Switch statements](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch) are a way to compare a variable against multiple possible values. They are similar to if-else statements, but tend to be more readable when there are many potential options.
+```js
+const os = "mac";
+let creator;
+switch (os) {
+  case "linux":
+    creator = "Linus Torvalds"
+    break;
+  case "windows":
+    creator = "Bill Gates"
+    break;
+  case "mac":
+    creator = "Steve"
+    break;
+  default
+    creator = "Unknown"
+    break;
+}
+
+console.log(creator);
+// Steve
+```
+Unlike some languages where fall-through doesn't happen by default, JavaScript **will continue** to execute the next case until it reaches a `break` or `return` statement.
+
+_99 times out of 100, you'll want to include a `break/return` statement after each case to prevent this behavior_
+
+### Assignment
+Set the "pro" and "enterprise" plans correctly:
+* pro: `20.0`
+* enterprise: `50.0`
+```js
+function billingCost(plan) {
+  switch (plan) {
+    case "basic":
+      return 10.0;
+    case "pro":
+      return 20.0;
+    case "enterprise":
+      return 50.0;
+    default:
+      return 0.0;
+  }
+}
+
+// don't touch below this line
+
+console.log(`The cost for a basic plan is $${billingCost("basic").toFixed(2)}`);
+console.log(`The cost for a pro plan is $${billingCost("pro").toFixed(2)}`);
+console.log(
+  `The cost for a enterprise plan is $${billingCost("enterprise").toFixed(2)}`,
+);
+console.log(`The cost for a free plan is $${billingCost("free").toFixed(2)}`);
+console.log(
+  `The cost for a unknown plan is $${billingCost("unknown").toFixed(2)}`,
+);
+
+```
