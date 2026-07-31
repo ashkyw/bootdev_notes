@@ -207,3 +207,96 @@ const messageStatus = numRetries < retryLimit ? "Processing" : "Failed";
 
 console.log(messageStatus);
 ```
+# When to Ternary
+
+Most often you will be using if/else statements more than ternaries. Ternary operators are great for _small_, single-line conditionals. Developers in the professional world can get... _clever_... with ternaries and it can lead to nested monstrosities like this:
+```js
+const vehicleName = isTruck
+  ? "truck"
+  : isCar
+    ? "car"
+    : isScooter
+    ? "scooter"
+    : "vehicle";
+```
+It _works_ & it's all on one line, but it's much harder to understand. This is generally preferred:
+```js
+let vehicleName = "vehicle";
+if (isTruck) {
+  vehicleName = "truck";
+} else if (isCar) {
+  vehicleName = "car";
+} else if (isScooter) {
+  vehicleName = "scooter";
+}
+```
+or maybe a function:
+```js
+function getVehicleName(isTruck, isCar, isScooter) {
+  if (isTruck) {
+    return "truck";
+  }
+  if (isCar) {
+    return "car";
+  }
+  if (isScooter) {
+    return "scooter";
+  }
+  return "vehicle";
+}
+```
+Remember: **Code is written for _humans_** not machines.
+
+# Truthy & Falsy
+A ["truthy"](https://developer.mozilla.org/en-US/docs/Glossary/Truthy) value is a value that is considered `true` when encountered in a Boolean context. In JavaScript, you don't _need_ to explicitly convert a value to a Boolean before using it in a conditional:
+```js
+if ("hello") {
+  console.log("hello is truthy");
+}
+if (42) {
+  console.log("42 is truthy");
+}
+// hello is truthy
+// 42 is truthy
+```
+A ["falsy"](https://developer.mozilla.org/en-US/docs/Glossary/Falsy), but for values that evaluate to `false`:
+```js
+if (!0) {
+  console.log("0 is falsy");
+}
+if (!null) {
+  console.log("null is falsy");
+}
+if (!undefined) {
+  console.log("undefined is falsy");
+}
+```
+Common truthy values include:
+* `true`
+* `42` (any number that isn't `0`)
+* `"hello"` (any non-empty string) 
+* `[]` (an empty array)
+* `{}` (an empty object)
+* `function() {}` an empty function
+
+Common falsy values include:
+* `false`
+* `0`
+* `""` (an empty string)
+* `null`
+* `undefined`
+* `NaN`
+* 
+### Assignment
+Fix a line for correct checks
+
+```js
+// End of lesson code
+const userCredits = -2;
+
+if (userCredits > 0) {
+  console.log("Sending message...");
+} else {
+  console.log("Not enough credits.");
+}
+```
