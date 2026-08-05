@@ -87,3 +87,39 @@ function isClean(review) {
 
 export { isClean };
 ```
+# Functions as Values
+JavaScript supports [first-class]() & higher-order functions, which are just fancy ways of saying "functions as values". Functions can be treated like any other data type -- such as `number`s & `string`s & `boolean`s. Let's assume we have two simple functions:
+```js
+function add(x, y) {
+  return x + y;
+}
+
+function mul(x, y) {
+  return x * y;
+}
+```
+We can create a new `aggregate` function that accepts a function as its 4th arguemnt
+```js
+function aggregate(a, b, c, arithmetic) {
+  const firstResult = arithmetic(a, b);
+  const secondResult = arithmetic(firstResult, c);
+  return secondResult;
+}
+```
+It calls the given `arithmetic` function (which could `add` or `mul`, or any other function that accepts two parameters & returns a number) and applies it to three inputs instead of two. It can be used like this:
+```js
+function main() {
+  const sum = aggregate(2, 3, 4, add);
+  // sum is 9
+  const product = aggregate(2, 3, 4, mul);
+  // product is 24
+}
+```
+### Assignment
+* Apply the given `formatter` _three times_ to the `message`
+* Add a prefix of `TEXTID: ` to the result
+* return string
+
+```js
+
+```
