@@ -121,5 +121,13 @@ function main() {
 * return string
 
 ```js
+function reformat(message, formatter) {
+  let formattedMessage = formatter(formatter(formatter(message)));
+  return `TEXTIO: ${formattedMessage}`;
+}
+
+// don't touch below this line
+
+export { reformat };
 
 ```
