@@ -177,3 +177,81 @@ function getMessageStatus(message) {
 export { getMessageStatus };
 
 ```
+# Anonymous Functions
+Anonymous Functions are true to form in that they have _no name_. They're useful when defining a function that will only be used once or to create a quick [closure](https://en.wikipedia.org/wiki/Closure_(computer_programming)).
+
+Let's say we have a function `conversions` that accepts another function, `converter` as input:
+```js
+function conversions(converter, x, y, z) {
+  const convertedX = converter(x);
+  const convertedY = converter(Y);
+  const convertedZ = converter(z);
+  console.log(convertedX, convertedY, convertedZ);
+}
+```
+We _could_ define a function normally and then pass it in by name... but if we only want to use it in this one place, we can define it inline as an anonymous function:
+```js
+// using a named function
+function double(a) {
+  return a + a;
+}
+conversions(double, 1, 2, 3);
+// 2 4 6
+```
+```js
+// using an anonymous function
+conversions(
+  function (a) {
+    return a + a;
+  },
+  1,
+  2,
+  3,
+);
+// 2 4 6
+```
+### Assignment
+Complete `printReports`:
+1. For each call to `printCostReport` pass:
+  * an anonymous function that calculates the cost of a message as an integer
+  * the message itself
+
+2. The cost for each type of message is calculated like this:
+   Intro: 2x the message length
+   Body: 3x the message length
+   Outro: 4x the message length
+
+Use the built-in `length` property to get the length of a string:
+```js
+const helloLen = "hello".length;
+// helloLen = 5
+```
+     
+```js
+// End of lesson code
+function printReports(intro, body, outro) {
+  printCostReport(function (msg) {
+    return msg.length * 2;
+  }, intro);
+  printCostReport(function (msg) {
+    return msg.length * 3;
+  }, body);
+  printCostReport(function (msg) {
+    return msg.length * 4;
+  }, outro);
+}
+
+// don't touch below this line
+
+function printCostReport(costCalculator, message) {
+  const cost = costCalculator(message);
+  console.log(`Message: "${message}" Cost: ${cost} cents`);
+}
+
+printReports(
+  "Welcome to the Hotel California",
+  "Such a lovely place",
+  "Plenty of room at the Hotel California",
+);
+
+```
