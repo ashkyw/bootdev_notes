@@ -255,3 +255,46 @@ printReports(
 );
 
 ```
+# Default Parameters
+In JavaScript, you can specify default values for function parameters. This is particularly useful for _optional_ parameters where you want to ensure a specific default behavior if the caller does not provide certain arguments. Default parameter values can be set during the function declaration.
+```js
+function getGreeting(email, name = "there") {
+  console.log(`Hello ${name}, welcome! You've registered your email: ${email}`);
+}
+getGreeting("lane@example.com", "Lane");
+// Hello Lane, welcome! You've registered your email lane@example.com
+
+getGreeting("lane@example.com");
+// Hello there, welcome! You've registered your email lane@example.com
+```
+If the second parameter is omitted the default `"there"` will be used in its place. Optionaal parameters (those with default values) should be defined after all mandatory parameters to avoid ambiguity.
+
+### Assignment
+Complete `createContact`, it takes three parameters:
+* `phoneNumber`
+* `name`, with a default parameter of `'Anonymous'`
+* `avatar`, with a default parameter of  `'default.jpg'`
+
+If a `phoneNumber` is not passed, return `"Invalid phone number`, otherwise concatenate the given `avatar` to the string "/public/pictures/".
+Return a string in this format: 
+`Contact saved! Name: NAME, Phone number: PHONE_NUMBER, Avatar: AVATAR_FILEPATH`
+```js
+function createContact(
+  phoneNumber,
+  name = "Anonymous",
+  avatar = "default.jpg",
+) {
+  if (!phoneNumber) {
+    return "Invalid phone number";
+  }
+
+  const avatarFilePath = "/public/pictures/" + avatar;
+
+  return `Contact saved! Name: ${name}, Phone number: ${phoneNumber}, Avatar: ${avatarFilePath}`;
+}
+
+// don't touch below this line
+
+export { createContact };
+
+```
