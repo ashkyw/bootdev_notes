@@ -328,3 +328,35 @@ function monthlyBillIncrease(costPerSend, numLastMonth, numThisMonth) {
 
 export { getBillForMonth, monthlyBillIncrease };
 ```
+# Immediate Invocation
+You can immediately invoke a function after defining it using the not-at-all-hard-to-pronounce acronym ["IIFE"](https://developer.mozilla.org/en-US/docs/Glossary/IIFE).
+```js
+(function () {
+  console.log("JavaScript: at least it's not Java");
+})();
+// JavaScript: at least it's not java
+```
+They can also return values and take arguments:
+```js
+const result = (function(a, b) {
+  return a + b;
+})(1,2);
+
+console.log(result);
+// 3
+```
+The function is defined and then immediately called. It looks nasty, but it's occasionally useful for a couple of reasons:
+  * **Scope**: It has its own scope
+  * **Expression**: Can be convenient for computing a value as a single expression (like above)
+  * **Async**: Can be used to quickly run code in an `async` function
+
+### Assignment
+```js
+const total = (function calculateTotal(numMessages, bytesPerMessage) {
+  return numMessages * bytesPerMessage;
+})(100, 24);
+
+// don't touch below this line
+
+console.log("Total message cost:", total);
+```
