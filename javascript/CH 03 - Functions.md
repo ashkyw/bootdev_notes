@@ -298,3 +298,33 @@ function createContact(
 export { createContact };
 
 ```
+# Passing by Value
+Variables in JavaScript are typically passed by value (except for objects, and arrays, which are passed by reference -- more to come on these). "Pass by value" means that when a variable is passed into a function, that function receives a copy of the variable. The function is unable to mutate the caller's original data.
+```js
+let x = 5;
+increment(x);
+console.log(x);
+// 5
+
+function increment(x) {
+  x++;
+  console.log(x);
+  // 6
+}
+```
+### Assignment
+```js
+function getBillForMonth(costPerSend, messagesSent) {
+  return costPerSend * messagesSent;
+}
+
+function monthlyBillIncrease(costPerSend, numLastMonth, numThisMonth) {
+  let lastMonthBill = getBillForMonth(costPerSend, numLastMonth);
+  let thisMonthBill = getBillForMonth(costPerSend, numThisMonth);
+  return thisMonthBill - lastMonthBill;
+}
+
+// don't touch below this line
+
+export { getBillForMonth, monthlyBillIncrease };
+```
