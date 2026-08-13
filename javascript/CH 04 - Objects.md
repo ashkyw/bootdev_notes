@@ -48,3 +48,27 @@ const apple = {
   color: color, // set for demonstration
 }
 ```
+# Updating Properties
+You can update and **add new** keys (you'll see the words "properties" and "key" used interchangeably here) to an existing object using the `.` operator. If it exists, it's updated; if it doesn't, it's created as a new property:
+```js
+const apple = {
+  name: "Apple",
+  radius: 2,
+  color: "red",
+};
+apple.numSeeds = 3; // new property
+apple.color = "green"; // update property
+// {"name":"Apple", "radius":2, "color":"green", "numSeeds":3}
+```
+### Assignment
+Complete the `addID` function
+```js
+function addID(campaignRecord) {
+  campaignRecord.id = `${campaignRecord.campaignName}-${campaignRecord.senderName}`;
+  return campaignRecord;
+}
+
+// don't touch below this line
+
+export { addID };
+```
