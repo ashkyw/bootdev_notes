@@ -72,3 +72,31 @@ function addID(campaignRecord) {
 
 export { addID };
 ```
+# Nesting Properties
+Objects can contain other objects. Here's two nested object literals within the `tournament` object:
+```js
+const tournament = {
+  refree: {
+    name: "Sally",
+    age: 25,
+  },
+  prize: {
+    units: "dollars",
+    value: 100,
+  },
+}
+```
+We can access the nested properties the same way by chaining: `tournament.referee.name`
+```js
+console.log(tournament.referee.name); // Sally
+console.log(tournament.referee.value); // 100
+```
+### Assignment
+Finish the `getCampaignCreator` function
+```js
+function getCampaignCreator(campaign) {
+  return campaign.creator.firstName;
+}
+
+export { getCampaignCreator };
+```
