@@ -84,7 +84,7 @@ const tournament = {
     units: "dollars",
     value: 100,
   },
-}
+};
 ```
 We can access the nested properties the same way by chaining: `tournament.referee.name`
 ```js
@@ -99,4 +99,35 @@ function getCampaignCreator(campaign) {
 }
 
 export { getCampaignCreator };
+```
+# Optional Chaining
+Nested data can _quickly_ become hard to work with. In most production systems you'll deal with 3-4 levels of object nesting on a regular basis. 
+When using the normal `.` operator, if the object on the left side of the `.` is `null` or `undefined`, you'll get a `TypeError` at runtime. Thankfully, JavaScript has recently added a new operator to make dealing with this easier. The [optional chaining operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining): `?.`
+```js
+const tournament = {
+  prize = {
+    units: "dollars",
+    value: 100,
+  },
+};
+
+const h = tournament.referee.height;
+// TypeError: Cannot read properties of undefined (reading: height)
+```
+So if you're _not sure_ whether the `referee` property exists we can use the optional chaining operator to avoid the error:
+```js
+const tournament = {
+  prize = {
+    units: "dollars",
+    value: 100,
+  },
+};
+
+const h = tournament.referee?.height;
+// h is simply undefined, no error is thrown
+```
+### Assignment
+Complete the `getRegion` function
+```js
+
 ```
