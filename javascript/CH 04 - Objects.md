@@ -129,5 +129,9 @@ const h = tournament.referee?.height;
 ### Assignment
 Complete the `getRegion` function
 ```js
+function getRegion(campaign) {
+  return campaign.location?.region;
+}
 
+export { getRegion };
 ```
