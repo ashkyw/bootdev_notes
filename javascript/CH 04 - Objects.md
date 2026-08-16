@@ -149,3 +149,36 @@ Or, is we aren't even sure if the `user` object exists:
 const street = user?.address?.street;
 ```
 We don't want to overuse it because if we _expect_ that all users have objects, and we come across one that doesn't we probably _want_ an error thrown so we can see it and go fix the problem. _**Good Errors make debugging easier**_
+
+# Object Methods
+JavaScript objects can have `methods`, just like classes in Python or structs in Go. Objects are interesting in JavaScript because they play the role of dictionaries _&_ classes in other languages (Yes, JS also has classes, but more on that later). 
+
+Methods are functions that are defined on an object. They can access & change the properties of the object in question. In the context of an object method, the `this` keyword refers to the object itself, like `self` in Python (more on the wonkiness of `this` later).
+```js
+const person = {
+  firstName: "Lane",
+  lastName: "Wagner",
+  getFullName() {
+    return this.firstName + " " + this.lastName;
+  },
+};
+
+console.log(person.getFullName());
+// Lane Wagner
+```
+### Assignment
+Complete the `getRemainingMessages()` method in the `campaign` object.
+```js
+const campaign = {
+  getRemainingMessages() {
+    return this.maxMessages - this.sentMessages;
+  },
+  maxMessages: 100,
+  sentMessages: 30,
+  name: "Welcome Campaign",
+};
+
+// don't touch below this line
+
+export { campaign };
+```
