@@ -182,3 +182,57 @@ const campaign = {
 
 export { campaign };
 ```
+# Methods Mutate
+Methods can change the properties of their objects as well:
+```js
+const tree = {
+  height: 256,
+  color: "green",
+  cut () {
+    this.height /= 2;
+  },
+};
+
+tree.cut();
+console.log(tree.height);
+// prints 128
+
+tree.cut();
+console.log(tree.height);
+// prints 64
+```
+You might be wondering
+> Wait... I thought `tree` was a constant?!?!
+
+That is correct, but in JavaScript the `const` keyword doesn't stop you from _changing the **properties**_ of an object... it only stops you from reassigning the variable (`tree` in this case) to a _new_ object. **Do _NOT_ trust `const` objects to have constant contents!**
+### Assignment
+Complete the `sendMessage()` method on the `campaign` object.
+```js
+const campaign = {
+  name: "Welcome Campaign",
+  maxMessages: 100,
+  sentMessages: 30,
+  sendMessage() {
+    this.sentMessages++;
+  },
+};
+
+export { campaign };
+```
+
+# Initializing Props
+If a property (key) doesn't exist when we try to access it with the `.` operator, we'll just get `undefined`. One way to check for this is by using the `!` (not) operator because `undefined` is "falsy" (meaning it evaluates to `false` in a boolean context). The syntax is simple:
+```js
+const balances = {
+  lane: 100,
+  breanna: 150,
+  john: 200,
+};
+
+// if bob doesn't have a balance yet
+// create a new prop for him
+// set to 0
+if (!balances.bob) {
+  balances.bob = 0;
+}
+```
