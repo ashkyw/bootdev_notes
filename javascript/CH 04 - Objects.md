@@ -135,3 +135,17 @@ function getRegion(campaign) {
 
 export { getRegion };
 ```
+# When to Chain
+You should only use `?.` chains when you _expect_ an object may not exist. For example, if according to our business logic, a `user` _must_ have an `address` object, but the `address` object may not have a `street` property, we wouldn't use the optional chaining operator because we expect `user.address` to never be `undefined`
+```js
+const street = user.address.street;
+```
+But if not all users have an address, we might use the optional chaining operator:
+```js
+const street = user.address?.street;
+```
+Or, is we aren't even sure if the `user` object exists:
+```js
+const street = user?.address?.street;
+```
+We don't want to overuse it because if we _expect_ that all users have objects, and we come across one that doesn't we probably _want_ an error thrown so we can see it and go fix the problem. _**Good Errors make debugging easier**_
