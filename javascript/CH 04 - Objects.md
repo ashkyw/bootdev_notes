@@ -236,3 +236,32 @@ if (!balances.bob) {
   balances.bob = 0;
 }
 ```
+# Strings as Keys
+Accessing a property like `desk.height` is great when the name of the prop is _static_, meaning you know the what it is _before_ runtime. But what if the key is dynamic? Like, what if the user enters a string & you need to use that as the lookup key?
+_Bracket notation solves this._
+```js
+const desk = {
+  wood: "maple",
+  width: 100
+};
+console.log(desk.wood);
+// prints "maple"
+
+console.log(desk["wood"]);
+// also prints "maple"
+
+const key = "wood";
+console.log(desk[key]);
+// also prints "maple"
+```
+For example, maybe the key is passed in as a parameter to a function:
+```js
+function getLastName(lastNames, firstName) {
+  return lastNames[firstName];
+}
+```
+### Assignment
+Complete the `getProviderCount` function
+```js
+
+```
