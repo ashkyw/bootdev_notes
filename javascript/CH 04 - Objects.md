@@ -263,5 +263,9 @@ function getLastName(lastNames, firstName) {
 ### Assignment
 Complete the `getProviderCount` function
 ```js
+function getProviderCount(provider, counts) {
+  return counts[provider] ?? 0;
+}
 
+export { getProviderCount };
 ```
