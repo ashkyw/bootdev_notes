@@ -269,3 +269,44 @@ function getProviderCount(provider, counts) {
 
 export { getProviderCount };
 ```
+# This 
+[Video](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/this-and-arrow-functions-js-1920x1080.mp4)
+
+The [`this`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this) keyword is perhaps one of the most rage-inducing parts of JavaScript. Once you understand it, it's not too bad, but it's not super intuitive.
+
+Put simply, `this` refers to the context where a piece of code is executed. 
+## Global Context:
+`this` refers to the [`window`](https://developer.mozilla.org/en-US/docs/Web/API/Window) object in browsers or `module.exports` in Node.js (not `global`, as you might expect).
+```js
+// in a browser
+console.log(this);
+// Window {...}
+```
+```js
+// in Node.js
+console.log(this);
+// {}
+```
+## Strict Mode
+In [strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) `this` is `undefined` in the global scope in both the browser & Node.js.
+```js
+"use strict"
+console.log(typeof this);
+// undefined
+```
+## Method Context
+Inside a standard [method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Method_definitions) or a [constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new), `this` refers to the object the method is called on.
+```js
+const myObject = {
+  message: "Hello, World!",
+  myMethod() {
+    console.log(this);
+    console.log(this.message);
+  },
+};
+myObject.myMethod();
+// { message: "Hello, World!", myMethod: [Function: myMethod] }
+// Hello, World!
+```
+## Arrow Functions
+We'll cover arrow functions specifically in the next lesson. They're... special.
