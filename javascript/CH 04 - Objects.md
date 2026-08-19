@@ -308,5 +308,36 @@ myObject.myMethod();
 // { message: "Hello, World!", myMethod: [Function: myMethod] }
 // Hello, World!
 ```
-## Arrow Functions
-We'll cover arrow functions specifically in the next lesson. They're... special.
+# Arrow Functions
+[Fat arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), or "arrow functions", are another way to define functions in JavaScript. Arrow functions are _newer_ than the `function` keyword, however unlike the `let/const` syntax, arrow functions are _sometimes_ better, not _always_ better.
+```js
+// declaring a function without a variable
+function add(x, y) {
+  return x + y;
+}
+```
+```js
+// declaring a function with a variable
+const add = function (x, y) {
+  return x + y;
+};
+```
+```js
+// using the fat arrow syntax
+const add = (x, y) => {
+  return x + y;
+};
+```
+>Not the least bit confusing to do essentially the same thing in 3 different ways.
+
+## What's the difference?
+* Fat arrow functions are usually declared as variables, while the `function` keyword may or may not be declared as a variable.
+* Fat arrow functions handle object scoping in a more intuitive way (more to come later)
+* Fat arrow functions don't work as constructors (more, later)
+* Other minor [differences](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#description)
+
+### Assignment
+Convert `isSpamMessage` to the fat arrow syntax
+```js
+
+```
