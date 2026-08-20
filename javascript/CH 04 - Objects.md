@@ -416,3 +416,64 @@ const campaign = {
 
 export { campaign };
 ```
+# Spread Syntax
+JavaScript has a really nifty [spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax#spread_in_object_literals) for moving groups of object properties around. It's a great way to copy objects & merge object properties.
+```js
+const engineering_dept = {
+  lane: "grand magus",
+  hunter: "software engineer",
+  allan: "software engineer",
+  matt: "software engineer",
+  dan: "software engineer",
+  waseem: "software engineer",
+};
+
+const video_dept = {
+  stass: "video producer",
+  alex: "video producer"
+};
+
+const all_employees = {... engineering_dept, ...video_dept};
+/*
+{
+  lane: 'grand magus',
+  hunter: 'software engineer',
+  allan: 'software engineer',
+  matt: 'software engineer',
+  dan: 'software engineer',
+  waseem: 'software engineer',
+  stass: 'video producer',
+  alex: 'video producer'
+}
+*/
+```
+The spread syntax [shallow copies](https://developer.mozilla.org/en-US/docs/Glossary/Shallow_copy) the properties of the objects you're spreading. If properties have the same name, the last (right-most) object's property will overwrite the previous ones.
+``` js
+const engineering_dept = {
+  lane: "software engineer",
+  hunter: "software engineer",
+};
+
+const video_dept = {
+  lane: "cringe youtuber",
+  alex: "video producer",
+};
+
+const all_employees = {... engineering_dept, ...video_dept};
+/*
+{
+  lane: 'cringe youtuber',
+  hunter: 'software engineer',
+  alex: 'video producer'
+}
+*/
+```
+### Assignment
+Complete the `mergeTemplates` function. 
+```js
+function mergeTemplates(defaultTemplates, customTemplates) {
+  return {...defaultTemplates, ...customTemplates};
+}
+
+export { mergeTemplates };
+```
