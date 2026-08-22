@@ -477,3 +477,46 @@ function mergeTemplates(defaultTemplates, customTemplates) {
 
 export { mergeTemplates };
 ```
+# Return Objects
+In JavaScript you can only return a single value from a function. So, when we want to return multiple values, we just return an object that contains those values.
+```js
+function doAllTheMath(x, y) {
+  const sum = x + y;
+  const difference = x - y;
+  const product = x * y;
+  const quotient = x / y;
+  return{
+    sum,
+    difference,
+    product,
+    quotient,
+  };
+}
+
+const results = doAllTheMath(10, 5);
+console.log(results.sum);
+// 15
+console.log(results.difference);
+// 5
+console.log(results.product);
+// 50
+console.log(results.quotient);
+// 2
+```
+### Assignment 
+Complete `calculateCampaignMetrics`
+```js
+function calculateCampaignMetrics(sent, opened, clicked) {
+  const openRate = opened / sent;
+  const clickRate = clicked / sent;
+  const conversionRate = clicked / opened;
+  return {
+    openRate,
+    clickRate,
+    conversionRate,
+  };
+}
+
+export { calculateCampaignMetrics };
+
+```
