@@ -520,3 +520,76 @@ function calculateCampaignMetrics(sent, opened, clicked) {
 export { calculateCampaignMetrics };
 
 ```
+# Destructuring
+It's admittedly annoying to have to get the return values from an object using the `.` operator. The [destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#object_destructuring) lets us unpack object properties easily. 
+
+So, instead of this:
+```js
+const apple = {
+  radius: 2,
+  color: "red",
+};
+
+const radius = apple.radius;
+const color = apple.color;
+```
+We can do this:
+```js
+const apple = {
+  radius: 2,
+  color: "red",
+};
+const { radius, color } = apple;
+```
+It's used quite often to unpack function return values:
+```js
+function getApple() {
+  const apple = {
+    radius: 2,
+    color: "red",
+  };
+  return apple; 
+}
+
+const { radius, color } = getApple();
+console.log(radius); // 2
+console.log(color); // red
+```
+Destructuring also works in function parameters, which means that if you write a function that takes an object as an argument, you can unpack the object's properties in function definition.
+
+So, instead of this:
+```js
+function eatApple(apple) {
+  console.log(`ate a ${apple.color} apple with a radius of ${apple.radius}`)
+}
+```
+We can do this:
+```js
+function eatApple({ radius, color }) {
+  console.log(`ate a ${color} apple with a radius of ${radius}`)
+}
+```
+### Assignment
+Use destructuring to assign `openRate`, `clickRate` and `conversionRate`
+```js
+function calculateCampaignMetrics(sent, opened, clicked) {
+  const openRate = opened / sent;
+  const clickRate = clicked / sent;
+  const conversionRate = clicked / opened;
+  return {
+    openRate,
+    clickRate,
+    conversionRate,
+  };
+}
+
+const { openRate, clickRate, conversionRate } = calculateCampaignMetrics(
+  1000,
+  800,
+  200,
+);
+
+console.log(`Open Rate:       ${openRate}`);
+console.log(`Click Rate:      ${clickRate}`);
+console.log(`Conversion Rate: ${conversionRate}`);
+```
