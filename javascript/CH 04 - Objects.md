@@ -593,3 +593,66 @@ console.log(`Open Rate:       ${openRate}`);
 console.log(`Click Rate:      ${clickRate}`);
 console.log(`Conversion Rate: ${conversionRate}`);
 ```
+# Not Bound
+Methods in JavaScript are _not_ bound to their object by default (as they are in languages like Python & Go). So if you use a method as a "callback" function, you may run into issues with the `this` keyword:
+```js
+const user = {
+  name: "Lane",
+  sayHi() {
+    console.log(`Hi, my name is ${this.name}`);
+  },
+};
+
+user.sayHi();
+// Hi, my name is Lane
+
+const sayhi = user.sayHi;
+sayHi();
+// TypeError: Cannot read properties of undefined.
+```
+This happens a lot when passing a method as a [callback function](https://developer.mozilla.org/en-US/docs/Glossary/Callback_function) to another function:
+```js
+const user = {
+  firstName: "Lane",
+  lastName: "Wagner",
+  getFullName() {
+    return `${this.firstName} ${this.lastName}`;
+  },
+};
+
+function getGreeting(introduction, nameCallback) {
+  return `${this.introduction} ${this.nameCallback()}`;
+}
+console.log(user.getFullName());
+// Lane Wagner
+console.log(getGreeting("Hello", user.getFullName));
+// TypeError: Cannot read properties of undefined.
+```
+If you want to use a method as a callback function you'll need to [`bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) it to the ebject using the `bind` method:
+```js
+const boundGetFullName = user.getFullName.bind(user);
+console.log(getGreeting("Hello", boundGetFullName));
+```
+### Assignment
+Fix the `this` error so it correctly references the scope of the `campaign` object.
+```js
+const campaign = {
+  name: "Welcome Campaign",
+  maxMessages: 100,
+  sentMessages: 30,
+  sendMessage() {
+    this.sentMessages++;
+  },
+};
+
+function sendWelcome(name, callback) {
+  callback();
+  console.log(`Sending: "Welcome ${name}! We are so glad you are here."`);
+}
+
+console.log("Campaign Messages:", campaign.sentMessages);
+
+sendWelcome("Tyler", campaign.sendMessage.bind(campaign));
+
+console.log("Campaign Messages:", campaign.sentMessages);
+```
