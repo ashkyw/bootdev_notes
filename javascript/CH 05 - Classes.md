@@ -101,5 +101,48 @@ console.log("createdAt: " + message.createdAt);
 
 const messageClass = Message.toString();
 console.log("has private createdAt: " + messageClass.includes("#createdAt"));
+```
+# Static Methods
+A [`static`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static) method or property is bound to the class itself, not the instance of the class (an object). In this example, we create two instances of the `User` class:
+```js
+class User {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
+
+const lane = new User("Lane", 30);
+const allan = new User("Allan", 30);
+console.log(lane.name); // Lane
+console.log(allan.name); // Allan
+```
+In JavaScript, a class is just an object template, so when we create a static method or property the object instances can't access it. So, the `static` members are often used for utility functions for the class itself.
+```js
+class User {
+  static numUsers = 0;
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+    User.numUsers++;
+  }
+  static getNumUsers() {
+  return User.numUsers;
+  }
+}
+  
+  const lane = new User("Lane", 30);
+  console.log(User.getNumUsers()); // 1
+  const allan = new User("Allan", 30);
+  console.log(User.getNumUsers()); // 2
+
+  // This doesn't work because its not a method on the object
+  console.log(lane.getNumUsers());
+  // TypeError: lane.getNumUsers is not a function
+  // at main.js:20:18
+```
+### Assignment
+Add static properties to the `Message` class, Update the `Message` constructor, write a new static `getAverageMessageLength` method.
+```js
 
 ```
