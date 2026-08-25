@@ -144,5 +144,25 @@ class User {
 ### Assignment
 Add static properties to the `Message` class, Update the `Message` constructor, write a new static `getAverageMessageLength` method.
 ```js
+class Message {
+  static totalMessages = 0;
+  static totalMessageLength = 0;
+
+  constructor(recipient, sender, body) {
+    this.recipient = recipient;
+    this.sender = sender;
+    this.body = body;
+
+    Message.totalMessages++;
+    Message.totalMessageLength += body.length;
+  }
+
+  static getAverageMessageLength() {
+    const avg = Message.totalMessageLength / Message.totalMessages;
+    return Math.round(avg * 100) / 100;
+  }
+}
+
+export { Message };
 
 ```
