@@ -164,5 +164,50 @@ class Message {
 }
 
 export { Message };
+```
+# Getters & Setters
+In JavaScript classes, getters & setters let us define special methods for getting & setting the values of properties. They look like regular methods but are accessed like properties. Here's an example using the `get` keyword:
+```js
+class User {
+  constructor(name, age) {
+    this._name = name;
+    this.age = age;
+  }
+  get name() {
+    return this._name.toUpperCase();
+  }
+}
+const lane = new User("Lane", 30);
+console.log(lane.name); // Lane
+```
+Notice that we've renamed `this.name` to `this._name` in our constructor to avoid a name collision with the getter itself.
+
+A setter lets us control what happens when a property is _changed_. For example, we could validate a user's `age` to make sure it's no negative:
+```js
+class User{
+  constructor(name, age){
+    this.name = name;
+    this._age = age;
+  }
+
+  get age() {
+    return this._age;
+  }
+
+  set age(value) {
+    if (value < 0) {
+      throw new Error("Age can't be negative.");
+    }
+    this._age = value;
+  }
+}
+
+const lane = new User("Lane", 29);
+lane.age = -5; // "Age can't be negative."
+console.log(lane.age); // 29
+```
+### Assignment
+Add a setter & a getter for `phoneNumber`
+```js
 
 ```
