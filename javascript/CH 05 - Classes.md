@@ -228,3 +228,77 @@ class Contact {
 }
 export { Contact };
 ```
+# Inheritance
+A class can inherit methods & properties from a parent class using the `extends` keyword:
+```js
+class Titan {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+class BeastTitan extends Titan {
+  speak(msg) {
+  console.log(`${this.name} says "${msg}"`);
+  }
+}
+
+const beast = new BeastTitan("Zeke");
+beast.speak("You know it's nothing like throwing a baseball.")
+// Zeke says, "You know it's nothing like throwing a baseball."
+```
+And if we want to override a method from the parent class, we can do that too:
+```js
+class Titan {
+  constructor(name) {
+    this.name = name;
+  }
+
+  speak() {
+    // this gets overridden in the BeastTitan class
+    console.log("*titan noises*");
+  }
+}
+
+class BeastTitan extends Titan {
+  speak() {
+    console.log(`${this.name} says, "I'm the Beast Titan"`);
+  }
+}
+
+const pureTitan = new Titan("Eren's mom");
+pureTitan.speak();
+// *titan noises*
+
+const beast = new BeastTitan("Zeke");
+beast.speak();
+// Zeke says, "I'm the Beast Titan"
+```
+### Assignment
+Create two new classes, **`SMSSender`** and **`EmailSender`**, that extend the base **`Sender`** class, overriding the `sendMessage` method.
+```js
+class Sender {
+  constructor(recipient) {
+    this.recipient = recipient;
+  }
+
+  sendMessage(message) {
+    throw new Error("sendMessage method must be implemented by subclasses");
+  }
+}
+
+class SMSSender extends Sender {
+  sendMessage(message) {
+    console.log(`Sending SMS to ${this.recipient}: ${message}`);
+  }
+}
+
+class EmailSender extends Sender {
+  sendMessage(message) {
+    console.log(`Sending email to ${this.recipient}: ${message}`);
+  }
+}
+
+export { Sender, SMSSender, EmailSender };
+
+```
