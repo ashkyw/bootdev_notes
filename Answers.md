@@ -1,14 +1,11 @@
+Automate Pivot table setup
 ```ts
 function main(workbook: ExcelScript.Workbook) {
 
-  function stopStartScreenCalc(state: boolean) {
-    workbook.enableCalculation(state);
-  }
-
-  stopStartScreenCalc(true);
+workbook.getApplication().setCalculationMode(ExcelScript.CalculationMode.Manual);
 
   //const sheet = workbook.getWorksheet("Ergo Depot");
-  const sheet = workbook.worksheets.getActiveWorksheet();
+  const sheet = workbook.getActiveWorksheet();
 
   if (!sheet) {
     throw new Error("Worksheet not found.");
@@ -75,7 +72,7 @@ function main(workbook: ExcelScript.Workbook) {
   safeRemoveColumnHierarchy("MeasuredOn");
 
   safeRemoveDataHierarchy("Actual  - Running Total by DateinActivity");
-  safeRemoveDataHierarchy("Target Forces - Running Total by Measurement");
+  safeRemoveDataHierarchy("Target Forces - Running Total by Measured On");
 
   // Rebuild rows
   if (!hasPivotHierarchy(pivotTable.getRowHierarchies(), "ProjectStage")) {
@@ -95,16 +92,16 @@ function main(workbook: ExcelScript.Workbook) {
     pivotTable.addDataHierarchy(getHierarchy("Actual  - Running Total by DateinActivity"));
   }
 
-  if (!hasDataHierarchy(pivotTable.getDataHierarchies(), "Target Forces - Running Total by Measurement")) {
-    pivotTable.addDataHierarchy(getHierarchy("Target Forces - Running Total by Measurement"));
+  if (!hasDataHierarchy(pivotTable.getDataHierarchies(), "Target Forces - Running Total by Measured On")) {
+    pivotTable.addDataHierarchy(getHierarchy("Target Forces - Running Total by Measured On"));
   }
 
-  const pivotLayout = pivotTable.layout;
-  pivotLayout.layoutType = "Tabular";
-  pivotLayout.layout.repeatAllItemLabels(true);
+  const pivotLayout = pivotTable.getLayout("PivotTable1");
+  pivotLayout.setLayoutType(ExcelScript.PivotLayoutType.tabular);
+  pivotLayout.repeatAllItemLabels(true);
 
   sheet.getRange("F1").setValue("Pivot rebuilt with tabular layout and repeated labels");
 
-  stopStartScreenCalc(false);
+  workbook.getApplication().setCalculationMode(ExcelScript.CalculationMode.Automatic);
 }
 ```
