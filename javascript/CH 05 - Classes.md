@@ -300,5 +300,62 @@ class EmailSender extends Sender {
 }
 
 export { Sender, SMSSender, EmailSender };
+```
+# Super
+The [`super`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/super) keyword allows us to call methods on an object's parent. It's often used to call a parent's constructor method when the child object has its own.
+```js
+class Titan {
+  constructor(name) {
+    this.name = name;
+  }
+
+  toString() {
+    return `Titan - Name: ${this.name}`;
+  }
+}
+
+class BeastTitan extends Titan {
+  constructor(name, power) {
+    // call the parent's constructor
+    super(name);
+    this.power = power;
+  }
+
+  toString() {
+    // call the parent's `toString` method
+    return `${super.toString()}, Power: ${this.power}`;
+  }
+}
+
+const beast = new BeastTitan("Zeke", 9000);
+console.log(beast.toString());
+// Titan - Name: Zeke, Power: 9000
+```
+### Assignment
+Add a `formatMessage` method to `SMSSender` & `EmailSender`
+```js
+class Sender {
+  constructor(recipient) {
+    this.recipient = recipient;
+  }
+
+  formatMessage(message) {
+    return `To: ${this.recipient}, Message: ${message}`;
+  }
+}
+
+class SMSSender extends Sender {
+  formatMessage(message) {
+    return `${super.formatMessage(message)} [SMS]`;
+  }
+}
+
+class EmailSender extends Sender {
+  formatMessage(message) {
+    return `${super.formatMessage(message)} [Email]`;
+  }
+}
+
+export { Sender, SMSSender, EmailSender };
 
 ```
