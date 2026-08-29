@@ -1,3 +1,164 @@
+# Fixed New Get Configtable
+```m
+let
+    get_configtable_data = (ConfigTable as table, FileFunction as function) =>
+    let
+        //-----------------------------------------------------------
+        // Helper: semicolon-splitter
+        //-----------------------------------------------------------
+        SplitSemi = (txt as nullable text) as list =>
+            let
+                cleaned = if txt=null then "" else Text.Trim(txt),
+                split = if cleaned="" then {} else List.Transform(Text.Split(cleaned, ";"), Text.Trim),
+                nonBlank = List.Select(split, each _ <> "")
+            in
+                nonBlank,
+
+        //-----------------------------------------------------------
+        // Load each file defined in ConfigTable
+        //-----------------------------------------------------------
+        AddResults = Table.AddColumn(ConfigTable, "Results", each
+            let
+                SiteUrl    = [SiteUrl],
+                FolderPath = [FolderPath],
+                Pattern    = [FilePattern],
+                Sheet      = [SheetName],
+
+                // Column lists
+                StandardCols = SplitSemi([StandardColumns]),
+
+                DateCol =
+                    if [DateColumn] = null or Text.Trim([DateColumn]) = ""
+                    then null
+                    else Text.Trim([DateColumn]),
+
+                WantedColumns =
+                    if DateCol = null
+                    then StandardCols
+                    else List.Combine({StandardCols, DateCol}),
+
+                //-----------------------------------------------------------
+                // Locate newest matching file from SharePoint
+                //-----------------------------------------------------------
+                AllFiles = SharePoint.Files(SiteUrl, [ApiVersion = 15]),
+
+                // Filter to target folder (full URL match)
+                InFolder = Table.SelectRows(AllFiles, each
+                    Text.Contains([Folder Path], FolderPath)
+                ),
+                
+                // Filter by file name pattern (wildcard support)
+                Prefix = Text.Trim(Text.BeforeDelimiter(Pattern, "*")),
+                Suffix = Text.Trim(Text.AfterDelimiter(Pattern, "*")),
+
+                Filtered = Table.SelectRows(InFolder, each
+                    Text.StartsWith([Name], Prefix)
+                    and Text.EndsWith([Name], Suffix)
+                ),
+
+                // Sort to get newest file
+                Sorted =
+                    if Table.HasColumns(Filtered, "Date modified")
+                    then Table.Sort(Filtered, {{"Date modified", Order.Descending}})
+                    else if Table.HasColumns(Filtered, "Date created")
+                    then Table.Sort(Filtered, {{"Date created", Order.Descending}})
+                    else Filtered,
+
+                Latest =
+                    if Table.RowCount(Sorted) = 0 then null else Sorted{0},
+
+                LatestPath =
+                    if Latest = null then null else Latest[Folder Path] & Latest[Name],
+
+                LatestContent =
+                    if Latest = null then null else Latest[Content],
+
+                //-----------------------------------------------------------
+                // If no file → log error, otherwise call FileFunction
+                //-----------------------------------------------------------
+                FileResult =
+                    if LatestPath = null then
+                        [
+                            Data = null,
+                            Diagnostics =
+                            [
+                                FilePath = "(none)",
+                                Error = "No matching file",
+                                RequestedColumns = WantedColumns,
+                                MatchedColumns = {},
+                                MissingColumns = WantedColumns
+                            ]
+                        ]
+                    else
+                        FileFunction(LatestContent, LatestPath, Sheet, WantedColumns),
+
+                TableData   = FileResult[Data],
+                Diagnostics = FileResult[Diagnostics],
+
+                //-----------------------------------------------------------
+                // Type StandardCols as Int64, DateCol as date
+                //-----------------------------------------------------------
+                ExistingStandardCols =
+                    if TableData = null then {}
+                    else List.Intersect({Table.ColumnNames(TableData), StandardCols}),
+
+                ExistingDateCol =
+                    if TableData = null or DateCol = null then {}
+                    else List.Intersect({Table.ColumnNames(TableData), DateCol}),
+
+                Typed =
+                    if TableData = null then null
+                    else
+                        let
+                            IntTyped = Table.TransformColumnTypes(
+                                TableData,
+                                List.Transform(ExistingStandardCols, each {_, Int64.Type})
+                            ),
+                            DateTyped = Table.TransformColumnTypes(
+                                IntTyped,
+                                List.Transform(ExistingDateCol, each {_, type date})
+                            )
+                        in
+                            DateTyped
+            in
+                [
+                    Data = Typed,
+                    Diagnostics = Diagnostics
+                ]
+        ),
+
+        //-----------------------------------------------------------
+        // Expand diagnostics
+        //-----------------------------------------------------------
+        Expanded = Table.ExpandRecordColumn(AddResults, "Results", {"Data", "Diagnostics"}),
+
+        //-----------------------------------------------------------
+        // Master diagnostic table
+        //-----------------------------------------------------------
+        Log =
+            if List.Count(List.RemoveNulls(Expanded[Diagnostics])) > 0 then
+                Table.Combine(List.Transform(Expanded[Diagnostics], each Table.FromRecords({_})))
+            else
+                #table({}, {}),
+
+        //-----------------------------------------------------------
+        // Combine loaded datasets
+        //-----------------------------------------------------------
+        Valid = Table.SelectRows(Expanded, each [Data] <> null),
+
+        Combined =
+            if Table.RowCount(Valid) = 0 then #table({}, {})
+            else Table.Combine(Valid[Data])
+
+    in
+        [
+            Data = Combined,
+            Log = Log
+        ]
+in
+    get_configtable_data
+```
+
 Currently used vuteq_file_data
 ```m
 let
