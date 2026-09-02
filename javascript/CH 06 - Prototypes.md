@@ -46,3 +46,56 @@ systemNotification.broadcast = function (message) {
 
 export { notification, systemNotification };
 ```
+# Prototype Chains
+Every object has a prototype, and that prototype can in turn have a prototype, creating a chain that goes all the way back to the [`Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) object, whose prototype is always `null`.
+
+**An object stores a reference to its prototype**. The [`Object.getPrototypeOf()`]() method returns the prototype of an object. When we create a new POJO (plain old java object), its prototype is automatically set to `Object.prototype`:
+```js
+const pureTitan = {
+  name: "Eren's mom",
+};
+
+const beastTitan = Object.create(pureTitan);
+beastTitan.name = "Zeke";
+
+console.log(beastTitan); // { name: "Zeke" }
+console.log(Object.getPrototypeOf(beastTitan)); // { name: "Eren's mom" }
+console.log(Object.getPrototypeOf(beastTitan)) === pureTitan); // true
+console.log(Object.getPrototypeOf(Object.getPrototypeOf(beastTitan))); // {} (Object.prototype)
+console.log(
+  Object.getPrototypeOf(
+    Object.getPrototypeOf(Object.getPrototypeOf(beastTitan)),
+  ),
+); // null (end of the chain)
+```
+
+## How are Parent Members accessed?
+
+You might think that using [`Object.create()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create) _copies_ the properties of parent object to the child object:
+```js
+const pureTitan = {
+  name = "Eren's mom",
+};
+
+const beastTitan = Object.create(pureTitan);
+console.log(beastTitan.name); // Eren's mom
+```
+**But it does not**. JavaScript looks within the `beastTitan` object for the `name` property & doesn't find it because we never set one. So it checks its prototype (using `Object.getPrototypeOf(beastTitan)`), which is `pureTitan`, and finds the `name` property there. It uses that value instead.
+
+### Assignment
+Write a the `isAdmin` function that takes an object & returns whether that object's prototype references the `adminUser` object.
+```js
+const user = {
+  name: "Default User",
+  type: "user",
+};
+
+const adminUser = Object.create(user);
+adminUser.type = "admin";
+
+function isAdmin(user) {
+  return Object.getPrototypeOf(user) === adminUser;
+}
+
+export { user, adminUser, isAdmin };
+```
