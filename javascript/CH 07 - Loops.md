@@ -55,5 +55,21 @@ No matter the end condition, when a `break` statement is encountered, the loop e
 ### Assignment
 Complete the `maxMessagesWithinBudget` function
 ```js
+function maxMessagesWithinBudget(budget) {
+  let totalCost = 0;
+  let count = 0;
 
+  for (let i = 0; ; i++) {
+    const cost = 1.0 + i * 0.01;
+    if (totalCost + cost > budget) {
+      break;
+    }
+    totalCost += cost;
+    count += 1;
+  }
+
+  return count;
+}
+
+export { maxMessagesWithinBudget };
 ```
