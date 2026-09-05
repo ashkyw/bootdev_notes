@@ -127,3 +127,51 @@ test(10);
 test(20);
 test(30);
 ```
+# While
+Like many other langauages, JavaScript has a [`while`]() loop. It keeps running as long as the condition is true.
+```js
+const jane = {
+  name: "Jane",
+  mom: {
+    name: "Alice",
+    mom: {
+      name: "Lilly",
+      mom: {
+        name: "Granny",
+      },
+    },
+  },
+};
+
+let currentPerson = jane;
+while (currentPerson) {
+  console.log(currentPerson.name);
+  currentPerson = currentPerson.mom;
+}
+console.log("No more ancestors!");
+// Jane
+// Alice
+// Lilly
+// Granny
+// No more ancestors!
+```
+### Assignment
+Fix the while loop.
+```js
+function getMaxMessagesToSend(costMultiplier, maxCostInPennies) {
+  let actualCostInPennies = 1.0;
+  let maxMessagesToSend = 1;
+  let balance = maxCostInPennies - actualCostInPennies;
+  while (balance > 0) {
+    actualCostInPennies *= costMultiplier;
+    balance -= actualCostInPennies;
+    maxMessagesToSend++;
+  }
+  if (balance < 0) {
+    maxMessagesToSend--;
+  }
+  return maxMessagesToSend;
+}
+
+export { getMaxMessagesToSend };
+```
