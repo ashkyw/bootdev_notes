@@ -1,3 +1,4 @@
+```js
 const getMostRecentUser = (usernames) => {
   if (usernames == []) {
     return null;
@@ -6,3 +7,4 @@ const getMostRecentUser = (usernames) => {
 };
 
 export { getMostRecentUser };
+```
