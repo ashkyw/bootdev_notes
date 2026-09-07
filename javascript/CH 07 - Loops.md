@@ -175,3 +175,62 @@ function getMaxMessagesToSend(costMultiplier, maxCostInPennies) {
 
 export { getMaxMessagesToSend };
 ```
+# For...in
+Sometimes it's useful to loop over all the _keys_ of an object. This is _most_ useful when you're using an object as you would use a dictionary or hash map in other languages.
+```js
+let titan = {
+  name: "Eren",
+  power: "Attack Titan",
+  age: 19,
+};
+
+for (const key in titan) {
+  console.log(`${key}: ${titan[key]}`);
+}
+
+// name: Eren
+// power: Attack Titan
+// age: 19
+```
+
+In modern specifications, the traversal order is well-defined & consistent across implementations.
+> Within each component of the prototype chain, all non-negative integer keys (those that can be array indices) will be traversed first in ascending order
+> by value, then other string keys in ascending chronological order of property creation.
+
+That is not necessarily obvious when reading code. It may be easier to break out the keys into an array & sort them how you want.
+### Assignment
+Complete the `printMatchinProperties` function.
+```js
+const printMatchingProperties = (messageLog, searchTerm) => {
+  for (const key in messageLog) {
+    if (key.startsWith(searchTerm)) {
+      console.log(`Found: ${key} -> ${messageLog[key]}`);
+    }
+  }
+};
+
+// don't touch below this line
+
+const messageLogs = [
+  {
+    messageId: "abc123",
+    messageText: "Your order has shipped",
+    timestamp: "2025-02-06T12:34:56Z",
+    sender: "TextioBot",
+  },
+  {
+    messageId: "def456",
+    messageSender: "Textio",
+  },
+  {
+    tomsBrilliantIdea: "Messages now have unique tracking codes",
+    trackingCode: "trk-555888",
+    loggedAt: "2025-02-07T09:30:00Z",
+  },
+];
+
+for (const log of messageLogs) {
+  printMatchingProperties(log, "message");
+  printMatchingProperties(log, "log");
+}
+```
