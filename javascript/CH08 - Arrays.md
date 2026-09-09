@@ -59,3 +59,20 @@ const getMostRecentUser = (usernames) => {
 
 export { getMostRecentUser };
 ```
+# Array Spread
+Remember the [spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) for merging object properties? **It works with arrays too**! It expands the elements of an array into individual elements & inserts them into another array.
+```js
+const nums = [1, 2, 3];
+const newNums = [...nums, 4, 5, 6];
+console.log(newNums);
+// Prints: [1, 2, 3, 4, 5, 6]
+```
+### Assignment
+Complete the `uploadNewMessages` function
+```js
+const uploadNewMessages = (oldMessages, newMessages) => {
+  return [...oldMessages, ...newMessages];
+};
+
+export { uploadNewMessages };
+```
