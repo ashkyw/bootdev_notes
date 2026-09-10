@@ -76,3 +76,25 @@ const uploadNewMessages = (oldMessages, newMessages) => {
 
 export { uploadNewMessages };
 ```
+# Includes
+Checking whether a value exists in an array is really easy in JavaScript, just use the `.includes()`method.
+```js
+fruits = ["apple", "orange", "banana"];
+console.log(fruits.includes("orange"));
+// Prints: true
+console.log(fruits.includes("pear"));
+// Prints: false
+```
+Array `.includes()` checks exact elements; string `.includes()` checks substrings:
+```js
+const str = "Hello, world!";
+console.log(str.includes("world"));
+// Prints: true
+console.log(str.includes("banana"));
+// Prints: false
+```
+### Assignment
+Complete the `getCleanRank` function
+```js
+
+```
