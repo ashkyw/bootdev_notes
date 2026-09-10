@@ -96,5 +96,30 @@ console.log(str.includes("banana"));
 ### Assignment
 Complete the `getCleanRank` function
 ```js
+function getCleanRank(reviewWords) {
+  const hasDang = reviewWords.includes("dang");
+  const hasShoot = reviewWords.includes("shoot");
+  const hasHeck = reviewWords.includes("heck");
 
+  let numWords = 0;
+  if (hasDang) {
+    numWords++;
+  }
+  if (hasShoot) {
+    numWords++;
+  }
+  if (hasHeck) {
+    numWords++;
+  }
+
+  if (numWords === 0) {
+    return "clean";
+  }
+  if (numWords === 1) {
+    return "dirty";
+  }
+  return "filthy";
+}
+
+export { getCleanRank };
 ```
