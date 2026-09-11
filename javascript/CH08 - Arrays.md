@@ -123,3 +123,44 @@ function getCleanRank(reviewWords) {
 
 export { getCleanRank };
 ```
+# For...of Loops
+JavaScript has a relatively new [`for...of`]()syntax to loop over a sequence without the need to keep track of the index manually. So, instead of typing out all of this:
+```js
+let woods = ["oak", "pine", "maple"];
+for (let i = 0; i < woods.length; i++) {
+  console.log(woods[i]);
+}
+// Prints:
+// Oak
+// Pine
+// Maple
+```
+We can instead write this:
+```js
+let woods = ["oak", "pine", "maple"];
+for (let wood of woods) {
+  console.log(wood);
+}
+// Prints:
+// Oak
+// Pine
+// Maple
+```
+It's a lot like Python's `for...in` syntax, but be careful not to confuse it with JavaScript's `for...in` syntax, which is used to loop over the _keys_ of an object.
+### Assignment
+Complete the `getCleanMessages` function
+```js
+const getCleanMessages = (messages, badWord) => {
+  const loweredBadWord = badWord.toLowerCase();
+  const cleanMessages = [];
+  for (const message of messages) {
+    const loweredMessage = message.toLowerCase();
+    if (!loweredMessage.includes(loweredBadWord)) {
+      cleanMessages.push(message);
+    }
+  }
+  return cleanMessages;
+};
+
+export { getCleanMessages };
+```
