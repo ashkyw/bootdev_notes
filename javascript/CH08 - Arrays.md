@@ -164,3 +164,30 @@ const getCleanMessages = (messages, badWord) => {
 
 export { getCleanMessages };
 ```
+# Slicing Arrays
+JavaScript's [`.slice`method]() makes it easy to slice & dice arrays.
+```js
+const animals = ["ant", "bison", "camel", "duck", "elephant"];
+console.log(animals.slice(2));
+// ["camel", "duck", "elephant"]
+console.log(animals.slice(2, 4));
+// ["camel", "duck"]
+console.log(animals.slice(1, 5));
+// ["bison", "camel", "duck", "elephant"]
+console.log(animals.slice(-2));
+// ["duck", "elephant"]
+console.log(animals.slice(2, -1));
+// ["camel", "duck"]
+console.log(animals.slice());
+// ["ant", "bison", "camel", "duck", "elephant"]
+```
+The first argument is the starting index, and the second argument is the ending index (exclusive). If the second argument is omitted, the slice goes to the end of the array.
+
+JavaScript doesn't support negative indexing _directly_ into arrays (like `animals[-1]`), but the `slice()` method _does_ support negative indexes.
+
+In `slice()`, `-1` means the last element `-2` means the second-to-last.
+### Assignment
+Complete the `splitLogs` function
+```js
+
+```
