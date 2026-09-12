@@ -189,5 +189,21 @@ In `slice()`, `-1` means the last element `-2` means the second-to-last.
 ### Assignment
 Complete the `splitLogs` function
 ```js
+function splitLogs(logs, slug) {
+  const foundSlugArray = {
+     before: [],
+     after: [],
+     i: -1
+   };
+  for (let i = 0; i < logs.length; i++) {
+    if (logs[i].toLowerCase().includes(slug)) {
+      foundSlugArray.before = logs.slice(0, i);
+      foundSlugArray.after = logs.slice(i+1);
+      foundSlugArray.i = i;
+    }
+  }
+  return foundSlugArray;
+}
 
+export { splitLogs };
 ```
