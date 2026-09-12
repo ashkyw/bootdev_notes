@@ -200,6 +200,7 @@ function splitLogs(logs, slug) {
       foundSlugArray.before = logs.slice(0, i);
       foundSlugArray.after = logs.slice(i+1);
       foundSlugArray.i = i;
+      break;
     }
   }
   return foundSlugArray;
