@@ -208,3 +208,18 @@ function splitLogs(logs, slug) {
 
 export { splitLogs };
 ```
+# const Arrays
+Like objects, the contents of `const` arrays _can be modified_! Again, they just can't be _reassigned_. That means we can add & remove elements, but we can't set a new array value with the assignment operator: `=`.
+```js
+const drinks = [];
+
+drinks.push("lemonade");
+// ["lemonade"]
+
+drinks[0] = "soda";
+// ["soda"]
+
+drinks = ["root beer"];
+// TypeError: Assignment to constant variable.
+```
+While `const` implies that a value won't change _at all_, this quirk of JavaScript means that all the contents of an array can be modified as long as the assignment operator is never used to reassign the array itself.
