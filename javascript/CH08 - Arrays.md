@@ -265,4 +265,10 @@ console.log(x, y, z, a);
 ### Assignment
 Complete the `getPrimaryAndBackupMessages` function
 ```js
+function getPrimaryAndBackupMessages(messages) {
+  const [primary, ...backups] = messages;
+  return { primary, backups };
+}
+
+export { getPrimaryAndBackupMessages };
 ```
