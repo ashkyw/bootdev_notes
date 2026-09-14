@@ -223,3 +223,46 @@ drinks = ["root beer"];
 // TypeError: Assignment to constant variable.
 ```
 While `const` implies that a value won't change _at all_, this quirk of JavaScript means that all the contents of an array can be modified as long as the assignment operator is never used to reassign the array itself.
+# Destructure
+You can [destructure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) an array just like you can an object:
+```js
+const nums = [1, 2, 3];
+
+function double([a, b, c]) {
+  return [a * 2, b * 2, c * 2];
+}
+
+const [x, y, z] = double(nums};
+console.log(x, y, z);
+// 2 4 6
+```
+If you're only interested in the first element, you can destructure just that element:
+```js
+const [x] = double(nums);
+console.log(x);
+// 2
+```
+If you're unsure how many elements there are, you can use the rest operator `...` to capture the rest of the elements into a new array:
+```js
+const [x, ...theRestOfThem] = double(nums);
+console.log(x);
+// 2
+console.log(theRestOfThem);
+// [4, 6]
+```
+If you over-destructure, you'll get `undefined`:
+```js
+const [x, y, z, a] = double(nums);
+console.log(x, y, z, typeof a);
+// 2 4 6 undefined
+```
+The variable created with `...` is always an array: if there are no remaining elements, it will simply be an empty array `[]`
+```js
+const [x, y, z, ...a] = double(nums);
+console.log(x, y, z, a);
+// 2 4 6 []
+```
+### Assignment
+Complete the `getPrimaryAndBackupMessages` function
+```js
+```
