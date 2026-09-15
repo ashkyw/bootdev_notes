@@ -11,5 +11,10 @@ console.log(err.message);
 ### Assignment
 Complete `createError`
 ```js
+function createError(message) {
+  const errMsg = "Error: " + message;
+  return new Error(errMsg);
+}
 
+export { createError };
 ```
