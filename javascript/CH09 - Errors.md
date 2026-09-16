@@ -96,7 +96,9 @@ main();
 ```
 # Finally
 We missed a block. While a `try/block` is the most common block you'll see, there is also a [`finally`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch#syntax) block. 
+
 > The code in the `finally` block will always be executed _before_ control flow exits the entire construct.
+
 It's for if you want something to run _regardless_ of what nonsense happens in the `try` & `catch` blocks. In some crazy scenarios (try to avoid this), you might have an error thrown in the `catch` block. But even if that happens, the `finally` block will still run. In this example:
 ```js
 try {
