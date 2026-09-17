@@ -137,3 +137,25 @@ try {
   console.log(err.message);
 }
 ```
+# Throwing Errors
+Sometimes errors are thrown implicitly be the JavaScript runtime, as we saw in past examples. But sometimes we need to throw errors ourselves _explicity_. The [`throw`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw) statement is how we do it:
+```js
+throw new Error("something went wrong");
+```
+It's worth mentioning that JavaScript will _allow_ you to throw anything you want, not just error objects:
+```js
+throw "something went wrong";
+```
+But for consistency & maintainability, it's recommended to throw error objects.
+### Assignment
+Complete the `sendMessage` function
+```js
+const sendMessage = (msg) => {
+  if (msg.length > 70) {
+    throw new Error("Message is too long");
+  }
+  return msg;
+};
+
+export { sendMessage };
+```
