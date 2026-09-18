@@ -159,3 +159,22 @@ const sendMessage = (msg) => {
 
 export { sendMessage };
 ```
+# When to try/catch
+Errors are _not_ something to be scared of. Every program that runs in production handles errors on a constant basis. Our job as devs is to handle the errors gracefully & in a way that aligns with our expectations. Admittedly, one of the big criticisms of JavaScript is how hard it is to know whether to expect a function should throw an error or not.
+
+In Go, & some other languages, the function signature tells us if we should expect an error:
+```go
+func getMovieRecord(movieid int)(Movie, error){
+//...}
+```
+This lets us know if we should be prepared to handle an error when a function is called. In JavaScript... you're kind of left guessing. The only way to know for sure is to read the body of the function. This _might_ tempt you to just wrap everything in tons of `try/catch` blocks, but it's advised to not do that.
+
+Some rules of thumb when to use `try/catch`:
+* **Do you control the input?**
+  * If the variable in question is coming from a user, an API, or some other external source, you should probably wrap its initial handling in a `try/catch` block.
+* **Is the error recoverable**
+  * If the error is something you can recover from, like a network request failing, you should probably wrap it in a `try/catch` block. If not, let the program crash.
+* **Are you trying to compensate for bad code**
+  * If you wrote some bad code that results in more errors than there needs to be, don't wrap it in a `try/catch` block. Fix the code.
+* **Is it really an abort-worthy error?**
+  * In a lot of (especially front-end) JavaScript code, there are so many unknowns that it doesn't make sense to lose control of a program just because a variable is `undefined`. That's why the [optional chaining operator (?.)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) and the [nullish coalescing operator (??)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing) were introduced... use them as needed.
