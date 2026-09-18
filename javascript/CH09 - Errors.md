@@ -165,7 +165,8 @@ Errors are _not_ something to be scared of. Every program that runs in productio
 In Go, & some other languages, the function signature tells us if we should expect an error:
 ```go
 func getMovieRecord(movieid int)(Movie, error){
-//...}
+//...
+}
 ```
 This lets us know if we should be prepared to handle an error when a function is called. In JavaScript... you're kind of left guessing. The only way to know for sure is to read the body of the function. This _might_ tempt you to just wrap everything in tons of `try/catch` blocks, but it's advised to not do that.
 
