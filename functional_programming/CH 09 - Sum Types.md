@@ -64,6 +64,42 @@ def respond_to_text(guy_at_bar):
 
 As opposed to product types, which can have many (often infinite) combinations, sum types have a *fixed* number of possible values. To be clear: **Python doesn't really support sum types**. We have to use a workaround and invent our own little system and enforce it ourselves.
 
+# Union Types
+We can simulate the shape of sum types in Python by using classes - like our `MaybeParsed` class with subclasses named `Parsed` & `ParseError`. It's better than nothing, but awkward.
+
+The [type hints](https://docs.python.org/3/library/typing.html) in modern Python offers a more direct way of describing a value that may be one type or another. We can use what's called a [union type](https://docs.python.org/3/library/stdtypes.html#union-type):
+```py
+def parse_document(doc_name: str, content: str) -> Parsed | ParseError: ...
+```
+The `Parsed | ParseError` annotation means, "This function returns either a `Parsed` value or a `ParseError` value." Crucially, the `|` ("or") operator lets us express that relationship without forcing both classes to inherit from the same parent class. `Parsed` & `ParseError` still need to be real types, but they don't need to belong to a shared class hierarchy.
+
+A union type can list any number of possible values for a given value. One of the most common use cases is for _optional_ values like `str | None` - i.e., a value that may be a string, or may be `None` if the string isn't available yet or couldn't be retrieved.
+
+In functional programming, union types are used constantly to make "this or that" situations explicit: _some_ value or _none_: a _result_ from a function or an _error_. Python is still ultimately a dynamically typed language. The union type, like other type hints, is meant to help devs & their tools (IDE, type checkers). **It's not enforced at runtime**. But being able to document the shape of your data makes it easier to write robust programs.
+
+### Assignment
+Complete the `parse_document` & `display_parse_result` functions.
+```py
+class Parsed:
+    def __init__(self, doc_name: str, text: str) -> None:
+        self.doc_name = doc_name
+        self.text = text
+
+class ParseError:
+    def __init__(self, doc_name: str, err: str) -> None:
+        self.doc_name = doc_name
+        self.err = err
+
+def parse_document(doc_name: str, content: str) -> Parsed | ParseError:
+    if not content:
+        return ParseError(doc_name, "no content")
+    return Parsed(doc_name, content)
+
+def display_parse_result(result: Parsed | ParseError) -> str:
+    if isinstance(result, Parsed):
+        return f"Parsed {result.doc_name}: {len(result.text)} characters"
+    return f"Failed {result.doc_name}: {result.err}"
+```
 # Enums
 
 Doing the admittedly weird `class` and `isinstance()` thing works, but it turns out, there's a better way in some cases. If you're trying to represent a fixed set of values (but not store additional data within them) [enums](https://docs.python.org/3/library/enum.html) are the way to go.
