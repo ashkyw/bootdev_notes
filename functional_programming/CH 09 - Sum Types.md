@@ -60,7 +60,7 @@ def respond_to_text(guy_at_bar):
     else:
         raise ValueError("invalid person type")
 ```
-# Sum Types
+## Sum Types
 
 As opposed to product types, which can have many (often infinite) combinations, sum types have a *fixed* number of possible values. To be clear: **Python doesn't really support sum types**. We have to use a workaround and invent our own little system and enforce it ourselves.
 
@@ -220,13 +220,24 @@ Look, functional programming kicked your ass. You need to work on this some in t
 
 ```py
 from enum import Enum
-
-CSVExportStatus = Enum(
-    "CSVExportStatus", ["PENDING", "PROCESSING", "SUCCESS", "FAILURE"]
-)
+from typing import Any
 
 
-def get_csv_status(status, data):
+class CSVExportStatus(Enum):
+    PENDING = 1
+    PROCESSING = 2
+    SUCCESS = 3
+    FAILURE = 4
+
+
+RawCSVData = list[list[object]]
+PreparedCSVData = list[list[str]]
+CSVStatusResult = tuple[str, PreparedCSVData | str]
+
+# Don't touch above this line
+
+
+def get_csv_status(status: CSVExportStatus, data: Any) -> CSVStatusResult:
     match status:
         case CSVExportStatus.PENDING:
             return prepare(data)
@@ -240,21 +251,24 @@ def get_csv_status(status, data):
             raise Exception("unknown export status")
 
 
-def prepare(data):
-    processed_data = list(map(lambda lst: list(map(lambda s: str(s), lst)), data))
+def prepare(data: RawCSVData) -> tuple[str, PreparedCSVData]:
+    processed_data: PreparedCSVData = list(
+        map(lambda lst: list(map(lambda s: str(s), lst)), data)
+    )
     return "Pending...", processed_data
 
 
-def process(prepared_data):
-    processed_data = "\n".join(map(lambda lst: ",".join(lst), prepared_data))
+def process(prepared_data: PreparedCSVData) -> tuple[str, str]:
+    processed_data: str = "\n".join(map(lambda lst: ",".join(lst), prepared_data))
     return "Processing...", processed_data
 
 
-def handle_success(processed_data):
+def handle_success(processed_data: str) -> tuple[str, str]:
     return "Success!", processed_data
 
 
-def handle_failure(data):
+def handle_failure(data: RawCSVData) -> tuple[str, str]:
     _, processed_data = process(prepare(data)[1])
     return "Unknown error, retrying...", processed_data
+
 ```
