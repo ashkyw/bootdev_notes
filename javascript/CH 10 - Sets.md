@@ -24,6 +24,11 @@ console.log(set);
 ### Assignment
 Compelete the `deduplicateEmails` function
 ```js
+function deduplicateEmails(emails) {
+  const dedupedEmails = new Set(emails);
+  return [...dedupedEmails];
+}
 
+export { deduplicateEmails };
 
 ```
