@@ -52,5 +52,14 @@ That said, in 99% of cases, you should just use strings or numbers as keys.
 ### Assignment
 Complete the `createUserMap` function
 ```js
+function createUserMap(users) {
+  const userMap = new Map();
+  for (const user of users) {
+    const key = `${user.fname} ${user.lname}`;
+    userMap.set(key, user);
+  }
+  return userMap;
+}
 
+export { createUserMap };
 ```
