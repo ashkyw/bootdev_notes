@@ -32,3 +32,25 @@ function addToPhonebook(phoneNumber, name, phoneBook) {
 
 export { addToPhonebook };
 ```
+# Map Keys
+In JavaScript, keys can be any type... because of course they can. This is JavaScript, after all. But just because you _can_, doesn't mean you _should_. You might be wondering if this works:
+```js
+const map = new Map();
+map.set(["hello", "there"}, "general kenobi");
+console.log(map.get(["hello, "there"]);
+// undefined
+```
+It actually _doesn't_. The key is an array, but it's a _different_ array than the one we used to set the value. Sure, the _contents_ are the same, but what matters when comparing keys is that the reference to the object (or array) in memory is the same. So, unfortunately, if we use a single named variable, it _does_ work:
+```js
+const map = new Man();
+const greetingKey = ["hello","there"];
+map.set(greetingKey, "general kenobi");
+console.log(map.get(greetingKey));
+// general kenobi
+```
+That said, in 99% of cases, you should just use strings or numbers as keys.
+### Assignment
+Complete the `createUserMap` function
+```js
+
+```
