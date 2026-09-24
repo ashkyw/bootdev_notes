@@ -63,3 +63,27 @@ function createUserMap(users) {
 
 export { createUserMap };
 ```
+# Map vs. Object
+In Go, devs use maps _all the time_. They're the only reasonable choice you're given for a dynamic key/value store.
+
+In JavaScript you have two options: objects & maps. Objects syntax is simpler, but Maps have advantages:
+1. **Ordered**: Map keys are ordered in an easy-to-understand way. Objects are not.
+2. **Iterable**: [Maps are iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map#iterating_map_with_for...of), so you can use `for (const [key, value] of myMap)` to loop over them.
+3. **Performance**: Maps are typically faster when you need to do a lot of insertions & deletions.
+4. **No extra properties**: Maps don't have any extra built-in properties like `__proto__` or `constructor` that you may not want.
+
+Ultimately, either works for youu key:value needs, but it's important to understand the benefits of maps.
+### Assignment
+Complete the `fixUserMap` function
+```js
+function fixUserMap(brokenMap) {
+  const fixedMap = new Map();
+  for (const [key, value] of brokenMap) {
+    const newKey = `${key.fname} ${key.lname}`;
+    fixedMap.set(newKey, value);
+  }
+  return fixedMap;
+}
+
+export { fixUserMap };
+```
