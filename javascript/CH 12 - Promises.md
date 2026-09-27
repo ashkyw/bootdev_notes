@@ -60,3 +60,59 @@ function sleep(ms) {
 We try to _mostly_ write synchronous code when we can, because it's easier to keep track of, and therefore leads to fewer bugs. But sometimes we _need_ our code to be asynchronous. For example, whenever you update your user settings on a website, your browser needs to communicate those new settings to the server. The time it takes your HTTP request to physically travel across all the wiring of the internet can be anywhere from 10-1000 milliseconds (give or take).
 
 It would be excruciating if your webpage froze while waiting for every network request to finish. By making network requests _asynchronously_, the webpage can continue to execute other code while waiting for the HTTP response to come back.
+
+# Promises
+[!Promises Video](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/Promises-1920x1080.mp4)
+
+A Promise in JavaScript is very similar to a promise to your friend. It's just a commitment for the future. For example, _I promise to explain promises to you._ This promise to you has 2 potential outcomes:
+
+  * It's fulfilled, meaning I eventually explained
+  * It's rejected, meaning I failed to explain
+
+The [`Promise Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) represents the eventual **fulfillment or rejection** of a promise. In the meantime, while we're waiting for the promise to be fulfilled, our code continues executing. Promises are the most popular modern way to write asynchronous code in JavaScript.
+
+## Creating a Promise
+
+Here's a promise that, based on [random number generation](https://csrc.nist.gov/glossary/term/random_number_generator) will resolve & return the string "resolved!" or reject & return the string "rejected!" after 1 second:
+```js
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    if (getRandomBool()) {
+      resolve("resolved!");
+    } else {
+      reject("rejected!");
+    }
+  }, 1000);
+});
+
+function getRandomBool() {
+  return Math.random() < 0.5;
+}
+```
+In the `new Promise((resolve, reject) => { ... })` constructor, `resolve` & `reject` are functions provided by JavaScript that you call to either successfully complete the promise (`resolve`) or signal that it failed (`reject`)
+
+## Working with Promises
+Now that we've created a promise, how do we use it?
+
+The `promise` object has `.then` & `.catch` methods. Think of `.then` as the _expected_ follow-up to a promise, & `.catch` as the "something went wrong" follow-up.
+  * If a promise _resolves_, its `.then` method will execute.
+  * If the promise rejects, its `.catch` method will execute.
+```js
+promise
+  .then((message) => {
+    console.log(`The promise finally ${message}`);
+  })
+  .catch((message) => {
+    console.log(`The promise finally ${message}`);
+  });
+
+// if the promise (from the first example) resolves, the output will be:
+// The promise finally resolved!
+
+// if the promise rejects, the output will be:
+// The promise finally rejected!
+```
+### Assignment
+```js
+
+```
