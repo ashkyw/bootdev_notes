@@ -151,3 +151,58 @@ Common examples of I/O include:
   * Sending data to a database
 
 Promises help us perform I/O without forcing our entire program to freeze up while we wait for a response.
+# Await
+The [`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await) keyword is used to _wait_ for a Promise to resolve. Once it has been resolved, the `await` expression returns the value of the resolved `promise`. It's basically a more modern syntax for `.then` callbacks.
+
+## .then Callback
+```js
+promise.then((message) => {
+  console.log(`Resolved with ${message}`);
+});
+```
+## await syntax
+```js
+const message = await promise;
+console.log(`Resolved with ${message}`);
+```
+
+## Handling Rejections
+When using `await`, if the promise is rejected, it will _throw an error_. That means we can use standard `try` / `catch` blocks to handle rejections.
+```js
+try {
+  const message = await promise;
+  console.log(`Resolved with ${message}`);
+} catch (error) {
+  console.log(`Resolved with ${error}`);
+}
+```
+### Assignment
+Complete the `updateMessageStatus` function
+```js
+const promise = updateMessageStatus("M123", "Sending", true);
+const message = await promise;
+
+console.log(message);
+
+function updateMessageStatus(messageId, currentStatus, isDelivered) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (currentStatus === "Sending") {
+        if (isDelivered) {
+          resolve(
+            `Textio Message ${messageId} has been delivered successfully.`,
+          );
+        } else {
+          reject(
+            `Textio Message ${messageId} is still sending and cannot be marked as delivered.`,
+          );
+        }
+      } else {
+        resolve(
+          `Textio Message ${messageId} status updated to ${currentStatus}.`,
+        );
+      }
+    }, 1000);
+  });
+}
+```
