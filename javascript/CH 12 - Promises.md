@@ -1,6 +1,6 @@
 # Synchronous vs. Asynchronous
 Most code is [synchronous](https://developer.mozilla.org/en-US/docs/Glossary/Synchronous), meaning it _runs in sequence_. Each line of code executes in order, one after the next.
-[!Synchronous Code](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/synchronous%20code.png)
+[Synchronous Code](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/synchronous%20code.png)
 Example of synchronous code:
 ```js
 console.log("I print first");
@@ -205,4 +205,54 @@ function updateMessageStatus(messageId, currentStatus, isDelivered) {
     }, 1000);
   });
 }
+```
+# Async Keyword
+Whille the `await` keyword can be used in place of `.then()` to _resolve_ a problem, the [async keyword](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) can be used in place of [new Promise()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/Promise) to _create_ a new promise. 
+
+When a function is prefixed by the `async` keyword, it will _automatically_ return a Promise that resolves to the return value. You can think of `async` as "wrapping" your function within a promise.
+
+These are equivalent:
+## New Promise()
+```js
+function getPromiseForUserData() {
+  return new Promise((resolve) => {
+    fetchDataFromServer().then(function (user) {
+      resolve(user);
+    });
+  });
+}
+
+const promise = getPromiseForUserData();
+```
+## Async
+```js
+async function getPromiseForUserData() {
+  const user = await fetchDataFromServer();
+  return user;
+}
+
+const promise = getPromiseForUserData();
+```
+> `await` can only be used inside an `async` function or at the top level of a module (file). In an `async` function, returning a `Promise`, will implicitly be awaited by the caller.
+
+### Assignment
+Update the `getMessageHash` function
+```js
+async function getMessageHash(sender, content) {
+  const hash = await sha256Hex(content);
+  return `Sender (${sender}): ${hash}`;
+}
+
+// don't touch below this line
+
+async function sha256Hex(str) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(str);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+  return hex;
+}
+
+export { getMessageHash };
 ```
