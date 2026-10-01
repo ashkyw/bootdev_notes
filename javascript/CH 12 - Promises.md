@@ -256,3 +256,31 @@ async function sha256Hex(str) {
 
 export { getMessageHash };
 ```
+# then vs. await
+In the early days of web browsers, promises and the `await` keyword didn't exist, so the only way to do something asynchronously was to use callbacks. A "callback function" is a function you hand to another function. That function then calls your callback later on. The [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout) function we've used in the past is a good example.
+```js
+function callbackFunction() {
+  console.log("calling back now!")
+}
+const milliseconds = 1000;
+setTimeout(callbackFunction, milliseconds);
+```
+The `.then()` syntax is generally _easier to then the non-`Promise` callbacks_, but `async` & `await` make handling promises even _simpler_. As a general rule, prefer `async` & `await` over `.then` and new Promise(). Realistically, what's going to be easier to follow & understand?
+```js
+fetchRecipient()
+  .then(function (recipient) {
+    return fetchMessageForRecipient(recipient.id);
+  })
+  .then(function (message) {
+    return fetchDeliveryStatus(message.id);
+  })
+  .then(function (status) {
+    console.log(`The status is ${status}`);
+  });
+```
+```js
+const recipient = await fetchRecipient();
+const message = await fetchMessageForRecipient(recipient.id);
+const status = await fetchDeliveryStatus(message.id);
+console.log(`The status is ${status}`);
+```
