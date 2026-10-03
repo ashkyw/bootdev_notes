@@ -45,5 +45,8 @@ So, the main thread should _always_ be available to do work, and blocking (read:
 ### Assignment
 Complete the `sleep(ms)` function
 ```js
-
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+export { sleep };
 ```
