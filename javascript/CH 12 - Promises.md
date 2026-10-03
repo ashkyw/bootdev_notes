@@ -62,7 +62,7 @@ We try to _mostly_ write synchronous code when we can, because it's easier to ke
 It would be excruciating if your webpage froze while waiting for every network request to finish. By making network requests _asynchronously_, the webpage can continue to execute other code while waiting for the HTTP response to come back.
 
 # Promises
-[!Promises Video](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/Promises-1920x1080.mp4)
+![Promises Video](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/Promises-1920x1080.mp4)
 
 A Promise in JavaScript is very similar to a promise to your friend. It's just a commitment for the future. For example, _I promise to explain promises to you._ This promise to you has 2 potential outcomes:
 
