@@ -1,6 +1,6 @@
 # Synchronous vs. Asynchronous
 Most code is [synchronous](https://developer.mozilla.org/en-US/docs/Glossary/Synchronous), meaning it _runs in sequence_. Each line of code executes in order, one after the next.
-[](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/synchronous%20code.png)
+![Synchronous Code](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/synchronous%20code.png)
 Example of synchronous code:
 ```js
 console.log("I print first");
