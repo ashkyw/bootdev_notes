@@ -1,7 +1,7 @@
 # Single Threaded
 JavaScript is _famously_ [single threaded](https://en.wikipedia.org/wiki/Thread_(computing)#Single-threaded_vs_multithreaded_programs).
 
-[!Threads video](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/js-is-single-threaded-and-non-blocking-v3-1920x1080.mp4)
+![Threads video](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/js-is-single-threaded-and-non-blocking-v3-1920x1080.mp4)
 
 JavaScript, however, is incredible when it comes to asynchronous programming because it's "non-blocking".
 
@@ -50,3 +50,43 @@ function sleep(ms) {
 }
 export { sleep };
 ```
+# The Call Stack
+![Call Stack](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/Js_Event_Loop_V3-1920x1080.mp4)
+
+So, we know that JavaScript has one main thread, & that it's non-blocking. So how do these "background" tasks (like HTTP requests, setTimeout, etc.) get executed? Well, it's via the [event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop) - but first we need a little refresher on the call stack.
+
+**Quick refresher:**
+_Every time a function is called, it gets added to the top of the call stack. When a function returns, it gets popped off the stack_
+
+Let's say we have this code:
+```js
+function startJob() {
+ console.log("Job Started");
+ workOnJob();
+}
+
+function workOnJob() {
+ console.log("Working on job");
+ finishJob();
+}
+
+function finishJob() {
+ console.log("Job finished");
+}
+
+startJob();
+```
+The call stack will grow like this as each function is called:
+```
+                                      -> finishJob
+                        -> workOnJob     workOnJob
+[empty]    -> startJob     startJob      startJob
+```
+Then as each function returns it gets popped off the stack:
+```
+finishJob ->
+workOnJob      workOnJob -> 
+startJob       startJob       startJob ->  [empty]
+```
+
+Long story short - JavaScript's call stack works the same way as any other language's call stack. But what happens when we encounter asynchronous code? _That's in the next lesson_.
