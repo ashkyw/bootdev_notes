@@ -90,3 +90,95 @@ startJob       startJob       startJob ->  [empty]
 ```
 
 Long story short - JavaScript's call stack works the same way as any other language's call stack. But what happens when we encounter asynchronous code? _That's in the next lesson_.
+# Task Queue
+We understand the call stack: call a function, it's pushed onto the stack, when it returns, it's popped off. But what about asynchronous code?
+
+_Enter the task queue_.
+
+The task queue (also known as the "message queue") is where asynchronous tasks are _queued up_ to be processed. It's just a standard queue of things for our JS engine to do, nothing to be scared of. But remember: Js is _non-blocking_, so the tasks in the queue can't be handled immediately.
+
+The rule of the task queue is simple: when the call stack is _empty_, the event loop (managed by the JS runtime) checks the task queue. If there are tasks in the queue, it pushes the first one onto the call stack to be executed. Take a look at this example again:
+```js
+function startJob() {
+  setTimeout(() => {
+    console.log("Hi I'm async!");
+  }, 0);
+  console.log("Job started");
+  workOnJob();
+}
+
+function workOnJob() {
+  console.log("Working on job");
+  finishJob();
+}
+
+function finishJob() {
+  console.log("Job finished");
+}
+
+startJob();
+```
+Because the `setTimeout` says "run this 0 milliseconds from now", you _might_ expect its callback to run instantly & produce this output:
+```
+Hi I'm async!
+Job started
+Working on job
+Job finished
+```
+But this is what actually happens:
+```
+Job started
+Working on job
+Job finished
+Hi I'm async!
+```
+Because the callback:
+```js
+() => {
+  console.log("Hi I'm async!");
+};
+```
+Was pushed into the task queue to be executed _after_ the call stack is empty, & it's not empty until the final nested function `finishJob` returns.
+###Assignment
+Fix the scoping issue
+```js
+function processMessages(messages) {
+  let success = true;
+  console.log(`Processing messages: ${messages}`);
+  setTimeout(() => {
+    finalizeJob(success, messages);
+  }, 0);
+  if (messages < 0) {
+    console.log("invalid data: how do we have negative messages??");
+    success = false;
+    return;
+  }
+  if (messages > 100) {
+    console.log("invalid data: way too many messages");
+    success = false;
+    return;
+  }
+
+  console.log("Doing more stuff...");
+}
+
+function finalizeJob(success, messages) {
+  const msg = success
+    ? `Processed ${messages} successfully!`
+    : `Failed to process messages!`;
+  console.log(msg);
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+processMessages(42);
+await sleep(0);
+console.log("---");
+processMessages(-1);
+await sleep(0);
+console.log("---");
+processMessages(9001);
+
+```
