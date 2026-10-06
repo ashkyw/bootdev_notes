@@ -226,5 +226,25 @@ The important thing to note is simply that all the microtasks run before the nex
 ### Assignment
 Fix the `processAnalytics` function
 ```js
+async function processAnalytics(data) {
+  let analysis = "";
 
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(analysis);
+    }, 100);
+
+    setTimeout(() => {
+      analysis += " - Finished!";
+    }, 0);
+
+    Promise.resolve().then(() => {
+      analysis += `- Processing: ${data}`;
+    });
+
+    analysis += "Analyzing...";
+  });
+}
+
+export { processAnalytics };
 ```
