@@ -139,7 +139,7 @@ Because the callback:
 };
 ```
 Was pushed into the task queue to be executed _after_ the call stack is empty, & it's not empty until the final nested function `finishJob` returns.
-###Assignment
+### Assignment
 Fix the scoping issue
 ```js
 function processMessages(messages) {
