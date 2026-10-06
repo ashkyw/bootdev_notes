@@ -180,5 +180,51 @@ processMessages(-1);
 await sleep(0);
 console.log("---");
 processMessages(9001);
+```
+# Microtask Queue
+As always, but wait...! There's (one) more (queue): the [microtask queue](https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide).
+
+Just like the task queue, the microtask queue is a mechanism for scheduling tasks to be executed later. But it operates under different rules & is used for different purposes. The nature of microtasks is that they represent smaller, shorter-lived operations compared to tasks in the task queue. And, importantly, **promises use the microtask queue** to schedule their `.then()` & `.catchk)` callbacks.
+
+There are two important differences between the task queue & the microtask queue:
+ 
+ * **Order of Execution**: All microtasks are executed before the next task in the task queue.
+ * **Addition of Microtasks**: Microtasks can add more microtasks to the queue, and those will still execute before the next "macro" task.
+
+## Do I Need to Care?
+Usually, no. But sometimes yes. For the most part feel free to think about promises & callbacks as just "asynchronous operations that will run later". You typically won't (and it's often a bad sign if you do) care about the exact order that their callbacks will run.
+
+This example shows the difference between the task queue & the microtask queue:
+```js
+function main() {
+  console.log("main start");
+
+  setTimeout(() => {
+    console.log("macrotask 1 finished");
+  }, 0);
+
+  Promise.resolve()
+    .then(() => {
+      console.log("microtask 1 finished");
+    })
+    .then(() => {
+      console.log("microtask 2 finished");
+    });
+
+  console.log("main end");
+}
+
+main();
+// Prints:
+// main start
+// main end
+// microtask 1 finished
+// microtask 2 finished
+// macrotask 1 finished
+```
+The important thing to note is simply that all the microtasks run before the next task in the task queue.
+### Assignment
+Fix the `processAnalytics` function
+```js
 
 ```
