@@ -248,3 +248,20 @@ async function processAnalytics(data) {
 
 export { processAnalytics };
 ```
+# Concurrency
+Okay, so we understand that:
+ * There's only one thread in the runtime
+ * The main thread can't be blocked by asynchronous tasks
+ * The results of asynchronous tasks are pushed into the task queue
+
+So how does the actual concurrency work? In the case of:
+```js
+setTimeout(() => {
+ consolle.log("Hi I'm async!");
+}, 1000);
+```
+What logic makes sure that the calllback function isn't pushed into the task queue until `1000` milliseconds have passed? Or regarding an HTTP request, what logic pushed the network response into the task queue when the request is complete?
+
+The answer is _external APIs_. Things like `setTimeout`, `fetch` & `addEventListener` are all examples of external APIs that the browser or Node.js, Deno, or Bun provide - they are not part of the core JavaScript language.
+
+The JavaScript _runtime_ (your code & the JS engine) is single-threaded, but those external APIs are _not!_ The host environment can run them in the background (often on separate threads or system-level services), and **when they're done, the host environment pushes their results into the task queue** for the event loop to handle.
