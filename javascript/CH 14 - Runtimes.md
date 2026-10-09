@@ -21,3 +21,23 @@ Originally, JavaScript _only_ ran in browsers. Today, it runs almost everywhere.
 If you're doing frontend development, congratulations! You're using the browser. You likely have to support all the major browsers, so you'll need to know what APIs are available for each.
 
 If you're doing backend development, you get to choose. Node.js is the oldest & most popular. Deno & Bun are newer & less mature, but have some cool features (like native Typescript support) & claim to be faster. In reality, they're all very similar to work with. You don't need to "learn" a runtime to be able to work with it. If you understand JavaScript, you can work with any of them.
+
+# Node.js
+If you've used Python before, you're familiar with running a Python script like this:
+```py
+python main.py
+```
+Similarly, if you install [Node.js](https://nodejs.org/en/download/) toolchain on your local machine, you'll be able to run
+```js
+node main.js
+```
+Before Node, the only way to run JavaScript code was in the browser. Of course, you can still do that using [your browser's dev tools!](https://developer.chrome.com/docs/devtools/console/javascript/)
+
+## NVM
+
+Node Version Manager (NVM) makes it easy to:
+ * Install multiple versions of Node
+ * Update your Node version
+ * Keep your Node version configurations separate on a per-project basis
+
+It's kinda like `pyenv` for Python.
