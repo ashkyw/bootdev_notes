@@ -41,3 +41,13 @@ Node Version Manager (NVM) makes it easy to:
  * Keep your Node version configurations separate on a per-project basis
 
 It's kinda like `pyenv` for Python.
+
+# NPM
+Now that `node` is working, it's important to understand that... you probably won't use it directly very often. Instead, you'll use `npm` (Node Package Manager) to install & manage packages.
+
+[`npm`](https://www.npmjs.com/) is a package manager for JavaScript. It's the world's largest software registry, with over 1.3 million packages of code. It's the home of many useful libraries such as:
+ * [is-even](https://www.npmjs.com/package/is-even)
+ * [cowsay](https://github.com/piuccio/cowsay)
+ * [left-pad](https://www.npmjs.com/package/left-pad)
+
+If you're familiar with Python, `npm` is similar to `pip` or `uv`. If you're familiar with Go, `npm` is similar to `go get`.
