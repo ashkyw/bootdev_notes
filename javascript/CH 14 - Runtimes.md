@@ -51,3 +51,56 @@ Now that `node` is working, it's important to understand that... you probably wo
  * [left-pad](https://www.npmjs.com/package/left-pad)
 
 If you're familiar with Python, `npm` is similar to `pip` or `uv`. If you're familiar with Go, `npm` is similar to `go get`.
+# DOM
+It's impossible to talk about JavaScript without mentioning its original use case: doing fancy stuff in the browser.
+
+The DOM (Document Object Model) is just an in-memory representation of an HTML document, you know, the thing that front-end devs suffer through working with on a daily basis. The [static site generator project](https://www.boot.dev/courses/build-static-site-generator-python) you did kinda built DOM from scratch when you converted markdown into in-memory nodes.
+
+## Okay, so what's it look like?
+Let's pretend we have this super cool HTML file that represents a homepage:
+```html
+<html>
+  <head>
+    <title>Princess Mononoke Fan Club</title>
+  </head>
+
+  <body>
+    <h1 id="mainHeading">A Fan Club for Mononoke Enjoyers</h1>
+    <p>
+      Join us in riveting discussion about the philosophical truths and untruths
+      revealed in the greatest metaphor of modern times.
+    </p>
+    <p>Every Tuesday at 7pm EST.</p>
+    <button id="joinButton">Join the Fun</button>
+  </body>
+</html>
+```
+When this HTML file is loaded into a browser, the browser creates a DOM in memory that our JavaScript code can interact with through a global object called [`document`](https://developer.mozilla.org/en-US/docs/Web/API/Document). For example, let's say I wanted to change the text of the `<h1>` (header) & the style of the `<p>` (paragraph) elements when a user clicks the "Join the Fun" button.
+
+First, we need to define a function that will be called when a button is clicked:
+```js
+function onJoinClick() {
+  // ...
+}
+```
+Inside the function, we can access the `h1` element by the `id` attribute we gave it & change its text content:
+```js
+function onJoinClick() {
+  document.getElementById("mainHeading").textContent = "Welcome to the Club!";
+}
+```
+Next, let's say we want to change the color of the text in the paragraph. We can access all the `p` elements & change their `style` properties:
+```js
+function onJoinClick() {
+  document.getElementById("mainHeading").textContent = "Welcome to the Club!";
+  const paragraphs = document.getElementsByTagName("p");
+  for (const p of paragraphs) {
+    p.style.color = "red";
+  }
+}
+```
+Finally, we need to register the function to be called when the button is clicked by adding an event listener:
+```js
+document.getElementById("joinButton").addEventListener("click", onJoinClick);
+```
+Now, when the user clicks the "Join the Fun" button, the text of the header will change to "Welcome to the Club!" & the color of the paragraphs will change to red.
