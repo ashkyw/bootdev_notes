@@ -104,3 +104,10 @@ Finally, we need to register the function to be called when the button is clicke
 document.getElementById("joinButton").addEventListener("click", onJoinClick);
 ```
 Now, when the user clicks the "Join the Fun" button, the text of the header will change to "Welcome to the Club!" & the color of the paragraphs will change to red.
+# ECMAScript
+ECMAScript is the standard that JavaScript is based on.
+
+Its purpose is to help JavaScript (& other languages) maintain compatibility across different runtimes. ECMAScript versions are released yearly, & they have a big impact on how we write modern JavaScript. Some notable versions include:
+ * 2009: ECMAScript 5 (ES5) introduced `strict mode` & JSON support
+ * 2015: ECMAScript 6 (ES6) introduced `let` & `const` for variable declarations
+ * 2017: ECMAScript 8 (ES8) introduced asnyc/await
