@@ -111,3 +111,13 @@ Its purpose is to help JavaScript (& other languages) maintain compatibility acr
  * 2009: ECMAScript 5 (ES5) introduced `strict mode` & JSON support
  * 2015: ECMAScript 6 (ES6) introduced `let` & `const` for variable declarations
  * 2017: ECMAScript 8 (ES8) introduced asnyc/await
+# Polyfills & Transpilers
+Most programming languages change over time. The update from Python 2 to 3 is a famous example of an insane amount of breaking changes that caused many issues for Python Developers.
+
+JavaScript has also changed over the years, but the interesting thing about being a language that primarily runs in the browser is that _you don't always control the runtime._ If you're running Python (or JS, on anything) on a _server_, then you can update your code, & at the same time update your runtime, compiler, or interpreter. With frontend JavaScript, you're at the mercy of whatever mix of out-of-date browsers your users are running.
+
+Enter **polyfills & transpilers**.
+
+A [polyfill](https://en.wikipedia.org/wiki/Polyfill_(programming)) is an extra bit of code you include to add functionality that some browsers might not support. For example, maybe Chrome allows you to use the fancy new `Array.prototype.flat()` method, but Internet Explorer 11 doesn't. You can include a polyfill (just some extra JavaScript code) that adds that method to the `Array` prototype so that your code works in both browsers.
+
+A [transpiler](https://en.wikipedia.org/wiki/Source-to-source_compiler) (in the context of adding new JavaScript features) is basically a polyfill on steroids. Instead of just adding a method here or a property there, a transpiler will take your _entire_ JavaScript file & convert it into an older version of JavaScript that is known to work in all browsers. For example, it might take your fancy `async` & `await` keywords & convert them into a bunch of `Promise` objects & `.then()` calls. [Babel](https://babeljs.io/) is the most common transpiler for JavaScript.
