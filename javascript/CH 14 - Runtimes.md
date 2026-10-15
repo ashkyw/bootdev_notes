@@ -121,3 +121,31 @@ Enter **polyfills & transpilers**.
 A [polyfill](https://en.wikipedia.org/wiki/Polyfill_(programming)) is an extra bit of code you include to add functionality that some browsers might not support. For example, maybe Chrome allows you to use the fancy new `Array.prototype.flat()` method, but Internet Explorer 11 doesn't. You can include a polyfill (just some extra JavaScript code) that adds that method to the `Array` prototype so that your code works in both browsers.
 
 A [transpiler](https://en.wikipedia.org/wiki/Source-to-source_compiler) (in the context of adding new JavaScript features) is basically a polyfill on steroids. Instead of just adding a method here or a property there, a transpiler will take your _entire_ JavaScript file & convert it into an older version of JavaScript that is known to work in all browsers. For example, it might take your fancy `async` & `await` keywords & convert them into a bunch of `Promise` objects & `.then()` calls. [Babel](https://babeljs.io/) is the most common transpiler for JavaScript.
+# Modules
+Back in the earliest days of JavaScript - when it was but a wee browser-only language that looked like bastardized Java - JavaScript files were _small_. A callback here, a dynamic element there, and a sprinkle of (gasp) [jQuery](https://jquery.com/) to make it all work.
+
+But as the web has grown, we're not just shipping a bit of interactivity to static HTML pages anymore. We're building full-fledged applications with crazy amounts of state, logic, and dependencies. In the case of [single page applications](https://en.wikipedia.org/wiki/Single-page_application), sometimes HTML is just a shell that gets filled in with JavaScript at runtime.
+
+Long story short, JS needed modules. In Go, you have packages. In Python, you have modules. Now, JavaScript also has modules - they're just a way to split your code into separate files and import the code you need across a large codebase.
+
+**Modules in JavaScript exist at the file level**, just like Python. So, if you have a file called `math.js` that looks like this:
+```js
+// math.js
+const add = (a, b) => a + b;
+const subtract = (a, b) => a - b;
+
+module.exports = {
+  add,
+  subtract,
+};
+```
+You can import & use those functions in another file like this:
+```js
+// main.js
+const { add, subtract } = require("./math.js");
+
+console.log(add(1, 2)); // 3
+console.log(subtract(1, 2)); // -1
+```
+>[!NOTE]
+> This is [CommonJS](https://en.wikipedia.org/wiki/CommonJS) syntax
