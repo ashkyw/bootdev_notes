@@ -177,3 +177,29 @@ const { add, subtract } = require("./math.js");
 console.log(add(1, 2)); // 3
 console.log(subtract(1, 2)); // -1
 ```
+# Strict Mode
+JavaScript is a loosey-goosey language. As such, it's easy to make mistakes that are hard to catch until you get a bug report.
+
+[Strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) is a way to opt-in to a more restrictive set of rules that help you catch errors earlier. It was introduced in ES5. Some of the big differences between strict mode & "normal" JavaScript are:
+
+ * Eliminates some silent errors by throwing them
+ * Fixes some mistakes that make it difficult for JS engines to optimize code. Strict mode code can sometimes run faster than identical code that's not in strict mode.
+ * Prohibits some syntax likely to be defined in future versions of ECMAScript
+ * `this` is `undefined` inside a function that's called without an object, instead of being the global object
+
+Long story short, when possible, **strict mode is a good idea**.
+
+To enable strict mode, you just need to "use strict" at the top of your file:
+```js
+"use strict";
+// code
+```
+You _con_ also enable strict mode for a single function:
+```js
+function strictFunction() {
+ "use strict";
+ // code
+}
+```
+## Strict Mode in Modules
+Here's the best part: you only need `"use strict";` at the top of non-es6 modules. ES6 modules are always in strict mode by default. That goes for the browser & Node.js
