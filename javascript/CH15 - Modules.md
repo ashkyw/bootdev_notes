@@ -80,3 +80,27 @@ function strictFunction() {
 ```
 ## Strict Mode in Modules
 Here's the best part: you only need `"use strict";` at the top of non-es6 modules. ES6 modules are always in strict mode by default. That goes for the browser & Node.js
+
+# ES6 Modules
+
+ES6 modules are the preferred way of doing modules in JavaScript. They're (now) built into the language and are supported in modern browsers and Node.js. That said, there are still some [gotchas](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) to be aware of... which we'll cover.
+
+## The Syntax
+
+The syntax for ES6 modules is drop-dead simple. You can export stuff from a module using the [`export`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) keyword, and import stuff using the [`import`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) keyword. Let's look at our math example again:
+
+## Exporting
+```js
+// math.js
+export const add = (a, b) => a + b;
+export const subtract = (a, b) => a - b;
+```
+
+## Importing
+```js
+// main.js
+import { add, subtract } from "./math.js";
+
+console.log(add(1, 2)); // 3
+console.log(subtract(1, 2)); // -1
+```js
