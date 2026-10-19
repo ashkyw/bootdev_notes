@@ -103,4 +103,11 @@ import { add, subtract } from "./math.js";
 
 console.log(add(1, 2)); // 3
 console.log(subtract(1, 2)); // -1
-```js
+```
+# Node.js Modules
+By default, Node.js uses the CommonJS syntax for modules. There are two ways you can manually switch to ES6 module syntax:
+
+  1. Add `"type": "module"` to the top-level object in your `package.js` file
+  2. Rename your module to `.mjs` instead of `.js`
+
+The first option is cleaner & easier to manage. But remember, if you're not using ES6 modules, your code will _not_ be in strict mode by default!
