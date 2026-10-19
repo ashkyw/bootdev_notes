@@ -111,3 +111,19 @@ By default, Node.js uses the CommonJS syntax for modules. There are two ways you
   2. Rename your module to `.mjs` instead of `.js`
 
 The first option is cleaner & easier to manage. But remember, if you're not using ES6 modules, your code will _not_ be in strict mode by default!
+
+# Browser Modules
+Modern browsers now support ES6 modules, but there are a few things to be aware of. If you HTML has "normal" old script tags, those scripts will _not_ be treated as modules. They will execute one after the other, in the order they appear in the HTML file.
+```html
+<script src="meFirst.js"></script>
+<script src="meSecond.js"></script>
+```
+If you want to use ES6 modules, you need to use the `type="module"` attribute on your script tags.
+```html
+<script type="module" src="meFirst.js"></script>
+<script type="module" src="meSecond.js"></script>
+```
+Modules have a few great advantages:
+  * Stuff defined in a module is _not_ in the global scope. To be accessed from another module, it must be exported.
+  * Modules are deferred by default, meaning they only run after the document has been parsed.
+  * Strict mode is enable by default.
