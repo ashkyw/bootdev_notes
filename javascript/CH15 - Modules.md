@@ -127,3 +127,60 @@ Modules have a few great advantages:
   * Stuff defined in a module is _not_ in the global scope. To be accessed from another module, it must be exported.
   * Modules are deferred by default, meaning they only run after the document has been parsed.
   * Strict mode is enable by default.
+
+# Default Exports
+
+Default exports are often used when you want to export a _single value_ from a module.
+```js
+// math.js
+
+export const add = (a, b) => a + b;
+export const subtrackt = (a, b) => a - b;
+```
+```js
+// main.js
+
+import { add, subtract } from "./math.js";
+```
+This exports _two_ functions. Sometimes a dev may want to just export one thing, instead they can do this:
+```js
+// math.js
+
+const add = (a, b) => a + b;
+const subtract = (a, b) => a - b;
+
+export default add;
+```
+Then when it's imported, you don't need to use {} syntax:
+```js
+// main.js
+
+import add from "./math.js"; // no curly braces
+```
+You can even have default _&_ named exports:
+```js
+// math.js
+
+export const subtract = (a, b) => a - b; // named export
+
+const add = (a, b) => a + b;
+export default add; // default export
+```
+(You typically wouldn't do this)
+## Should I use Default Exports?
+You can, but what if you want to export more things later? Now you have to refactor all of your imports & exports. It's a pain.
+
+# Bundlers
+
+[Bundlers](https://webpack.js.org/concepts/) are tools that allow you to _write_ code in a modular & easy-to-manage way, and then _bundle_ it in a way that's optimized for production. For example, you probably want a giant front-end application to exist in your codebase as many hundreds of files, but you want to serve it to your visitors as a single file or one file per page.
+
+The point is, a bundler takes care of transforming your code from _how you're writing it_ to _how you want it to be served._ That said, popular bundlers often do a whole suite of important things, like:
+
+  * **Bundling**: Thus the name
+  * **Minification:** Making your code smaller by removing unnecessary whitespace (useful when you have to serve your code to a browser via a slow connection)
+  * **Code Splitting:** Breaking your code into smaller chunks that can be loaded on demand.
+  * **Tree Shaking:** Removing unused code from your final bundle.
+  * **Asset Optimization:** Optimizing images, fonts, & other assets i.e. converting images to WebP format or reducing their size.
+  * **Source Maps:** Building files that allow you to debug your code in the browser as if it were still in its original form.
+
+For a long time, [Webpack](https://webpack.js.org/) was the most popular bundler. It's still used, but [Vite](https://vitejs.dev/) has been gaining a lot of traction lately. Vite is often quite a bit faster than Webpack, & it's seemingly much easier to configure. It's built on top of (and adds more features to) [Rollup](https://rollupjs.org/), which is another popular bundler.
