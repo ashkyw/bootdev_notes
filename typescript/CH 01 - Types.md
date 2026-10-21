@@ -57,4 +57,29 @@ The _real_ question is why should I use TypeScript instead of JavaScript? TypeSc
 
 In short, it adds static typing to JavaScript. 
 
-[!Story Time](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/what-is-typescript-1920x1080.mp4)
+# [!Story Time](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/what-is-typescript-1920x1080.mp4)
+TypeScript was developed internally at Microsoft by C# devs who wanted static typing in their JavaScript. It was released publically in 2012. While its execution speed isn't necessarily blazing fast, its rise in popularity is.
+
+# What is TypeScript
+TypeScript is a _language_, but the official _implementation_ of TypeScript is the [TypeScript compiler](https://code.visualstudio.com/docs/typescript/typescript-compiling), `tsc`. Its job is simple: take TypeScript code, ensure it's valid, then compile it into JavaScriptcode.
+> [!]
+> The compiler (`tsc`) has been written in TypeScript for a long time, but _very_ recently, the TypeScript team has started a [port to Golang](https://github.com/microsoft/typescript-go)! They've reported compilation speed improvements of ~10x
+
+TypeScript is _not_ supported natively by most JavaScript engines, so it needs to be compiled into equivalent JavaScript code before it can run. This interesting fact, that TypeScript is only type-checked _before_ it's run has led to an interesting question:
+
+> Is TypeScript basically just a really good [linter](https://en.wikipedia.org/wiki/Lint_(software))?
+
+Honestly? Yeah, essentially. Technically it does a _lot_ more than your standard linter, but from a practical perspective, its primary benefit is to do static analysis on your _almost-JavaScript_ code & catch bugs before they happen.
+
+## Compiled to... JavaScript?
+TypeScript is interesting in that it's "compiled", but not in the traditional (compiled to binary) sense. Instead, it's compiled to JavaScript. So it's not really compiled for _performance_ reasons, but rather _compatibility_ reasons.
+
+**The goal of TypeScript is to write JavaScript code that's eaiser to work with**.
+
+### Assignment
+Fix the compilation error by changing the _value_ of `supportAiPort` to the _number_ `3000`
+```ts
+const supportAiPort: number = 3000;
+console.log(`Starting server on port ${supportAiPort}...`);
+console.log(`The type of supportAiPort is ${typeof supportAiPort}`);
+```
