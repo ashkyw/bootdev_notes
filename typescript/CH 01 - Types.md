@@ -29,3 +29,32 @@ Fix `supportAiLogs` so it's a string
 const supportAiLogs: string = "CRITICAL: Boots cut the power cord again";
 console.log(supportAiLogs);
 ```
+# Type Inference
+[Type inference](https://www.typescriptlang.org/docs/handbook/type-inference.html) lets TypeScript determine a variable's type _from its value_, so we don't need to write obvious annotations.
+```ts
+// explicit (unnecessary)
+const bootupLog: string = "starting server...";
+
+// inferred (preferred)
+const bootupLog = "starting server...";
+```
+Both versions are type-safe, but the inferred version is shorter.
+### Assignment
+Fix the type error:
+```ts
+const supportAiLogs = "WARNING: The break fridge smells like salmon";
+console.log(supportAiLogs);
+```
+#  Why TypeScript
+TypeScript is a [superset](https://www.cuemath.com/algebra/superset/) of JavaScript, meaning that:
+  * All JavaScript code is valid TypeScript code.
+  * All TypeScript code is not necessarily valid JavaScript code.
+
+The _real_ question is why should I use TypeScript instead of JavaScript? TypeScript is fantastig because it:
+  * Catches a ton of bugs & errors at compile time (fact)
+  * Makes your code more readable & maintainable (opinion)
+  * Makes it eaiser to refactor & scale your codebase (opinion)
+
+In short, it adds static typing to JavaScript. 
+
+[!Story Time](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/what-is-typescript-1920x1080.mp4)
