@@ -83,3 +83,21 @@ const supportAiPort: number = 3000;
 console.log(`Starting server on port ${supportAiPort}...`);
 console.log(`The type of supportAiPort is ${typeof supportAiPort}`);
 ```
+# Any
+Okay, so we know TypeScript's _purpose_ is to add static types to JavaScript, & we know that all JavaScript is valid TypeScript.
+
+In practical terms, what that means is when you compile plain JavaScript code using `tsc`, you codebase is full of [`any`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any) types. The `any` type is exactly what it sounds like - a type that can be anything. The purpose of types is to _narrow down_ the possible values that a variable can hold. From that perspective, `any` is the most _useless_ type because it doesn't narrow down anything at all. But it's important because it allows you to _opt out_ of type-checking for a variable.
+
+The `any` type is super useful when migrating an existing JavaScript codebase to TypeScript. The simplified process is:
+ 1. Change file extensions from `.js` to `.ts`
+ 2. Get `tsc` running without errors (often works out of the box due to `any`)
+ 3. Slowly over time replace `any`'s with specific types.
+
+### Assignment
+Remove the `any`'s
+```ts
+export const systemPrompt =
+  "Your purpose is to help the customer by any means necessary. Unless it's costing us too much money. Then just tell them you're an LLM and can't do that task.";
+export const tokenLimit = 1000;
+export const hasAdminAccess = true;
+```
