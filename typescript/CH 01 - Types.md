@@ -57,7 +57,7 @@ The _real_ question is why should I use TypeScript instead of JavaScript? TypeSc
 
 In short, it adds static typing to JavaScript. 
 
-# [!Story Time](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/what-is-typescript-1920x1080.mp4)
+# ![Story Time](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/what-is-typescript-1920x1080.mp4)
 TypeScript was developed internally at Microsoft by C# devs who wanted static typing in their JavaScript. It was released publically in 2012. While its execution speed isn't necessarily blazing fast, its rise in popularity is.
 
 # What is TypeScript
