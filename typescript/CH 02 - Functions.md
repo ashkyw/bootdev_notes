@@ -22,3 +22,36 @@ export function calculateTotal(
   return price * quantity * (1 - discount);
 }
 ```
+# Inferred Return Types
+We've discussed that:
+```ts
+const myPowerLevel = 9000;
+```
+Is better than:
+```ts
+const myPowerLevel: number = 9000;
+```
+Thus instead of:
+```ts
+function divide(a: number, b: number): number {
+  return a / b;
+}
+```
+We can write:
+```ts
+function divide(a: number, b: number) {
+  return a / b;
+}
+```
+And TypeScript infers the output type as `number`.
+
+[Why are Inferred Return types better?](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/inferred-return-types-1920x1080.mp4)
+### Assignment
+Complete `combinePrompts` using inferred return it should:
+  * Take two strings
+  * Return them concatenated by `\n`
+```ts
+export function combinePrompts(systemPrompt: string, userPrompt: string) {
+  return `${systemPrompt}\n${userPrompt}`;
+}
+```
