@@ -139,13 +139,13 @@ export function farewellCustomer(name: string) {
   2. **Structural Typing**:
      TypeScript checks whether types match by their _shape_, not their name. When you define:
      ```ts
-     export type SupportResponse = (name: string) => string;
+       export type SupportResponse = (name: string) => string;
      ```
      and then write:
      ```ts
-    export function greetCustomer(name: string) {
-      return `Hello ${name}...`;
-    }
+       export function greetCustomer(name: string) {
+         return `Hello ${name}...`;
+       }
      ```
 TypeScript looks at `greetCustomer` and sees:
   * Takes a `string`
