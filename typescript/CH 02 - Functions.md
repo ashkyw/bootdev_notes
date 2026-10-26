@@ -114,6 +114,8 @@ function setLoggerTimeout(loggerCallback: LoggerCallback, delay: number){
 // something
 }
 ```
+>![Tip]
+>A function type alias describes a function's shape; it doesn't declare or create functions. You don't need to explicitly use the alias in your function declarations – as long as the signature matches, the function "conforms to" the type. 
 This is much easier to read an reuse. 
 ### Assignment
 1. Create and `export` a new `SupportResponse` function that takes a string & returns a string
