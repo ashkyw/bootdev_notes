@@ -94,3 +94,31 @@ and both of these functions are of that type:
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 ```
+# Type Alias
+It can get really cumbersome to write out long custom types whenever you want to use them. For example, maybe we have a function that accepts another function as input.
+```ts
+function setLoggerTimeout(
+  loggerCallback: (s1: string, s2: string) => string,
+  delay: number,
+) {
+  // do something
+}
+```
+That's a really nasty function signature. Let's use [`type keyword`](https://www.typescriptlang.org/docs/handbook/declaration-files/by-example.html#reusable-types-type-aliases) instead to create an aliasaa
+```ts
+type LoggerCallback = (s1: string, s2: string) => string;
+```
+Now whenever we use this specific kind of function we can just use `LoggerCallback`:
+```ts
+function setLoggerTimeout(loggerCallback: LoggerCallback, delay: number){
+// something
+}
+```
+This is much easier to read an reuse. 
+### Assignment
+1. Create and `export` a new `SupportResponse` function that takes a string & returns a string
+2. Update `greetCustomer` so its signature conforms to `SupportResponse`
+3. Repeat for `farewellCustomer`
+```ts
+
+```
