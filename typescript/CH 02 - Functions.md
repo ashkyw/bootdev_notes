@@ -122,5 +122,34 @@ This is much easier to read an reuse.
 2. Update `greetCustomer` so its signature conforms to `SupportResponse`
 3. Repeat for `farewellCustomer`
 ```ts
+export type SupportResponse = (name: string) => string;
 
+export function greetCustomer(name: string) {
+  return `Hello ${name}, welcome to Support.ai! How can I assist you today?`;
+}
+
+export function farewellCustomer(name: string) {
+  return `Goodbye ${name}, have a great day!`;
+}
 ```
+#### Notes from the Boots AI
+  1. **Parameter naming vs. types**:
+     In `greetCustomer(SupportResponse: string)`, `SupportResponse` became the _name_ of the parameter variable (holding a string), not its type. It
+     technically worked because the function still took one string and returned a string, but idiomatic code would keep the parameter name as `name: string`.
+  2. **Structural Typing**:
+     TypeScript checks whether types match by their _shape_, not their name. When you define:
+     ```ts
+     export type SupportResponse = (name: string) => string;
+     ```
+     and then write:
+     ```ts
+    export function greetCustomer(name: string) {
+      return `Hello ${name}...`;
+    }
+     ```
+TypeScript looks at `greetCustomer` and sees:
+  * Takes a `string`
+  * Returns a `string`
+
+Because the shape matches `(name: string) => string`, TypeScript allows `greetCustomer` to be assigned to any variable or parameter typed as `SupportResponse`.
+You don't have to explicitly mention `SupportResponse` inside `greetCustomer` at all for it to satisfy the type.
