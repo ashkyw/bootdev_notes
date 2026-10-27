@@ -199,5 +199,11 @@ console.log(result);
 2. If `id` is a string, parse the number out of it
 3. Return the string `Processing ticket: ID` where `ID` is the ID number or the parsed number from the project code.
 ```ts
-
+export function getTicketInfo(id: string | number) {
+  if (typeof id === "string") {
+    const [_, idNum] = id.split("-");
+    return `Processing ticket: ${idNum}`;
+  }
+  return `Processing ticket: ${id}`;
+}
 ```
