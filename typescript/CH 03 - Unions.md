@@ -62,5 +62,13 @@ There are two rules to keep in mind:
   * `pro` tier = `0.05`
   * `enterprise` tier = `0.03`
 ```ts
-
+export function calculateApiCost(numReqs: number, tier?: string) {
+  let cost = 0.10;
+  if (tier === "pro") {
+    cost = 0.05;
+  } else if (tier === "enterprise") {
+      cost = 0.03;
+  }
+    return numReqs * cost;
+}
 ```
