@@ -38,3 +38,29 @@ export function getTicketInfo(id: string | number) {
   return `Processing ticket: ${id}`;
 }
 ```
+# Optional Parameters
+You can specify function parameters as _optional_ with a question mark (`?`) after the name:
+```ts
+function greet(name: string, title?: string): string {
+  if (title) {
+    return `Hello, ${title} ${name)!`;
+  }
+  return `Hello, ${name)!`;
+}
+
+greet("Gandalf"); // Hello, Gandalf!
+greet("Gandalf", "Wizard"); // Hello, Wizard Gandalf!
+```
+There are two rules to keep in mind:
+  1. Optional parameters must come _**after**_ all required parameters.
+  2. Optional parameters have an `undefined` automatically unioned on the specified type. If the value is omitted, it's `undefined` instead of the specified type.
+
+### Assignment
+1. Modify the `calculateApiCost` function to make `tier` optional
+2. `calculateApiCost` should return the cost of api calls:
+  * No tier, or tier not recognized = `0.10`
+  * `pro` tier = `0.05`
+  * `enterprise` tier = `0.03`
+```ts
+
+```
