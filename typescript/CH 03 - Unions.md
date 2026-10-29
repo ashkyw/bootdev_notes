@@ -72,3 +72,43 @@ export function calculateApiCost(numReqs: number, tier?: string) {
     return numReqs * cost;
 }
 ```
+# Default Parameters
+Default parameters provide fallback values for arguments that callers can omit.
+```ts
+function newCharacter(name: string, role: string = "warrior"): string {
+  return `${name} is a ${role}`;
+}
+
+console.log(newCharacter("Gandalf"));
+// Gandalf is a warrior
+console.log(newCharacter("Gandalf", "wizard"));
+// Gandalf is a wizard
+```
+When you use default parameters, you do _not_ need to mark the parameter as optional by using `?`. When using a default value, the parameter type can be automatically inferred, so don't specify it (unless you need to widen the type):
+```ts
+function countdown(start = 10): void {
+  // start is a number
+  console.log(`Counting down from ${start}...`);
+}
+```
+### Assignment
+1. Complete `estimateResponseTime`
+2. Calculate the estimated response time based on `modelType`
+     * `text`: `2+(0.01 * prompLength)` seconds
+     * `image`: `5+(0.02 * prompLength)` seconds
+     * `code`: `3+(0.05 * prompLength)` seconds
+     * otherwise `0`
+3. Return the final time in seconds, rounded to the nearest whole number
+```ts
+export function estimateResponseTime(promptLength = 100, modelType = "text") {
+  let time = 0;
+  if (modelType === "text") {
+    time = 2 + (0.01 * promptLength);
+  } else if (modelType === "image") {
+    time = 5 + (0.02 * promptLength);
+  } else if (modelType === "code") {
+    time = 3 + (0.05 * promptLength);
+  }
+  return Math.round(time);
+}
+```
