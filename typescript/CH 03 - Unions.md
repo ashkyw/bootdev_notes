@@ -159,5 +159,13 @@ function move(direction: Direction) {
 2. Update the `setPriority` function to accept the `Priority` typed instead of any `string`
 3. Complete the `setPriority` function.
 ```ts
+export type Priority = "low" | "medium" | "high" | "critical";
 
+export function setPriority(level: Priority) {
+  if (level === "low") return 0;
+  if (level === "medium") return 1;
+  if (level === "high") return 2;
+  if (level === "critical") return 3;
+  return 0;
+}
 ```
