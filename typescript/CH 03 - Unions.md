@@ -112,3 +112,52 @@ export function estimateResponseTime(promptLength = 100, modelType = "text") {
   return Math.round(time);
 }
 ```
+# Literal Types
+Many other statically typed languages don't have nearly as extensive & powerful type systems as TypeScript. It should be obvious, since it's in the name, but TypeScript has a massive type system.
+
+[Literal Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types) are incredibly powerful for narrowing the possible values of a variable.
+
+  * A string can have an infinite number of values.
+  * A number can have an infinite number of values
+
+So what if we want to declare a "direction" variable?
+```ts
+function move(direction: string) {
+  // Implementation...
+}
+```
+This sucks, direction can be any string! To be fair, in many other languages enums are used to solve this problem. While TypeScript does have enums, literal types are a more lightweight solution. I literal value can be used as a type:
+```ts
+function move(direction: "north") {
+  // Implementation...
+}
+```
+Now `direction` can _only_ be "north".
+# Value Unions
+Let's look at the last example of a literal type:
+```ts
+function move(direction: "north") {
+  // Implementation...
+}
+```
+Now, let's make it a bit more useful & combine that idea with a union type:
+```ts
+function move(direction: "north" | "south" | "east" | "west") {
+  // Implementation...
+}
+```
+But, let's refactor it to make a new "Direction" type that we can reuse:
+```ts
+type Direction = "north" | "south" | "east" | "west";
+
+function move(direction: Direction) {
+  // Implementation...
+}
+```
+### Assignment
+1. Create and `export` a new `Priority` type.
+2. Update the `setPriority` function to accept the `Priority` typed instead of any `string`
+3. Complete the `setPriority` function.
+```ts
+
+```
