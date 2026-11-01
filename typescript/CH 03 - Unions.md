@@ -169,3 +169,49 @@ export function setPriority(level: Priority) {
   return 0;
 }
 ```
+# Template Literal Types
+This is one of the more unhinged features of TypeScript, but it is really cool & insanely powerful when you find a good use case for it.
+Recall literal types & type unions:
+```ts
+type Class = "wizard" | "warrior" | "rogue";
+```
+Well, you can also create literal types using string templates:
+```ts
+type Hero = `elf ${Class}`;
+```
+The type of `Class` expands _automatically_ to the possible values, so the above is the same as:
+```ts
+type Hero = "elf wizard" | "elf warrior" | "elf rogue";
+```
+You can also get crazy & combine all the combinations of two types:
+```ts
+type Class = "wizard" | "warrior" | "rogue";
+type Race = "elf" | "human" | "dwarf";
+type Hero = `Hero: ${Race} ${Class}`;
+// Hero: elf wizard | Hero: elf warrior | Hero: elf rogue | Hero: human wizard | Hero: human warrior | Hero: human rogue | Hero: dwarf wizard | Hero: dwarf warrior | Hero: dwarf rogue
+```
+You can also create types that enforce a simple pattern match:
+```ts
+type LogRecord = `${string}: ${number}`;
+// this is valid because it's a string followed by a colon and a number
+const criticalErr: LogRecord = "CRITICAL: 69";
+
+// these are all invalid
+const criticalErr: LogRecord = "CRITICAL 92";
+const criticalErr: LogRecord = "CRITICAL: 92a";
+const criticalErr: LogRecord = "92: CRITICAL";
+```
+### Assignment
+1. Create & `export` `LogMessage` type. Format `LogLevel: string`
+2. Create & `export` `LogSource` type. Format `LogSource_number`
+```ts
+export type LogLevel = "info" | "warn" | "error";
+export type LogSourceType = "api" | "database" | "auth";
+
+export type LogMessage = `${LogLevel}: ${string}`;
+export type LogSource = `${LogSourceType}_${number}`;
+
+export function createLogEntry(message: LogMessage, source: LogSource): string {
+  return `[${source}] LOG - ${message}`;
+}
+```
