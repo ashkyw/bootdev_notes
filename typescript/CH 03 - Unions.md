@@ -243,5 +243,5 @@ type MoveMessage =
   `The ${Class} moves ${Distance}, ${Distance}, then ${Distance} spaces.`;
 ```
 When hovering over tha `MoveMessage` type in an IDE you'd see:
-[]()
+![Type Masturabtion](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/Big%20O.jpeg)
 There are still over `5,000` combinations! TypeScript doesn't like that - it can slow down the IDE & compilation times drastically. So, at a certain point `tsc` says "enough is enough".
