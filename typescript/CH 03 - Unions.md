@@ -215,3 +215,33 @@ export function createLogEntry(message: LogMessage, source: LogSource): string {
   return `[${source}] LOG - ${message}`;
 }
 ```
+# Giant Unions
+What happens if we create an absolute _monstrosity_ of a union type? It can happen faster than you'd thing. Let's say we're building a `MoveMessage` type describing a message about a charcter's movement in a game:
+```ts
+type Distance = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+type Class =
+  | "Warrior"
+  | "Rogue"
+  | "Mage"
+  | "Cleric"
+  | "Paladin"
+  | "Druid"
+  | "Hunter"
+  | "Shaman";
+type MoveMessage =
+  `The ${Class} moves ${Distance}, ${Distance}, ${Distance}, ${Distance}, then ${Distance} spaces.`;
+
+const message: MoveMessage = "The Warrior moves 6, 2, 5, 4, then 7 spaces.";
+```
+Chances are good that we'll run into the following error:
+> **Error: Union type too complex to represent.**
+
+This happens because we've tried to create an explicit union of types that has **exploded** in size. There are hundreds of thousands of possible combinations in the type above. Even if we remove a of the distance values:
+
+```ts
+type MoveMessage =
+  `The ${Class} moves ${Distance}, ${Distance}, then ${Distance} spaces.`;
+```
+When hovering over tha `MoveMessage` type in an IDE you'd see:
+[]()
+There are still over `5,000` combinations! TypeScript doesn't like that - it can slow down the IDE & compilation times drastically. So, at a certain point `tsc` says "enough is enough".
