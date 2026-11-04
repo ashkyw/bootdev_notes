@@ -89,3 +89,20 @@ export function interpolateComment(
   }
 }
 ```
+> [!WARNING]
+> This can easily be confused with the similar, but different, [spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
+> Pay attention to the [] syntax in the function signature
+
+### Assignment
+Complete the `formatLabels` function
+```ts
+export function formatLabels(...labels: string[]) {
+  if (labels.length === 0) {
+    return "No Labels";
+  }
+  if (labels.length === 1) {
+    return `Label: ${labels[0]}`;
+  }
+  return `Labels: ${labels.join(", ")}`;
+}
+```
