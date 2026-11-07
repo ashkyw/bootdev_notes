@@ -37,3 +37,61 @@ SUBJECT: ${mail.urgent ? "[URGENT] " : ""}${mail.subject}
 BODY: ${mail.body}`;
 }
 ```
+# Extra Properties
+_Most of the time_, when you pass an object to a function in TypeScript, it's:
+    * OK to have _more_ properties than those defined in the function's parameter type
+    * Not OK to have _missing_ properties
+
+However, when you pass an object _literal_ directly to a function, TypeScript performs what's called "excess property checking". Which means it _also_ will not allow extra properties.
+
+For example, say we have this type:
+```ts
+type Spaceship = {
+  name: string;
+  speed: number;
+};
+```
+and we make an object with one extra property:
+```ts
+const Falcon = {
+  name: "Millennium Falcon",
+  speed: 75,
+  weapons: 4, 
+};
+```
+We can pass this object to a function that expects a `Spaceship`:
+```ts
+function pilot(ship: Spaceship) {
+  console.log(`Piloting ${ship.name} at ${ship.speed} light-years per hour` );
+}
+// this is fine
+pilot(falcon);
+```
+But interestingly, if we pass in the same object _literal_ (no variable assignment), TypeScript will throw an error:
+```ts
+// Error: Object literal may only specify known properties, and 'weapons' does not exist in type 'Spaceship'.
+pilot({ name: "Millennium Falcon", speed: 75, weapons: 4 });
+```
+_It's also worth noting that many of these kinds of rules are configurable in the [`tsconfig.json`](https://www.typescriptlang.org/tsconfig)_file_.
+### Assignment
+Fix the `Mail` type
+```ts
+export type Mail = {
+  from: string;
+  to: string[];
+  cc: string[];
+  subject: string;
+  body: string;
+  urgent: boolean;
+};
+
+// don't touch below this line
+
+export function processMail(mail: Mail) {
+  return `FROM: ${mail.from}
+TO: ${mail.to.join(", ")}
+CC: ${mail.cc.join(",")}
+SUBJECT: ${mail.urgent ? "[URGENT] " : ""}${mail.subject}
+BODY: ${mail.body}`;
+}
+```
