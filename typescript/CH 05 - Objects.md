@@ -105,7 +105,7 @@ type Superhero = {
 };
 ```
 That means that the type of `.cape` is actually `boolean | undefined`, just like optional function parameters
->[TIP]
+> [!TIP]
 > Do _not_ go overboard using optional properties. Require all the fields that **should** be there. It will make your life easier with and you won't
 > have so many runtime checks that look like this:
 
