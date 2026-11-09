@@ -138,3 +138,71 @@ SUBJECT: ${mail.urgent ? "[URGENT] " : ""}${mail.subject}
 BODY: ${mail.body}`;
 }
 ```
+# Empty Object Type
+Let's says we create a new empty object:
+```ts
+let newUser = {};
+```
+Then go to add properties to it later:
+```ts
+// Propertiy 'name' does not exist on type '{}'
+newUser.name = "Lane";
+```
+**TypeScript doesn't like that!**
+
+It make sense, we never told TypeScript which properties to allow, but here's what's really crazy: _this_ is actually allowed:
+```ts
+let newUser = {};
+newUser = "Lane";
+```
+That is correct: you can reassign the variable which initially held an empty object to a _string_. In fact, you can reassign it to anything except `null` or `undefined`, because everything else is technically an object! So, to get back to our first example, what you probably _want_ to do is just predefine the allowed fields:
+```ts
+type User = {
+  name: string;
+};
+
+let newUser: User = {
+  name: "Lane",
+};
+```
+### Assignment
+Fix the `Address` type
+```ts
+export type Address = {
+  name: string;
+  domain: string;
+};
+
+// don't touch below this line
+
+export type Mail = {
+  from: Address;
+  to: Address[];
+  subject: string;
+  body: string;
+  urgent: boolean;
+  cc?: Address[];
+};
+
+export function processMail(mail: Mail) {
+  let addressees = "";
+  for (const addressee of mail.to) {
+    addressees += `${addressee.name}@${addressee.domain}, `;
+  }
+  addressees = addressees.slice(0, -2);
+
+  let copies = "";
+  if (mail.cc) {
+    copies = "\nCC: ";
+    for (const addressee of mail.cc) {
+      copies += `${addressee.name}@${addressee.domain}, `;
+    }
+    copies = copies.slice(0, -2);
+  }
+
+  return `FROM: ${mail.from.name}@${mail.from.domain}
+TO: ${addressees}${copies}
+SUBJECT: ${mail.urgent ? "[URGENT] " : ""}${mail.subject}
+BODY: ${mail.body}`;
+}
+```
