@@ -95,3 +95,46 @@ SUBJECT: ${mail.urgent ? "[URGENT] " : ""}${mail.subject}
 BODY: ${mail.body}`;
 }
 ```
+# Optional Object Properties
+Optional properties can be added to an object type with the `?` operator.
+```ts
+type Superhero = {
+  name: string;
+  strength: number;
+  cape?: boolean // cape is optional
+};
+```
+That means that the type of `.cape` is actually `boolean | undefined`, just like optional function parameters
+>[TIP]
+> Do _not_ go overboard using optional properties. Require all the fields that **should** be there. It will make your life easier with and you won't
+> have so many runtime checks that look like this:
+
+```ts
+function fight(superhero: Superheor) {
+  if (!superhero.cape) {
+  // something
+  }
+// happy path thing
+}
+```
+### Assignment
+Fix the `Mail` type.
+```ts
+export type Mail = {
+  from: string;
+  to: string[];
+  subject: string;
+  body: string;
+  urgent: boolean;
+  cc?: string[];
+};
+
+// don't touch below this line
+
+export function processMail(mail: Mail) {
+  return `FROM: ${mail.from}
+TO: ${mail.to}${!mail.cc ? "" : "\nCC: " + mail.cc}
+SUBJECT: ${mail.urgent ? "[URGENT] " : ""}${mail.subject}
+BODY: ${mail.body}`;
+}
+```
