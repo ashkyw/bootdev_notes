@@ -206,3 +206,91 @@ SUBJECT: ${mail.urgent ? "[URGENT] " : ""}${mail.subject}
 BODY: ${mail.body}`;
 }
 ```
+# Discriminated Unions
+A union of two primitive types, like `string | number`, is really simple: it's a string or a number. The same is true of object types, but it can be tricky to know which type you're dealing with. That's where "discriminant properties" (or "tags") come in handy. It's just a property that tells you which type you're dealing with, & makes it easy to use conditional logic to handle each type. What is special about it is it can only be one value.
+
+Unions of objects with a discriminant property are called ["discriminated unions"](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) or "tagged unions".
+```ts
+type MultipleChoiceLesson = {
+  kind: "multiple-choice"; // Discriminant Property
+  question: string;
+  studentAnswer: string;
+  correctAnswer: string;
+};
+
+type CodingLesson = {
+  kind: "coding"; // Discriminant property
+  studentCode: string;
+  solutionCode: string;
+};
+
+type Lesson = MultipleChoiceLesson | CodingLesson;
+
+function isCorrect(lesson: Lesson): boolean {
+  switch (lesson.kind) {
+    case "multiple-choice":
+      return lesson.studentAnswer === lesson.correctAnswer;
+    case "coding":
+      return lesson.studentCode === lesson.solutionCode;
+  }
+}
+```
+Discriminated unions are **really** useful when you need to account for another new shape because TypeScript can ensure you handle all the possible cases. If we make these changes:
+```ts
+type TrueFalseLesson = {
+  kind: "true-false"; // Discriminant property
+  question: string;
+  studentAnswer: boolean;
+  correctAnswer: boolean;
+};
+
+type Lesson = MultipleChoiceLesson | CodingLesson | TrueFalseLesson;
+```
+TypeScript will throw an error: `Function lacks ending return statement and return type does not include 'undefined'`. Which reminds us to add a third case:
+```ts
+function isCorrect(lesson: Lesson): boolean {
+  switch (lesson.kind) {
+    case "multiple-choice":
+      return lesson.studentAnswer === lesson.correctAnswer;
+    case "coding":
+      return lesson.studentCode === lesson.solutionCode;
+    case "true-false":
+      return lesson.studentAnswer === lesson.correctAnswer;
+  }
+}
+```
+> [!TIP]
+> You don't _have_ to use `kind` as the tag. But the convention generally does. Follow the convention.
+
+### Assignment
+Create the `Address` type
+```ts
+type InternalAddress = {
+  kind: "internal";
+  firstName: string;
+  lastName: string;
+};
+
+type ExternalAddress = {
+  kind: "external";
+  username: string;
+  domain: string;
+};
+
+// don't touch below this line
+
+export type Address = InternalAddress | ExternalAddress;
+
+export function formatAddresses(addresses: Address[]) {
+  let formatted = "";
+  for (const address of addresses) {
+    if (address.kind === "internal") {
+      formatted += `${address.firstName}.${address.lastName}@support.ai, `;
+    }
+    if (address.kind === "external") {
+      formatted += `${address.username}@${address.domain}, `;
+    }
+  }
+  return formatted.slice(0, -2);
+}
+```
