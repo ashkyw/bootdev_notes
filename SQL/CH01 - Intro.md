@@ -127,3 +127,27 @@ SELECT
 FROM
   users;
 ```
+#NoSQL vs. SQL
+When talking about SQL databases, we also have to mention the elephant in the room: [NoSQL](https://en.wikipedia.org/wiki/NoSQL).
+
+Put simply, a NoSQL database is a database that does _not_ use SQL. Each NoSQL database system typically has its own way of writing and executing queries. For example, MongoDB uses MQL (MongoDB Query Language), and ElasticSearch simply has a JSON API.
+
+While most relational databases are fairly similar, NoSQL databases tend to be unique & are used for more niche purpose. Some of the main differences between SQL & NoSQL databases are:
+
+  1. NoSQL databases are usually non-relational; SQL databases are usually [relationl](https://cloud.google.com/learn/what-is-a-relational-database).
+  2. SQL databases usually have a defined schema; NoSQL databases usually have a dynamic schema.
+  3. SQL databases are table-based; NoSQL databases have a variety of different storage methods, such as document, key-value, graph, wide column, & more.
+
+[Video](https://storage.googleapis.com/qvault-webapp-dynamic-assets/lesson_videos/sql-vs-no-sql-s-1920x1080.mp4)
+
+## NoSQL databases
+ * [Document Database](https://en.wikipedia.org/wiki/Document-oriented_database)
+ * [Key-Value Store](https://en.wikipedia.org/wiki/Key%E2%80%93value_database)
+ * [Wide-Column](https://en.wikipedia.org/wiki/Wide-column_store)
+ * [Graph](https://en.wikipedia.org/wiki/Graph_database)
+
+## SQL databases
+ * [MongoDB](https://en.wikipedia.org/wiki/MongoDB)
+ * [Cassandra](https://en.wikipedia.org/wiki/Apache_Cassandra)
+ * [CouchDB](https://en.wikipedia.org/wiki/Apache_CouchDB)
+ * [ElasticSearch](https://www.elastic.co/)
