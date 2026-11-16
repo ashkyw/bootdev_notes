@@ -191,3 +191,52 @@ In real-world projects, we don't run raw SQL migrations. We use tools that help:
 
 #### Version control for your schema
 Migration files are committed like code. They travel with your project, so your teammates and [CI Systems](https://en.wikipedia.org/wiki/Continuous_integration) always apply the same schema changes in the right order.
+
+# SQL Data Types
+SQL as a language can support many different data types. However, the type that _your_ [database management system](https://en.wikipedia.org/wiki/Database#:~:text=A%20database%20management%20system%20(DBMS)) (DBMS) supports will depend on which database you choose.
+
+As for SQLite, it supports only the most _basic types_.
+
+#### SQLite Data Types
+  1. `NULL` - Null value
+  2. `INTEGER` - Signed Integer stored in 0, 1, 2, 3, 4, 6 or 8 bytes
+  3. `REAL` - Floating-point value stored as a 64-bit [IEEE Floating point #](https://en.wikipedia.org/wiki/IEEE_754).
+  4. `TEXT` - Text string stored using the database encoding. Most commonly [UTF-8](https://en.wikipedia.org/wiki/UTF-8).
+  5. `BLOB` - Short for [Binary Large Object](https://en.wikipedia.org/wiki/Binary_large_object) & typically used for images, audio, or other multimedia
+  6. `BOOLEAN` - Boolean values in SQLite queries are written as `true` or `false`, but are recorded as `1` or `0`
+
+>[!NOTE]
+>Throughout this course you will be using the `REAL` data type to represent currency. This is just for simplicity.
+>
+>In the real world, in order to avoid problems with floating-point math, best practice is to use `INTEGER` for currency. The value then represents the smallest denomination. I.E. $42.67 would be `4267`
+
+#### Boolean Values
+It's important to note, SQLite does not have a separate `BOOLEAN` storage class. Instead, boolean values are stored as integers:
+  * `0` = `false`
+  * `1` = `true`
+
+SQLite will let you write your queries as `boolean` expressions & `true` / `false` keywords, but will convert them to integers under the hood.
+
+### SQL Practice
+Create a new `posts` table:
+```sql
+CREATE TABLE posts (
+  id INTEGER,
+  image_url TEXT,
+  description TEXT,
+  author_id INTEGER,
+  is_sponsored BOOLEAN
+);
+```
+
+Migrate `posts` table:
+```sql
+ALTER TABLE posts
+RENAME COLUMN author_id TO poster_id;
+
+ALTER TABLE posts
+ADD COLUMN is_edited BOOLEAN;
+
+ALTER TABLE posts
+DROP COLUMN is_sponsored;
+```
