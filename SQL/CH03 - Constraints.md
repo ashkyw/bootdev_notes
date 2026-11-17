@@ -179,3 +179,37 @@ This database has 3 tables. `Students`, `Courses` & `StudentCourses`. The `Stude
 ## Example 2: Haskell Monads
 * Has an `id` of `3`
 * We can find all the students enrolled in the Haskell Monads course by checking the `CourseId` column in the `StudentCourses` table.
+
+# Relational vs. Non-Relational DBs
+The big difference between relational & non-relational databases is that non-relational databases tend to _nest_ their data. Instead of always keeping records in separate tables, they often store records _within other records_.
+
+To over-simplify it, you can think of non-relational databases as giant JSON blobs. If a user can have multiple courses, you might just add all the courses to the user record.
+```json
+{
+  "users": [
+    {
+      "id": 0,
+      "name": "Elon",
+      "courses": [
+        {
+          "name": "Biology",
+          "id": 0
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Curly",
+      "courses": [
+        {
+          "name": "Biology",
+          "id": 0
+        }
+      ]
+    }
+  ]
+}
+```
+This often results in _duplicate data_ within the database. That's obviously less than ideal, but it does have some benefits we'll discuss later.
+![Relational Database Example](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/relational%20databases.png)
+![Non-relational DB](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/non-relational%20databases.png)
