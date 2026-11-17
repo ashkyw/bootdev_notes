@@ -169,7 +169,7 @@ In a relational database:
 3. Each row or entry in the table is called a [record](https://en.wikipedia.org/wiki/Record_(computer_science)).
 4. Typically, each record has a unique `Id` called the [primary key](https://en.wikipedia.org/wiki/Primary_key).
 
-[!Relational Database Example]()
+[!Relational Database Example](https://github.com/ashkyw/bootdev_notes/blob/main/pictures/relational%20databases.png)
 This database has 3 tables. `Students`, `Courses` & `StudentCourses`. The `StudentCourses` table manages the relationship between the `Studends` & `Courses` tables
 
 ## Example 1: Curly
