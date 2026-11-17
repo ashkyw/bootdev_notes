@@ -7,5 +7,9 @@ When creating a table, we can define whether or not a field _can or cannot_ be `
 ### Assignment
 Write a `SELECT` query
 ```sql
-
+SELECT 
+  *
+FROM 
+  transactions;
 ```
+# 
