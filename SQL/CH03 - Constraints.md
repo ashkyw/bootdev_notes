@@ -159,3 +159,23 @@ CREATE TABLE transactions(
   balance REAL NOT NULL
 );
 ```
+# Relational Databases
+A relational database is a type of database that stores data so that it can be easily related to other data. For example, a `user` can have many `tweets`. There's a relationship between a `user` and their `tweet`.
+
+In a relational database:
+
+1. Data is typically represented in "tables."
+2. Each table has "columns" or "fields" that hold attributes related to the record.
+3. Each row or entry in the table is called a [record](https://en.wikipedia.org/wiki/Record_(computer_science)).
+4. Typically, each record has a unique `Id` called the [primary key](https://en.wikipedia.org/wiki/Primary_key).
+
+[!Relational Database Example]()
+This database has 3 tables. `Students`, `Courses` & `StudentCourses`. The `StudentCourses` table manages the relationship between the `Studends` & `Courses` tables
+
+## Example 1: Curly
+ * Curly has an `id` of `2`
+ * We can find Curly's courses by looking in the `StudentCourses` table for the records that match his `StudentId`.
+
+## Example 2: Haskell Monads
+* Has an `id` of `3`
+* We can find all the students enrolled in the Haskell Monads course by checking the `CourseId` column in the `StudentCourses` table.
