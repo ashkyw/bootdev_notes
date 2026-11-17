@@ -129,3 +129,33 @@ INSERT INTO
 VALUES
   (2, 'Amit', 'IN');
 ```
+# Schema
+We've seen the word schema before, let's talk about what it means. A database's [schema](https://www.ibm.com/think/topics/database-schema) describes how data is organized within it. 
+
+Data types, table names, field names, constraints, & the relationship between all of those entities are part of a database's schema.
+
+## There is no perfect schema
+When designing a database schema, there typically isn't a "correct" solution. We do our best to choose a reasonable set of tables, fields, constraints, etc. that will accomplish our project's goals.
+
+Like many things in programming, different schema designs come with different trade-offs.
+
+## How to decide on a Sane schema
+Let's use CashPal as an example. One important decision that needs to be made is which table will store a user's balance! As you can imagine, ensuring our data is accurate when dealing with money is _critical_. We want to be able to:
+ * Keep track of a user's current balance
+ * See the historical balance at any point in the past
+ * See a log of which transactions changed the balance over time.
+
+There are many ways to approach this problem, but let's start with the simplest schema that fulfills our project's needs.
+
+### Assignment
+We have decided to use a single `transactions` table. Create it
+```sql
+CREATE TABLE transactions(
+  id INTEGER PRIMARY KEY,
+  sender_id INTEGER,
+  recipient_id INTEGER,
+  memo TEXT NOT NULL,
+  amount REAL NOT NULL,
+  balance REAL NOT NULL
+);
+```
