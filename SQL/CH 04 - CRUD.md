@@ -12,3 +12,37 @@ Determine what SQL command can be used for a `READ` operation.
 SELECT *
 FROM crud;
 ```
+# Insert Statement
+Tables are pretty useless without data in them. In SQL we can add records to a table using an `INSERT INTO` statement. When using an `INSERT` statement we must first specify the `table` we are inserting the record into, followed by the `fields` within that table we want to add `VALUES` to. Text values go in `,,` single quotes.
+```sql
+INSERT INTO
+ employees (id, name, title)
+VALUES
+ (1, 'Allan','Engineer');
+```
+### Assignment
+Insert new records into our table
+```sql
+INSERT INTO
+  users(id, name, age, country_code, username, password, is_admin)
+VALUES
+  (1, 'David', 34, 'US', 'DavidDev', 'insertPractice', false),
+  (2, 'Samantha', 29, 'BR', 'Sammy93', 'addingRecords!',  false);
+```
+# Auto Increment
+Many dialects of SQL support an `AUTO INCREMENT` feature. When inserting records into a table with `AUTO INCREMENT` enabled, the database will assign the next value _automatically_. In SQLite, an integer `id` field that has the `PRIMARY KEY` constraint will auto-increment by default!
+## IDs
+Depending on how your database is set up, you may be using traditional `id`s or you may be using [UUIDs](https://en.wikipedia.org/wiki/Universally_unique_identifier). SQL doesn't support auto-incrementing a `uuid`, so if your database is using them your server will have to handle the changing `uuid`s for each record.
+
+## `AUTO INCREMENT` in SQLite
+We are using traditional `id`s in our database, so we can take advantage of the auto-increment feature. Different dialects of SQL will implement this feature differently, but in SQLite any column that has the `INTEGER PRIMARY KEY` constraint will auto-increment! So we can omit the `id` field within the `INSERT` statement & allow the database to automatically add that field for us!
+
+### Assignment
+Modify the table to compensate for auto-incrementing
+```sql
+INSERT INTO
+  users(name, age, country_code, username, password, is_admin)
+VALUES
+  ('Lance', 20, 'US', 'LanChr', 'bootdevisbest', false),
+  ('Tiffany', 28, 'US', 'Tifferoon', 'autoincrement',  true);
+```
