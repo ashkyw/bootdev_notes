@@ -46,3 +46,15 @@ VALUES
   ('Lance', 20, 'US', 'LanChr', 'bootdevisbest', false),
   ('Tiffany', 28, 'US', 'Tifferoon', 'autoincrement',  true);
 ```
+# Manual Entry
+Manually `INSERT`ing every single record in a database would be an _extremely_ time-consuming task! Working with raw SQL as we are now is _not_ super common when designing backend systems.
+
+When working with SQL within a software system, like a backend web application, you'll typically have acccess to a programming language such as Go or Python. For example, a backend server written in Go can use string concatenation to dynamically create SQL statements, & that's how it's usually done!
+```go
+sqlQuery := fmt.Sprintf(`
+INSERT INTO users(name, age, country_code)
+VALUES ('%s', %v, '%s');
+`, user.Name, user.Age, user.CountryCode)
+```
+## SQL Injection
+The example above is an oversimplification of what _really_ happens when you access a database in Go, in essence, it's correct. String interpolation is how production systems access databases. That said, it must be done _carefully_ to not be a [security vulnerability](https://en.wikipedia.org/wiki/SQL_injection).
