@@ -58,3 +58,18 @@ VALUES ('%s', %v, '%s');
 ```
 ## SQL Injection
 The example above is an oversimplification of what _really_ happens when you access a database in Go, in essence, it's correct. String interpolation is how production systems access databases. That said, it must be done _carefully_ to not be a [security vulnerability](https://en.wikipedia.org/wiki/SQL_injection).
+# Count
+We can use a `SELECT` statement to get a _count_ of the records within a table. This can be very useful when we need to know _how many_ records there are, but we don't particularly care what's in them.
+```sql
+SELECT
+ COUNT(*)
+FROM
+ employees;
+```
+### Assignment
+```sql
+SELECT
+  COUNT(*)
+FROM
+  users;
+```
